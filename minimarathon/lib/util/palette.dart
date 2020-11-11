@@ -7,3 +7,4 @@ const pale = Color.fromRGBO(234, 230, 218, 1.0);
 const lightgrey = Color.fromRGBO(119, 119, 119, 1.0);
 const darkgrey = Color.fromRGBO(51, 51, 51, 1.0);
 const mandarin = Color.fromRGBO(234, 85, 23, 1.0);
+const lightwhite = Color.fromRGBO(238, 238, 238, 1.0);

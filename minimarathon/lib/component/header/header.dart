@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minimarathon/util/palette.dart';
 
 class CustomHeader extends StatelessWidget {
   final title, body;
@@ -16,7 +17,9 @@ class CustomHeader extends StatelessWidget {
           onTap: () {
             FocusScope.of(context).requestFocus(new FocusNode());
           },
-          child: new Center(
+          child: Container(
+            color: white,
+            alignment: Alignment.center,
             child: body,
           ),
         ));

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:minimarathon/component/body/register/result_register.dart';
 import 'package:minimarathon/util/palette.dart';
-
-import '../header/header.dart';
+//component
+import '../../header/header.dart';
 
 class SingleRegister extends StatefulWidget {
   final title;
@@ -25,7 +26,7 @@ class _SingleRegisterState extends State<SingleRegister> {
     "donationFee": 10
   };
 
-  bool bottomButton = false;
+  bool isRegisterAvailable = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,23 +34,6 @@ class _SingleRegisterState extends State<SingleRegister> {
       title: widget.title,
       body: registerBody(),
     );
-  }
-
-  bool checkProperty(Map<String, dynamic> data) {
-    /*
-  <example>
-    data : {
-      name : john,
-      phoneNumber : 951-254-2599,
-      donationFee : 10
-    }
-  */
-
-    //name and fee
-    if (_isNumeric(data['name']) || data['donationFee'] < 10)
-      return false;
-    else
-      return true;
   }
 
   @override
@@ -99,6 +83,9 @@ class _SingleRegisterState extends State<SingleRegister> {
                             width: MediaQuery.of(context).size.width * 0.7,
                             child: TextField(
                               decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(color: lightgrey)),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
                                     borderSide: BorderSide(color: lightgrey)),
@@ -145,6 +132,9 @@ class _SingleRegisterState extends State<SingleRegister> {
                               width: MediaQuery.of(context).size.width * 0.7,
                               child: TextField(
                                 decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide(color: lightgrey)),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12),
                                       borderSide: BorderSide(color: lightgrey)),
@@ -191,6 +181,9 @@ class _SingleRegisterState extends State<SingleRegister> {
                               width: MediaQuery.of(context).size.width * 0.7,
                               child: TextField(
                                 decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide(color: lightgrey)),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12),
                                       borderSide: BorderSide(color: lightgrey)),
@@ -202,7 +195,8 @@ class _SingleRegisterState extends State<SingleRegister> {
                                 ),
                                 onChanged: (value) {
                                   setState(() {
-                                    singleRegisterData['donationFee'] = value;
+                                    singleRegisterData['donationFee'] =
+                                        int.parse(value);
                                   });
                                 },
                                 textInputAction: TextInputAction.done,
@@ -213,11 +207,11 @@ class _SingleRegisterState extends State<SingleRegister> {
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              !bottomButton
+                              !isRegisterAvailable
                                   ? "You can donate from \$10."
                                   : "You have successfully completed your donation!",
                               style: TextStyle(
-                                  color: !bottomButton
+                                  color: !isRegisterAvailable
                                       ? darkgrey
                                       : Colors.blue[400],
                                   fontWeight: FontWeight.normal,
@@ -230,8 +224,10 @@ class _SingleRegisterState extends State<SingleRegister> {
                 Expanded(
                   flex: 1,
                   child: SizedBox(
-                    child: Text(singleRegisterData.toString()),
-                  ),
+                      // child: Text(singleRegisterData.toString() +  // for debugging
+                      //     ' ' +
+                      //     (singleRegisterData['donationFee'] is int).toString()),
+                      ),
                 ),
                 Expanded(
                   flex: 1,
@@ -239,12 +235,23 @@ class _SingleRegisterState extends State<SingleRegister> {
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: FlatButton(
                           onPressed: () {
-                            setState(() {
-                              if (checkProperty(singleRegisterData))
-                                bottomButton = true;
-                              else
-                                bottomButton = false;
-                            });
+                            if (singleRegisterData['donationFee'] >= 10 &&
+                                singleRegisterData['name'] != '' &&
+                                singleRegisterData['phoneNumber'] != '') {
+                              setState(() {
+                                isRegisterAvailable = true;
+                              });
+                            } else {
+                              setState(() {
+                                isRegisterAvailable = false;
+                              });
+                            }
+                            if (isRegisterAvailable) {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Register()));
+                            }
                           },
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -254,7 +261,9 @@ class _SingleRegisterState extends State<SingleRegister> {
                             // height: MediaQuery.of(context).size.width * 0.2,
                             alignment: Alignment.center,
                             child: Text(
-                              !bottomButton ? 'Pay by PAYPAL' : 'REGISTER',
+                              !isRegisterAvailable
+                                  ? 'Pay by PAYPAL'
+                                  : 'REGISTER',
                               style: TextStyle(
                                   color: orange,
                                   fontWeight: FontWeight.bold,
@@ -270,13 +279,5 @@ class _SingleRegisterState extends State<SingleRegister> {
             ),
           ),
         )));
-  }
-
-  bool _isNumeric(String result) {
-    //string 안에 숫자가 있으면 true, 숫자가 없으면 false
-    if (result == null) {
-      return false;
-    }
-    return double.tryParse(result) != null;
   }
 }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:minimarathon/component/body/single_register.dart';
 //header
 import './component/header/header.dart';
 //util
 import './util/palette.dart';
+//route
+import 'package:minimarathon/component/body/register/single_register.dart';
+import 'package:minimarathon/component/body/register/team_register.dart';
 
 void main() {
   runApp(MyApp());
@@ -37,16 +39,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  DateTime serviceStateDate = new DateTime.utc(2020, 12, 20);
-
-  void _navigation() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (BuildContext context) => SingleRegister(),
-      ),
-    );
-  }
+  DateTime serviceStateDate = new DateTime.utc(2020, 12, 10);
 
   @override
   void initState() {
@@ -138,8 +131,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: FlatButton(
                             onPressed: () {
-                              // showMyDialog(context);
-                              isOpenned(context);
+                              showMyDialog(context);
+                              // isOpenned(context);
                             },
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -174,7 +167,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     Container(
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: FlatButton(
-                            onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => SingleRegister(title: Text("Register"),))); },
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SingleRegister(
+                                            title: Text("Register"),
+                                          )));
+                            },
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                                 side: BorderSide(color: orange, width: 3.0)),
@@ -196,7 +196,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     Container(
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: FlatButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        TeamRegister(
+                                      title: Text("Register"),
+                                    ),
+                                  ));
+                            },
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                                 side: BorderSide(color: orange, width: 3.0)),
