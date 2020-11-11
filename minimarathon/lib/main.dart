@@ -39,6 +39,15 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   DateTime serviceStateDate = new DateTime.utc(2020, 12, 20);
 
+  void _navigation() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => SingleRegister(),
+      ),
+    );
+  }
+
   @override
   void initState() {
     // TODO: implement initState
