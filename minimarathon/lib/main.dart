@@ -68,11 +68,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   FlatButton(
                     color: Colors.amberAccent,
                     onPressed: () {},
-                    child: Container(),
+                    child: Container(
+                      child: Text('A'),
+                    ),
                   )
                 ],
               ),
             ),
+            Divider(),
             Expanded(
               flex: 4,
               child: Column(
@@ -80,12 +83,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   FlatButton(
                     color: Colors.amberAccent,
                     onPressed: () {},
-                    child: Container(),
+                    child: Container(
+                      child: Text('A'),
+                    ),
                   ),
                   FlatButton(
                     color: Colors.amberAccent,
                     onPressed: () {},
-                    child: Container(),
+                    child: Container(
+                      child: Text('A'),
+                    ),
                   )
                 ],
               ),
