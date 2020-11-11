@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'register.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,17 +11,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: new Scaffold(
-        appBar: new AppBar(
-          title: Text("Hello World"),
-        ),
-        body: new Center(child: MyHomePage(),)
-      ),
+          appBar: new AppBar(
+            title: Text("Hello World"),
+          ),
+          body: new Center(
+            child: MyHomePage(),
+          )),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-
   MyHomePage();
 
   @override
@@ -28,7 +29,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  
+  void _navigation() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => Register(),
+      ),
+    );
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -59,44 +68,42 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           Expanded(
-              flex: 4,
-              child: Column(
-                children: [
-                  TextField(
-                    
+            flex: 4,
+            child: Column(
+              children: [
+                TextField(),
+                FlatButton(
+                  color: Colors.amberAccent,
+                  onPressed: () {},
+                  child: Container(
+                    child: Text('A'),
                   ),
-                  FlatButton(
-                    color: Colors.amberAccent,
-                    onPressed: () {},
-                    child: Container(
-                      child: Text('A'),
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
-            Divider(),
-            Expanded(
-              flex: 4,
-              child: Column(
-                children: [
-                  FlatButton(
-                    color: Colors.amberAccent,
-                    onPressed: () {},
-                    child: Container(
-                      child: Text('A'),
-                    ),
+          ),
+          Divider(),
+          Expanded(
+            flex: 4,
+            child: Column(
+              children: [
+                FlatButton(
+                  color: Colors.amberAccent,
+                  onPressed: () {},
+                  child: Container(
+                    child: Text('A'),
                   ),
-                  FlatButton(
-                    color: Colors.amberAccent,
-                    onPressed: () {},
-                    child: Container(
-                      child: Text('A'),
-                    ),
-                  )
-                ],
-              ),
-            )
+                ),
+                FlatButton(
+                  color: Colors.amberAccent,
+                  onPressed: _navigation,
+                  child: Container(
+                    child: Text('A'),
+                  ),
+                )
+              ],
+            ),
+          )
         ],
       ),
     );
