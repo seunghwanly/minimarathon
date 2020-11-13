@@ -21,3 +21,8 @@ util      :	  앱 구성할 때 필요한 기능을 넣어 둔 곳
 main.dart :   앱이 run 되는 부분입니다.
 
 ```
+
+PayPal testing 계정
+```
+id : sb-5v1zv3741698@personal.example.com
+pw : 3gl$gV?k
