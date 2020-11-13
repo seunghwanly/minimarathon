@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/body/register/result_register.dart';
+import 'package:minimarathon/component/loading.dart';
+import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/palette.dart';
+import 'package:minimarathon/util/paypal/paypal_model.dart';
+import 'package:minimarathon/util/paypal/paypal_payment.dart';
 //component
 import '../../header/header.dart';
 
@@ -26,13 +30,14 @@ class _SingleRegisterState extends State<SingleRegister> {
     "donationFee": 10
   };
 
+  bool isPaymentAvailable = false;
   bool isRegisterAvailable = false;
 
   @override
   Widget build(BuildContext context) {
     return CustomHeader(
       title: widget.title,
-      body: registerBody(),
+      body: isPaymentAvailable && !isRegisterAvailable ? LoadingPage() : registerBody(),
     );
   }
 
@@ -235,22 +240,53 @@ class _SingleRegisterState extends State<SingleRegister> {
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: FlatButton(
                           onPressed: () {
-                            if (singleRegisterData['donationFee'] >= 10 &&
-                                singleRegisterData['name'] != '' &&
-                                singleRegisterData['phoneNumber'] != '') {
-                              setState(() {
-                                isRegisterAvailable = true;
-                              });
-                            } else {
-                              setState(() {
-                                isRegisterAvailable = false;
-                              });
-                            }
-                            if (isRegisterAvailable) {
-                              Navigator.pushReplacement(
-                                  context,
+                            print(isPaymentAvailable.toString() + '\t' + isRegisterAvailable.toString());
+                            if (!isRegisterAvailable) {
+                              if (singleRegisterData['donationFee'] >= 10 &&
+                                  singleRegisterData['name'] != '' &&
+                                  singleRegisterData['phoneNumber'] != '') {
+                                setState(() {
+                                  isPaymentAvailable = true;
+                                });
+                              } else {
+                                showMyDialog(context, 'The form is not Completely finished !');
+                                setState(() {
+                                  isPaymentAvailable = false;
+                                });
+                              }
+                              if (isPaymentAvailable) {
+                                // make PayPal payment
+                                Navigator.of(context).push(
                                   MaterialPageRoute(
-                                      builder: (context) => Register()));
+                                    builder: (BuildContext c) =>
+                                        PaypalPayment(
+                                      donationFee:
+                                          singleRegisterData['donationFee'],
+                                      onFinish: (res) async {
+                                        print('> : single_register.dart :- \t' +
+                                            res.toString());
+                                        // payment done
+                                        if (res == 'approved') {
+                                          setState(() {
+                                            isRegisterAvailable = true;
+                                            isPaymentAvailable = false;
+                                          });
+                                          await showMyDialog(context, "Payment was succefully done !\n You are now avaiable to register !");
+                                        } else {
+                                          showMyDialog(context, 'Payment was not Completed !');
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                );
+                              }
+                            } else {
+                              if (isRegisterAvailable && !isPaymentAvailable) {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Register()));
+                              }
                             }
                           },
                           shape: RoundedRectangleBorder(
