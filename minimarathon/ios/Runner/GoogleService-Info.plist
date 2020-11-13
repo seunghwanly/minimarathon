@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>485715355450-il052ef6logss6o68jl1dbhu8p3mqbtb.apps.googleusercontent.com</string>
+	<string>949723521719-1jgoi622qs6l8goeanvfsa027vk4vbcv.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.485715355450-il052ef6logss6o68jl1dbhu8p3mqbtb</string>
+	<string>com.googleusercontent.apps.949723521719-1jgoi622qs6l8goeanvfsa027vk4vbcv</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDbhd3PYCJjdb1KnymMI7gmynXkpk4_Kvk</string>
+	<string>AIzaSyArT6EbCUFxmF7A0bmXa_pN2SGelvWxaok</string>
 	<key>GCM_SENDER_ID</key>
-	<string>485715355450</string>
+	<string>949723521719</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.minimarathon</string>
 	<key>PROJECT_ID</key>
-	<string>minimarathon-795f1</string>
+	<string>hopesharingrelay-ae215</string>
 	<key>STORAGE_BUCKET</key>
-	<string>minimarathon-795f1.appspot.com</string>
+	<string>hopesharingrelay-ae215.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:485715355450:ios:058466615030116fa25203</string>
+	<string>1:949723521719:ios:1bab607ab1ad737ffea332</string>
 	<key>DATABASE_URL</key>
-	<string>https://minimarathon-795f1.firebaseio.com</string>
+	<string>https://hopesharingrelay-ae215.firebaseio.com</string>
 </dict>
 </plist>
