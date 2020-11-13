@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/header/header.dart';
 import '../../../util/text_style.dart';
@@ -24,12 +25,11 @@ class RankingState extends State<Ranking> {
         padding: const EdgeInsets.all(2),
         children: [
           PaginatedDataTable(
-            header: makeText('5km Ranking', Colors.black87, 20),
+            header: makeText('Who walked fast?', Colors.black87, 20),
             rowsPerPage: 10,
             columns: [
               DataColumn(label: Text('Rank')),
               DataColumn(label: Text('Name')),
-              DataColumn(label: Text('Km')),
               DataColumn(label: Text('Time')),
             ],
             source: _DataSource(context),
@@ -44,13 +44,11 @@ class _Row {
   _Row(
     this.rank,
     this.name,
-    this.km,
     this.time,
   );
 
   final int rank;
   final String name;
-  final double km;
   final String time;
 
   bool selected = false;
@@ -59,22 +57,22 @@ class _Row {
 class _DataSource extends DataTableSource {
   _DataSource(this.context) {
     _rows = <_Row>[
-      _Row(1, 'Mados', 5, '00:52:33'),
-      _Row(2, 'kook', 5, '00:53:53'),
-      _Row(3, 'tata', 5, '00:56:43'),
-      _Row(4, 'puni', 5, '00:58:17'),
-      _Row(1, 'Mados', 5, '00:52:33'),
-      _Row(2, 'kook', 5, '00:53:53'),
-      _Row(3, 'tata', 5, '00:56:43'),
-      _Row(4, 'puni', 5, '00:58:17'),
-      _Row(1, 'Mados', 5, '00:52:33'),
-      _Row(2, 'kook', 5, '00:53:53'),
-      _Row(3, 'tata', 5, '00:56:43'),
-      _Row(4, 'puni', 5, '00:58:17'),
-      _Row(1, 'Mados', 5, '00:52:33'),
-      _Row(2, 'kook', 5, '00:53:53'),
-      _Row(3, 'tata', 5, '00:56:43'),
-      _Row(4, 'puni', 5, '00:58:17'),
+      _Row(1, 'Mados', '00:52:33'),
+      _Row(2, 'kook', '00:53:53'),
+      _Row(3, 'tata', '00:56:43'),
+      _Row(4, 'puni', '00:58:17'),
+      _Row(1, 'Mados', '00:52:33'),
+      _Row(2, 'kook', '00:53:53'),
+      _Row(3, 'tata', '00:56:43'),
+      _Row(4, 'puni', '00:58:17'),
+      _Row(1, 'Mados', '00:52:33'),
+      _Row(2, 'kook', '00:53:53'),
+      _Row(3, 'tata', '00:56:43'),
+      _Row(4, 'puni', '00:58:17'),
+      _Row(1, 'Mados', '00:52:33'),
+      _Row(2, 'kook', '00:53:53'),
+      _Row(3, 'tata', '00:56:43'),
+      _Row(4, 'puni', '00:58:17'),
     ];
   }
 
@@ -92,7 +90,6 @@ class _DataSource extends DataTableSource {
       cells: [
         DataCell(Text(index.toString())),
         DataCell(Text(row.name)),
-        DataCell(Text(row.km.toString())),
         DataCell(Text(row.time.toString())),
       ],
     );
