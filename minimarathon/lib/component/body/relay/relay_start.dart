@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:minimarathon/component/body/relay/background_location.dart';
 import 'package:minimarathon/component/header/header.dart';
 import '../../../util/text_style.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'relay_finish.dart';
+import 'package:background_location/background_location.dart';
 
 class RelayStart extends StatefulWidget {
   @override
@@ -12,12 +14,20 @@ class RelayStart extends StatefulWidget {
 
 class RelayStartState extends State<RelayStart> {
   final String username = 'Jong Ha Park';
-
   void _navigation() {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (BuildContext context) => RelayFinish(),
+      ),
+    );
+  }
+
+  void _navigationToLocation() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => MyBackgroundLocation(),
       ),
     );
   }
@@ -56,7 +66,7 @@ class RelayStartState extends State<RelayStart> {
                             color: Color.fromRGBO(234, 85, 24, 1.0), width: 3),
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: FlatButton(
-                      onPressed: _navigation,
+                      onPressed: _navigationToLocation,
                       child: Container(
                         child: makeText(
                             'START', Color.fromRGBO(234, 85, 24, 1.0), 28),
