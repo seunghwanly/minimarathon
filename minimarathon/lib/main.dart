@@ -7,7 +7,7 @@ import './util/custom_dialog.dart';
 //route
 import 'package:minimarathon/component/body/register/single_register.dart';
 import 'package:minimarathon/component/body/register/team_register.dart';
-
+import 'package:minimarathon/component/body/relay/relay_start.dart';
 
 void main() {
   runApp(MyApp());
@@ -59,7 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
     if (serviceStateDate.compareTo(DateTime.now()) != 0) {
       //begin service
     } else {
-      showMyDialog(context, "You can't use this application before the marathon starts");
+      showMyDialog(
+          context, "You can't use this application before the marathon starts");
     }
   }
 
@@ -133,7 +134,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: FlatButton(
                             onPressed: () {
-                              showMyDialog(context, "You can't use this application before the marathon starts");
+                              showMyDialog(context,
+                                  "You can't use this application before the marathon starts");
                               // isOpenned(context);
                             },
                             shape: RoundedRectangleBorder(
@@ -199,14 +201,25 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: FlatButton(
                             onPressed: () {
+                              // ** 개발상 편의를 위해 팀 Register 버튼 -> Start Relay 로 이동으로 변경
+                              // 2020-11-17
+
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //       builder: (BuildContext context) =>
+                              //           TeamRegister(
+                              //         title: Text("Register"),
+                              //       ),
+                              //     ));
+
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        TeamRegister(
-                                      title: Text("Register"),
-                                    ),
-                                  ));
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      RelayStart(),
+                                ),
+                              );
                             },
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
