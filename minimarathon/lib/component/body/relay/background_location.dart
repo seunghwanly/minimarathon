@@ -22,6 +22,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
   String time = "waiting...";
 
   double totalDistance = 0;
+  double totalDistance2 = 0;
   @override
   void initState() {
     super.initState();
@@ -39,12 +40,13 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
             children: <Widget>[
               locationData("Latitude: " + latitude),
               locationData("Longitude: " + longitude),
-              locationData("Altitude: " + altitude),
+
               locationData("Accuracy: " + accuracy),
-              locationData("Bearing: " + bearing),
+
               locationData("Speed: " + speed),
               locationData("Time: " + time),
               locationData("TotalDistance: " + totalDistance.toString()),
+              locationData("TotalDistance2: " + totalDistance2.toString()),
               RaisedButton(
                   onPressed: () async {
                     BackgroundLocation.setNotificationTitle(
@@ -84,6 +86,9 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                               currentLat,
                               currentLong,
                               location.speed);
+
+                          totalDistance2 += distance(beforeLat, beforeLong,
+                              currentLat, currentLong, 'm', location.speed);
                         }
                       });
                       print("""\n
@@ -157,26 +162,29 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
       return 0;
   }
 
-  double distance(lat1_, lon1_, lat2_, lon2_, String unit) {
-    double lat1 = lat1_;
-    double lon1 = lon1_;
-    double lat2 = lat2_;
-    double lon2 = lon2_;
+  double distance(lat1_, lon1_, lat2_, lon2_, String unit, speed) {
+    if (speed > 0.3 && speed < 5) {
+      double lat1 = lat1_;
+      double lon1 = lon1_;
+      double lat2 = lat2_;
+      double lon2 = lon2_;
 
-    double theta = lon1 - lon2;
-    double dist = sin(deg2rad(lat1)) * sin(deg2rad(lat2)) +
-        cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * cos(deg2rad(theta));
-    dist = acos(dist);
-    dist = rad2deg(dist);
-    dist = dist * 60 * 1.1515;
-    if (unit == 'm') {
-      //meters
-      dist = dist * 1.609344 * 1000;
-    } else if (unit == 'N') {
-      //nautical miles
-      dist = dist * 0.8684;
-    }
-    return (dist); //miles
+      double theta = lon1 - lon2;
+      double dist = sin(deg2rad(lat1)) * sin(deg2rad(lat2)) +
+          cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * cos(deg2rad(theta));
+      dist = acos(dist);
+      dist = rad2deg(dist);
+      dist = dist * 60 * 1.1515;
+      if (unit == 'm') {
+        //meters
+        dist = dist * 1.609344 * 1000;
+      } else if (unit == 'N') {
+        //nautical miles
+        dist = dist * 0.8684;
+      }
+      return (dist); //miles
+    } else
+      return 0;
   }
 
   double deg2rad(double deg) {
