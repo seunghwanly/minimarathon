@@ -79,7 +79,11 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                         if (((beforeLat == 0 && currentLat == 1) == false) &&
                             ((beforeLat == currentLat) == false)) {
                           totalDistance += distanceInKmBetweenEarthCoordinates(
-                              beforeLat, beforeLong, currentLat, currentLong);
+                              beforeLat,
+                              beforeLong,
+                              currentLat,
+                              currentLong,
+                              location.speed);
                         }
                       });
                       print("""\n
@@ -131,22 +135,27 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
   }
 
   double degreesToRadians(degrees) {
-    return degrees * 0.0174532925199433;
+
+    // return degrees * 0.0174532925199432954743716805978692718781530857086181640625;   // max : 52 | min 14 
+    return degrees * 0.017453292519943295474371680597869271878153085708618;   // max : 65 | min 14 
+    // return degrees * 0.01745329251994329547437168059786927187815;          // max : 49 | min 15
   }
 
-  double distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
-    var earthRadiusKm = 6371;
+  double distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2, speed) {
+    if (speed != 0.0) {
+      var earthRadiusKm = 6371;
 
-    var dLat = degreesToRadians(lat2 - lat1);
-    var dLon = degreesToRadians(lon2 - lon1);
+      var dLat = degreesToRadians(lat2 - lat1);
+      var dLon = degreesToRadians(lon2 - lon1);
 
-    lat1 = degreesToRadians(lat1);
-    lat2 = degreesToRadians(lat2);
+      lat1 = degreesToRadians(lat1);
+      lat2 = degreesToRadians(lat2);
 
-    var a = sin(dLat / 2) * sin(dLat / 2) +
-        sin(dLon / 2) * sin(dLon / 2) * cos(lat1) * cos(lat2);
-    var c = 2 * atan2(sqrt(a), sqrt(1 - a));
-    return earthRadiusKm * c * 1000;
+      var a = sin(dLat / 2) * sin(dLat / 2) +
+          sin(dLon / 2) * sin(dLon / 2) * cos(lat1) * cos(lat2);
+      var c = 2 * atan2(sqrt(a), sqrt(1 - a));
+      return earthRadiusKm * c * 1000;
+    }
   }
 
   @override
