@@ -91,9 +91,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                         current: $currentLat
                         Latitude:  $latitude
                         Longitude: $longitude
-                        Altitude: $altitude
                         Accuracy: $accuracy
-                        Bearing:  $bearing
                         Speed: $speed
                         Time: $time
                       """);
@@ -105,11 +103,11 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                     BackgroundLocation.stopLocationService();
                   },
                   child: Text("Stop Location Service")),
-              RaisedButton(
-                  onPressed: () {
-                    getCurrentLocation();
-                  },
-                  child: Text("Get Current Location")),
+              // RaisedButton(
+              //     onPressed: () {
+              //       getCurrentLocation();
+              //     },
+              //     child: Text("Get Current Location")),
             ],
           ),
         ),
@@ -135,14 +133,14 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
   }
 
   double degreesToRadians(degrees) {
-
-    // return degrees * 0.0174532925199432954743716805978692718781530857086181640625;   // max : 52 | min 14 
-    return degrees * 0.017453292519943295474371680597869271878153085708618;   // max : 65 | min 14 
+    // return degrees * 0.0174532925199432954743716805978692718781530857086181640625;   // max : 52 | min 14
+    return degrees * 0.017453292519943295474371; // jongsTest
+    // 0.017453292519943295474371680597869271878153085708618; // max : 65 | min 14
     // return degrees * 0.01745329251994329547437168059786927187815;          // max : 49 | min 15
   }
 
   double distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2, speed) {
-    if (speed != 0.0) {
+    if (speed > 0.3 && speed < 5) {
       var earthRadiusKm = 6371;
 
       var dLat = degreesToRadians(lat2 - lat1);
@@ -155,7 +153,38 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
           sin(dLon / 2) * sin(dLon / 2) * cos(lat1) * cos(lat2);
       var c = 2 * atan2(sqrt(a), sqrt(1 - a));
       return earthRadiusKm * c * 1000;
+    } else
+      return 0;
+  }
+
+  double distance(lat1_, lon1_, lat2_, lon2_, String unit) {
+    double lat1 = lat1_;
+    double lon1 = lon1_;
+    double lat2 = lat2_;
+    double lon2 = lon2_;
+
+    double theta = lon1 - lon2;
+    double dist = sin(deg2rad(lat1)) * sin(deg2rad(lat2)) +
+        cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * cos(deg2rad(theta));
+    dist = acos(dist);
+    dist = rad2deg(dist);
+    dist = dist * 60 * 1.1515;
+    if (unit == 'm') {
+      //meters
+      dist = dist * 1.609344 * 1000;
+    } else if (unit == 'N') {
+      //nautical miles
+      dist = dist * 0.8684;
     }
+    return (dist); //miles
+  }
+
+  double deg2rad(double deg) {
+    return (deg * pi / 180.0);
+  }
+
+  double rad2deg(double rad) {
+    return (rad * 180.0 / pi);
   }
 
   @override
