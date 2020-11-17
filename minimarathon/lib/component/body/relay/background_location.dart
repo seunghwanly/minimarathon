@@ -39,9 +39,9 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
               locationData("Time: " + time),
               RaisedButton(
                   onPressed: () async {
-                    await BackgroundLocation.setNotificationTitle(
+                    BackgroundLocation.setNotificationTitle(
                         "Background service running");
-                    await BackgroundLocation.startLocationService();
+                    BackgroundLocation.startLocationService();
                     BackgroundLocation.getLocationUpdates((location) {
                       setState(() {
                         this.latitude = location.latitude.toString();
