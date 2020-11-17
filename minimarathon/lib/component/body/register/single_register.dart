@@ -271,6 +271,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                                             isRegisterAvailable = true;
                                             isPaymentAvailable = false;
                                           });
+                                          print('> R : ' + isRegisterAvailable.toString() + ' P : ' + isPaymentAvailable.toString());
                                           await showMyDialog(context, "Payment was succefully done !\n You are now avaiable to register !");
                                         } else {
                                           showMyDialog(context, 'Payment was not Completed !');
