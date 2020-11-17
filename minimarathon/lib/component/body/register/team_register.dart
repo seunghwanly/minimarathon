@@ -318,7 +318,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                           ))),
                   Expanded(
                     // ---------------------------------------------------------------------------Donation Fee
-                    flex: 2,
+                    flex: 3,
                     child: Container(
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: Column(
@@ -379,14 +379,14 @@ class _TeamRegisterState extends State<TeamRegister> {
                           ],
                         )),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: SizedBox(
-                        // child: Text(singleRegisterData.toString() +  // for debugging
-                        //     ' ' +
-                        //     (singleRegisterData['donationFee'] is int).toString()),
-                        ),
-                  ),
+                  // Expanded(
+                  //   flex: 1,
+                  //   child: SizedBox(
+                  //       // child: Text(singleRegisterData.toString() +  // for debugging
+                  //       //     ' ' +
+                  //       //     (singleRegisterData['donationFee'] is int).toString()),
+                  //       ),
+                  // ),
                   Expanded(
                     flex: 1,
                     child: Container(

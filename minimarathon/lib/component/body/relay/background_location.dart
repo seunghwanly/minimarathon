@@ -96,7 +96,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
 
   getCurrentLocation() {
     BackgroundLocation().getCurrentLocation().then((location) {
-      print("This is current Location" + location.longitude.toString());
+      print("This is current Location" + location.longitude.toString() + ' / ' + location.latitude.toString());
     });
   }
 
