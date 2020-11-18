@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
         physics: NeverScrollableScrollPhysics(),
         child: Container(
           padding: EdgeInsets.all(20.0),
-          color: Colors.white,
+          // color: Colors.white,
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: Column(

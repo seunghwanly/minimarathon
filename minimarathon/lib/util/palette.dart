@@ -12,3 +12,4 @@ const lightwhite = Color.fromRGBO(238, 238, 238, 1.0);
 // theme
 
 const pastelblue = Color.fromRGBO(106, 140, 180, 1.0);
+const pastelgreen = Color.fromRGBO(34, 141, 79, 1.0);

@@ -11,19 +11,30 @@ class CustomHeader extends StatelessWidget {
     return new Scaffold(
         appBar: new AppBar(
           title: title,
-          elevation: 1.0,
-          shape: RoundedRectangleBorder(side: BorderSide(color: pastelblue)),
-          backgroundColor: white,
-          shadowColor: pastelblue,
+          elevation: 0.0,
+          //shape: RoundedRectangleBorder(side: BorderSide(color: pastelblue, width: 20)),
+          backgroundColor: pastelblue,
+          // shadowColor: pastelblue,
           // textTheme: TextTheme(headline6: TextStyle(color: white, fontSize: MediaQuery.of(context).size.width / 18, fontWeight: FontWeight.w600)),
-          
+
         ),
+        // appBar: new GradientAppBar(
+        //   title: title,
+        //   elevation: 0.0,
+        //   backgroundColorStart: Colors.pink[200],
+        //   backgroundColorEnd: white,
+        // ),
         body: GestureDetector(
           onTap: () {
             FocusScope.of(context).requestFocus(new FocusNode());
           },
           child: Container(
-            color: white,
+            color: pastelblue,
+            // decoration: BoxDecoration(
+            //     gradient: LinearGradient(
+            //         begin: Alignment.topRight,
+            //         end: Alignment.bottomLeft,
+            //         colors: [Colors.pink[200], Colors.green[200]])),
             alignment: Alignment.center,
             child: body,
           ),

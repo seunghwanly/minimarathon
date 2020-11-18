@@ -41,6 +41,9 @@ dependencies:
   geolocator: ^5.3.0
   workmanager : ^ 0.2.0
 
+  #UI
+  
+
   url_launcher:
   flutter_linkify: ^4.0.2
   # The following adds the Cupertino Icons font to your application.
