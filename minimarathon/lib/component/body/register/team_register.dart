@@ -71,7 +71,6 @@ class _TeamRegisterState extends State<TeamRegister> {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: Container(
-              color: white,
               padding: EdgeInsets.all(20.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -89,7 +88,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                             child: Text(
                               "Team Name",
                               style: TextStyle(
-                                  color: darkgrey,
+                                  color: lightwhite,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20.0),
                             ),
@@ -99,17 +98,20 @@ class _TeamRegisterState extends State<TeamRegister> {
                               child: TextField(
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide(color: lightgrey)),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide(color: lightgrey)),
-                                  labelText: 'input Team Name ...',
+                                      borderRadius: BorderRadius.circular(30),
+                                      borderSide:
+                                          BorderSide(color: white, width: 3)),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                      borderSide: new BorderSide(
+                                          color: lightwhite, width: 3)),
+                                  labelText: '  input Team name ...',
                                   labelStyle: TextStyle(
-                                      color: lightgrey,
+                                      color: Colors.white54,
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500),
                                 ),
+                                style: TextStyle(color: lightwhite),
                                 onChanged: (name) {
                                   setState(() {
                                     teamData.teamName = name;
@@ -168,7 +170,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                               },
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30)),
-                              color: orange,
+                              color: mandarin,
                               child: Container(
                                 width: 50,
                                 height: 50,
@@ -189,8 +191,9 @@ class _TeamRegisterState extends State<TeamRegister> {
                           margin: EdgeInsets.symmetric(vertical: 10.0),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30.0),
-                              color: lightwhite.withOpacity(0.5)),
+                              color: royalblue),
                           child: ListView.builder(
+                            //TODO:scrollcontroller height
                             // physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: memberList.length,
@@ -213,7 +216,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                       child: Text(
                                         "Member " + (index + 1).toString(),
                                         style: TextStyle(
-                                            color: darkgrey,
+                                            color: lightwhite,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20.0),
                                       ),
@@ -229,22 +232,24 @@ class _TeamRegisterState extends State<TeamRegister> {
                                           decoration: InputDecoration(
                                             focusedBorder: OutlineInputBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(12),
+                                                    BorderRadius.circular(30),
                                                 borderSide: BorderSide(
-                                                    color: lightgrey)),
-                                            border: OutlineInputBorder(
+                                                    color: white, width: 3)),
+                                            enabledBorder: OutlineInputBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(12),
-                                                borderSide: BorderSide(
-                                                    color: lightgrey)),
+                                                    BorderRadius.circular(30),
+                                                borderSide: new BorderSide(
+                                                    color: lightwhite,
+                                                    width: 3)),
                                             labelText: 'Member ' +
                                                 (index + 1).toString() +
                                                 ' Name',
                                             labelStyle: TextStyle(
-                                                color: lightgrey,
+                                                color: Colors.white54,
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.w500),
                                           ),
+                                          style: TextStyle(color: lightwhite),
                                           onChanged: (name) {
                                             setState(() {
                                               memberList[index].name = name;
@@ -269,22 +274,24 @@ class _TeamRegisterState extends State<TeamRegister> {
                                           decoration: InputDecoration(
                                             focusedBorder: OutlineInputBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(12),
+                                                    BorderRadius.circular(30),
                                                 borderSide: BorderSide(
-                                                    color: lightgrey)),
-                                            border: OutlineInputBorder(
+                                                    color: white, width: 3)),
+                                            enabledBorder: OutlineInputBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(12),
-                                                borderSide: BorderSide(
-                                                    color: lightgrey)),
+                                                    BorderRadius.circular(30),
+                                                borderSide: new BorderSide(
+                                                    color: lightwhite,
+                                                    width: 3)),
                                             labelText: 'Member ' +
                                                 (index + 1).toString() +
                                                 ' Phone Number',
                                             labelStyle: TextStyle(
-                                                color: lightgrey,
+                                                color: Colors.white54,
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.w500),
                                           ),
+                                          style: TextStyle(color: lightwhite),
                                           onChanged: (number) {
                                             setState(() {
                                               memberList[index].phoneNumber =
@@ -329,7 +336,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                               child: Text(
                                 "Donation Fee",
                                 style: TextStyle(
-                                    color: darkgrey,
+                                    color: lightwhite,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20.0),
                               ),
@@ -339,19 +346,20 @@ class _TeamRegisterState extends State<TeamRegister> {
                                 child: TextField(
                                   decoration: InputDecoration(
                                     focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(12),
+                                        borderRadius: BorderRadius.circular(30),
                                         borderSide:
-                                            BorderSide(color: lightgrey)),
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                        borderSide:
-                                            BorderSide(color: lightgrey)),
+                                            BorderSide(color: white, width: 3)),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                        borderSide: new BorderSide(
+                                            color: lightwhite, width: 3)),
                                     labelText: '\$${memberLength}0',
                                     labelStyle: TextStyle(
-                                        color: lightgrey,
+                                        color: Colors.white54,
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500),
                                   ),
+                                  style: TextStyle(color: lightwhite),
                                   onChanged: (value) {
                                     setState(() {
                                       teamData.donationFee = int.parse(value);
@@ -370,9 +378,9 @@ class _TeamRegisterState extends State<TeamRegister> {
                                     : "You have successfully completed your donation!",
                                 style: TextStyle(
                                     color: !isRegisterAvailable
-                                        ? darkgrey
-                                        : Colors.blue[400],
-                                    fontWeight: FontWeight.normal,
+                                        ? mandarin
+                                        : white,
+                                    fontWeight: FontWeight.bold,
                                     fontSize: 18.0),
                               ),
                             ),
@@ -410,8 +418,8 @@ class _TeamRegisterState extends State<TeamRegister> {
                               }
                             },
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                side: BorderSide(color: orange, width: 3.0)),
+                                borderRadius: BorderRadius.circular(30),),
+                                color: mandarin,
                             child: Container(
                               width: double.infinity,
                               // height: MediaQuery.of(context).size.width * 0.2,
@@ -421,7 +429,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                     ? 'Pay by PAYPAL'
                                     : 'REGISTER',
                                 style: TextStyle(
-                                    color: orange,
+                                    color: white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 26.0),
                               ),
