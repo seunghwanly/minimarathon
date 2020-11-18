@@ -40,13 +40,13 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
             children: <Widget>[
               locationData("Latitude: " + latitude),
               locationData("Longitude: " + longitude),
-
               locationData("Accuracy: " + accuracy),
-
               locationData("Speed: " + speed),
               locationData("Time: " + time),
-              locationData("TotalDistance: " + totalDistance.toString()),
-              locationData("TotalDistance2: " + totalDistance2.toString()),
+              locationData(
+                  "TotalDistance: " + totalDistance.toStringAsFixed(2)),
+              locationData(
+                  "TotalDistance2: " + totalDistance2.toStringAsFixed(2)),
               RaisedButton(
                   onPressed: () async {
                     BackgroundLocation.setNotificationTitle(
@@ -145,7 +145,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
   }
 
   double distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2, speed) {
-    if (speed > 0.3 && speed < 5) {
+    if (speed > 0.5 && speed < 4) {
       var earthRadiusKm = 6371;
 
       var dLat = degreesToRadians(lat2 - lat1);
@@ -163,7 +163,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
   }
 
   double distance(lat1_, lon1_, lat2_, lon2_, String unit, speed) {
-    if (speed > 0.3 && speed < 5) {
+    if (speed > 0.5 && speed < 4) {
       double lat1 = lat1_;
       double lon1 = lon1_;
       double lat2 = lat2_;
