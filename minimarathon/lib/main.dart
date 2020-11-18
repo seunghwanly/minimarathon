@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minimarathon/util/custom_container.dart';
 //header
 import './component/header/header.dart';
 //util
@@ -19,8 +20,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData(
-          primaryColor: Colors.white,
-        ),
+            // primaryColor: Colors.white,
+            ),
         home: CustomHeader(
           title: Text(''),
           body: GestureDetector(
@@ -67,164 +68,213 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        //physics: NeverScrollableScrollPhysics(),
+        controller: new ScrollController(
+            initialScrollOffset: MediaQuery.of(context).size.height),
         child: Container(
-      padding: EdgeInsets.all(20.0),
-      // color: Colors.white,
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      child: Column(
-        children: [
-          Expanded(
-              flex: 5,
-              child: Container(
-                //color: Colors.black54,
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 2,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                  image: AssetImage('images/home.png'),
-                  fit: BoxFit.cover,
-                  // colorFilter: ColorFilter.mode(
-                  //     Colors.black.withOpacity(0.3), BlendMode.darken),
-                )),
-              )),
-          Expanded(
-            // ---------------------------------------------------------------------------LOGIN
-            flex: 3,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide(color: white)),
-                        labelText: 'Phone number',
-                        labelStyle: TextStyle(
-                            color: lightwhite,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      onChanged: (value) {},
-                      cursorWidth: 4.0,
+          padding: EdgeInsets.all(20.0),
+          // color: Colors.white,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            children: [
+              Expanded(
+                  flex: 5,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height / 2,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                      image: AssetImage('images/home.png'),
+                      fit: BoxFit.cover,
+                      // colorFilter: ColorFilter.mode(
+                      //     Colors.black.withOpacity(0.3), BlendMode.darken),
                     )),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                    child: FlatButton(
-                        onPressed: () {
-                          showMyDialog(context,
-                              "You can't use this application before the marathon starts");
-                          // isOpenned(context);
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            side: BorderSide(color: mandarin, width: 3.0)),
-                        child: Container(
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.width * 0.2,
-                          alignment: Alignment.center,
-                          child: Text(
-                            'LOGIN',
-                            style: TextStyle(
-                                color: mandarin,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 26.0),
+                  )),
+              Expanded(
+                // ---------------------------------------------------------------------------LOGIN
+                flex: 3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide(color: white, width: 3)),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: new BorderSide(
+                                    color: lightwhite, width: 3)),
+                            labelText: '  Phone number',
+                            labelStyle: TextStyle(
+                                color: lightwhite,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500),
                           ),
-                        )))
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Divider(
-              thickness: 2.0,
-              color: lightgrey,
-            ),
-          ),
-          Expanded(
-            // ---------------------------------------------------------------------------REGISTER
-            flex: 4,
-            child: Column(
-              children: [
-                Container(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                    child: FlatButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SingleRegister(
-                                        title: Text("Register"),
-                                      )));
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            side: BorderSide(color: orange, width: 3.0)),
-                        child: Container(
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.width * 0.2,
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Single REGISTER',
-                            style: TextStyle(
-                                color: orange,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 26.0),
-                          ),
-                        ))),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                    child: FlatButton(
-                        onPressed: () {
-                          // ** 개발상 편의를 위해 팀 Register 버튼 -> Start Relay 로 이동으로 변경
-                          // 2020-11-17
-
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (BuildContext context) =>
-                          //           TeamRegister(
-                          //         title: Text("Register"),
-                          //       ),
-                          //     ));
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => RelayStart(),
+                          style: TextStyle(color: lightwhite),
+                          onChanged: (value) {},
+                          cursorWidth: 4.0,
+                        )),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        child: FlatButton(
+                            onPressed: () {
+                              showMyDialog(context,
+                                  "You can't use this application before the marathon starts");
+                              // isOpenned(context);
+                            },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              // side: BorderSide(color: mandarin, width: 3.0)
                             ),
-                          );
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            side: BorderSide(color: orange, width: 3.0)),
-                        child: Container(
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.width * 0.2,
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Team REGISTER',
-                            style: TextStyle(
-                                color: orange,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 26.0),
-                          ),
-                        )))
-              ],
-            ),
-          )
-        ],
-      ),
-    ));
+                            color: mandarin,
+                            child: Container(
+                              width: double.infinity,
+                              height: MediaQuery.of(context).size.width * 0.2,
+                              alignment: Alignment.center,
+                              child: Text(
+                                'LOGIN',
+                                style: TextStyle(
+                                    color: white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 26.0),
+                              ),
+                            )))
+                  ],
+                ),
+              ),
+              // Expanded(
+              //   flex: 1,
+              //   child: Divider(
+              //     thickness: 2.0,
+              //     color: lightwhite,
+              //   ),
+              // ),
+              Expanded(
+                // ---------------------------------------------------------------------------REGISTER
+                flex: 2,
+                child: Row(
+                  children: [
+                    Expanded(
+                        flex: 4,
+                        child: FlatButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SingleRegister(
+                                            title: Text("Register"),
+                                          )));
+                            },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            color: royalblue,
+                            child: Container(
+                                width: double.infinity,
+                                height: MediaQuery.of(context).size.width * 0.2,
+                                alignment: Alignment.center,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Single',
+                                      style: TextStyle(
+                                          color: lightwhite,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              16),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      'REGISTER',
+                                      style: TextStyle(
+                                          color: lightwhite,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              24),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                )))),
+                    Expanded(
+                      flex: 1,
+                      child: SizedBox(),
+                    ),
+                    Expanded(
+                        flex: 4,
+                        child: FlatButton(
+                            onPressed: () {
+                              // ** 개발상 편의를 위해 팀 Register 버튼 -> Start Relay 로 이동으로 변경
+                              // 2020-11-17
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        TeamRegister(
+                                      title: Text("Register"),
+                                    ),
+                                  ));
+
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (BuildContext context) =>
+                              //         RelayStart(),
+                              //   ),
+                              // );
+                            },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            color: royalblue,
+                            child: Container(
+                                width: double.infinity,
+                                height: MediaQuery.of(context).size.width * 0.2,
+                                alignment: Alignment.center,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Team',
+                                      style: TextStyle(
+                                          color: lightwhite,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              16),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      'REGISTER',
+                                      style: TextStyle(
+                                          color: lightwhite,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              24),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ))))
+                  ],
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }
