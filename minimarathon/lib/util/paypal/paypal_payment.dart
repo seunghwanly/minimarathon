@@ -168,7 +168,7 @@ class PaypalPaymentState extends State<PaypalPayment> {
                     .executePayment(executeUrl, payerID, accessToken)
                     .then((res) {
                   widget.onFinish(res);
-                  //Navigator.of(context).pop();
+                  Navigator.of(context).pop();
                   // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoadingPage(res: res, onFinish: widget.onFinish,)));
                 });
               } else {

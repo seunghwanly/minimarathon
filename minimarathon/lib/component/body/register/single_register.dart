@@ -7,8 +7,6 @@ import 'package:minimarathon/util/paypal/paypal_model.dart';
 import 'package:minimarathon/util/paypal/paypal_payment.dart';
 //component
 import '../../header/header.dart';
-import 'package:firebase_database/firebase_database.dart';
-final databaseReference = FirebaseDatabase.instance.reference();
 
 class SingleRegister extends StatefulWidget {
   final title;
@@ -242,9 +240,6 @@ class _SingleRegisterState extends State<SingleRegister> {
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: FlatButton(
                           onPressed: () {
-
-                            print(singleRegisterData['name']);
-                            print(1);
                             print(isPaymentAvailable.toString() + '\t' + isRegisterAvailable.toString());
                             if (!isRegisterAvailable) {
                               if (singleRegisterData['donationFee'] >= 10 &&
@@ -253,7 +248,6 @@ class _SingleRegisterState extends State<SingleRegister> {
                                 setState(() {
                                   isPaymentAvailable = true;
                                 });
-
                               } else {
                                 showMyDialog(context, 'The form is not Completely finished !');
                                 setState(() {
@@ -277,13 +271,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                                             isRegisterAvailable = true;
                                             isPaymentAvailable = false;
                                           });
-                                          databaseReference.child(singleRegisterData['phoneNumber']).set({
-                                            'Name': singleRegisterData['name'],
-                                            'DonationFee': singleRegisterData['donationFee'],
-                                            'More':'F'
-                                          });
                                           await showMyDialog(context, "Payment was succefully done !\n You are now avaiable to register !");
-
                                         } else {
                                           showMyDialog(context, 'Payment was not Completed !');
                                         }
