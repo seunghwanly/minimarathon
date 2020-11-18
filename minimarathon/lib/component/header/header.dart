@@ -11,11 +11,10 @@ class CustomHeader extends StatelessWidget {
     return new Scaffold(
         appBar: new AppBar(
           title: title,
-          elevation: 2.0,
+          elevation: this.title == "" ? 0.0 : 2.0,
           shadowColor: white,
           backgroundColor: pastelblue,
           // textTheme: TextTheme(headline6: TextStyle(color: white, fontSize: MediaQuery.of(context).size.width / 18, fontWeight: FontWeight.w600)),
-
         ),
         // appBar: new GradientAppBar(
         //   title: title,
