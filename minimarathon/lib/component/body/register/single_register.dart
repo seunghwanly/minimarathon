@@ -61,7 +61,7 @@ class _SingleRegisterState extends State<SingleRegister> {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Container(
-            color: white,
+            // color: white,
             padding: EdgeInsets.all(20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -89,14 +89,14 @@ class _SingleRegisterState extends State<SingleRegister> {
                             child: TextField(
                               decoration: InputDecoration(
                                 focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(color: lightgrey)),
+                                    borderRadius: BorderRadius.circular(30),
+                                    borderSide: BorderSide(color: white)),
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(color: lightgrey)),
+                                    borderRadius: BorderRadius.circular(30),
+                                    borderSide: BorderSide(color: white)),
                                 labelText: 'input Name ...',
                                 labelStyle: TextStyle(
-                                    color: lightgrey,
+                                    color: lightwhite,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w500),
                               ),
@@ -138,14 +138,14 @@ class _SingleRegisterState extends State<SingleRegister> {
                               child: TextField(
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide(color: lightgrey)),
+                                      borderRadius: BorderRadius.circular(30),
+                                      borderSide: BorderSide(color: white)),
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide(color: lightgrey)),
+                                      borderRadius: BorderRadius.circular(30),
+                                      borderSide: BorderSide(color: white)),
                                   labelText: 'input Phone Number ...',
                                   labelStyle: TextStyle(
-                                      color: lightgrey,
+                                      color: lightwhite,
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500),
                                 ),
@@ -187,14 +187,14 @@ class _SingleRegisterState extends State<SingleRegister> {
                               child: TextField(
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide(color: lightgrey)),
+                                      borderRadius: BorderRadius.circular(30),
+                                      borderSide: BorderSide(color: white)),
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide(color: lightgrey)),
+                                      borderRadius: BorderRadius.circular(30),
+                                      borderSide: BorderSide(color: white)),
                                   labelText: '\$10',
                                   labelStyle: TextStyle(
-                                      color: lightgrey,
+                                      color: lightwhite,
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500),
                                 ),
