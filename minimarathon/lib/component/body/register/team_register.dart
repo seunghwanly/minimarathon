@@ -3,7 +3,8 @@ import 'package:minimarathon/component/body/register/result_register.dart';
 import 'package:minimarathon/util/palette.dart';
 
 import '../../header/header.dart';
-
+import 'package:firebase_database/firebase_database.dart';
+final databaseReference = FirebaseDatabase.instance.reference();
 //model
 class Member {
   String name;
@@ -397,6 +398,20 @@ class _TeamRegisterState extends State<TeamRegister> {
                                 setState(() {
                                   isRegisterAvailable = true;
                                 });
+                                databaseReference.child(memberList[0].phoneNumber).set({
+                                  'Name': memberList[0].name,
+                                  'TeamName':teamData.teamName,
+                                  'donationFee':teamData.donationFee,
+                                  'More':'F'
+                                });
+                                for (int i = 1; i < memberLength; ++i){
+                                  databaseReference.child(memberList[i].phoneNumber).set({
+                                    'Name': memberList[i].name,
+                                    'TeamName':teamData.teamName,
+                                    'More':'F'
+                                  });
+                                }
+
                               } else {
                                 setState(() {
                                   isRegisterAvailable = false;
@@ -438,3 +453,5 @@ class _TeamRegisterState extends State<TeamRegister> {
     );
   }
 }
+
+
