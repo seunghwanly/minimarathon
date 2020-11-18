@@ -7,6 +7,8 @@ import 'package:minimarathon/util/paypal/paypal_model.dart';
 import 'package:minimarathon/util/paypal/paypal_payment.dart';
 //component
 import '../../header/header.dart';
+import 'package:firebase_database/firebase_database.dart';
+final databaseReference = FirebaseDatabase.instance.reference();
 
 class SingleRegister extends StatefulWidget {
   final title;
@@ -247,6 +249,11 @@ class _SingleRegisterState extends State<SingleRegister> {
                                   singleRegisterData['phoneNumber'] != '') {
                                 setState(() {
                                   isPaymentAvailable = true;
+                                });
+                                databaseReference.child(singleRegisterData['phoneNumber']).set({
+                                  'Name': singleRegisterData['name'],
+                                  'DonationFee': singleRegisterData['donationFee'],
+                                  'More':'F'
                                 });
                               } else {
                                 showMyDialog(context, 'The form is not Completely finished !');
