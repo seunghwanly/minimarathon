@@ -11,10 +11,9 @@ class CustomHeader extends StatelessWidget {
     return new Scaffold(
         appBar: new AppBar(
           title: title,
-          elevation: 0.0,
-          //shape: RoundedRectangleBorder(side: BorderSide(color: pastelblue, width: 20)),
+          elevation: 2.0,
+          shadowColor: white,
           backgroundColor: pastelblue,
-          // shadowColor: pastelblue,
           // textTheme: TextTheme(headline6: TextStyle(color: white, fontSize: MediaQuery.of(context).size.width / 18, fontWeight: FontWeight.w600)),
 
         ),
