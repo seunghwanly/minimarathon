@@ -145,9 +145,8 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
   }
 
   double distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2, speed) {
-    if (speed > 0.5 && speed < 4) {
+    if (speed > 0.8 && speed < 4) {
       var earthRadiusKm = 6371;
-
       var dLat = degreesToRadians(lat2 - lat1);
       var dLon = degreesToRadians(lon2 - lon1);
 
@@ -163,7 +162,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
   }
 
   double distance(lat1_, lon1_, lat2_, lon2_, String unit, speed) {
-    if (speed > 0.5 && speed < 4) {
+    if (speed > 0.8 && speed < 4) {
       double lat1 = lat1_;
       double lon1 = lon1_;
       double lat2 = lat2_;
