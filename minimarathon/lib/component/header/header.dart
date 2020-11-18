@@ -15,7 +15,6 @@ class CustomHeader extends StatelessWidget {
           shadowColor: white,
           backgroundColor: pastelblue,
           // textTheme: TextTheme(headline6: TextStyle(color: white, fontSize: MediaQuery.of(context).size.width / 18, fontWeight: FontWeight.w600)),
-
         ),
         // appBar: new GradientAppBar(
         //   title: title,

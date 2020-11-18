@@ -22,6 +22,33 @@ Widget makeTextThin(String title, Color color, double size) {
   );
 }
 
+Widget makeTwoColor(
+    @required String left,
+    @required String right,
+    @required Color leftcolor,
+    @required Color rightcolor,
+    @required double size) {
+  return Container(
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          left,
+          style: TextStyle(
+              color: leftcolor, fontWeight: FontWeight.w400, fontSize: size),
+          textAlign: TextAlign.center,
+        ),
+        Text(
+          right,
+          style: TextStyle(
+              color: rightcolor, fontWeight: FontWeight.bold, fontSize: size),
+          textAlign: TextAlign.center,
+        )
+      ],
+    ),
+  );
+}
+
 Widget makeTextSemiThin(String title, Color color, double size) {
   return Container(
     child: Text(
