@@ -101,11 +101,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: TextField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: lightgrey)),
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide(color: white)),
                         labelText: 'Phone number',
                         labelStyle: TextStyle(
-                            color: lightgrey,
+                            color: lightwhite,
                             fontSize: 18,
                             fontWeight: FontWeight.w500),
                       ),
