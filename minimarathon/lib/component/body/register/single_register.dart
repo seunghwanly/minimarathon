@@ -26,9 +26,11 @@ class _SingleRegisterState extends State<SingleRegister> {
 
   final _formKey = GlobalKey<FormState>(); //form
 
+  // TODO : 로그인 된 핸드폰 번호로 초기화 하기 
   Map<String, dynamic> singleRegisterData = {
     "name": "  Please type your name . . .",
     "phoneNumber": "  Please type your phonenumber . . .",
+    // "phoneNumber": firebase.auth().currentUser.phonenumber 사실 함수 잘 모름 예시임
     "donationFee": 10
   };
 
