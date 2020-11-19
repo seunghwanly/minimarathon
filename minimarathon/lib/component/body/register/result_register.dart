@@ -39,7 +39,7 @@ class RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return CustomHeader(
-        title: Text("Register"),
+        title: "Register",
         body: new Center(
           child: Column(
             children: [

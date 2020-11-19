@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minimarathon/component/body/register/need_payment_register.dart';
 import 'package:minimarathon/util/custom_container.dart';
 //header
 import './component/header/header.dart';
@@ -78,21 +79,27 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             children: [
               Expanded(
-                  flex: 5,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height / 2,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                      image: AssetImage('images/home.png'),
-                      fit: BoxFit.cover,
-                      // colorFilter: ColorFilter.mode(
-                      //     Colors.black.withOpacity(0.3), BlendMode.darken),
-                    )),
-                  )),
+                flex: 5,
+                child: Image(
+                  image: AssetImage('images/home.png'),
+                  fit: BoxFit.contain,
+                ),
+                // child: Container(
+                //   padding: EdgeInsets.all(1.0),
+                //   width: MediaQuery.of(context).size.width,
+                //   height: MediaQuery.of(context).size.height / 2,
+                //   decoration: BoxDecoration(
+                //       image: DecorationImage(
+                //     image: AssetImage('images/home.png'),
+                //     fit: BoxFit.cover,
+                //     // colorFilter: ColorFilter.mode(
+                //     //     Colors.black.withOpacity(0.3), BlendMode.darken),
+                //   )),
+                // )
+              ),
               Expanded(
                 // ---------------------------------------------------------------------------LOGIN
-                flex: 3,
+                flex: 5,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -125,9 +132,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: FlatButton(
                             onPressed: () {
-                              showMyDialog(context,
-                                  "You can't use this application before the marathon starts");
-                              // isOpenned(context);
+                              // showMyDialog(context,
+                              //     "You can't use this application before the marathon starts");
+
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => NeedPaymentRegister()));
                             },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
@@ -156,123 +164,6 @@ class _MyHomePageState extends State<MyHomePage> {
               //     color: lightwhite,
               //   ),
               // ),
-              Expanded(
-                // ---------------------------------------------------------------------------REGISTER
-                flex: 2,
-                child: Row(
-                  children: [
-                    Expanded(
-                        flex: 4,
-                        child: FlatButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SingleRegister(
-                                            title: Text("Register"),
-                                          )));
-                            },
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            color: royalblue,
-                            child: Container(
-                                width: double.infinity,
-                                height: MediaQuery.of(context).size.width * 0.2,
-                                alignment: Alignment.center,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Single',
-                                      style: TextStyle(
-                                          color: lightwhite,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              16),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      'REGISTER',
-                                      style: TextStyle(
-                                          color: lightwhite,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              24),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                )))),
-                    Expanded(
-                      flex: 1,
-                      child: SizedBox(),
-                    ),
-                    Expanded(
-                        flex: 4,
-                        child: FlatButton(
-                            onPressed: () {
-                              // ** 개발상 편의를 위해 팀 Register 버튼 -> Start Relay 로 이동으로 변경
-                              // 2020-11-17
-
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (BuildContext context) =>
-                              //           TeamRegister(
-                              //         title: Text("Register"),
-                              //       ),
-                              //     ));
-
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      RelayStart(),
-                                ),
-                              );
-                            },
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            color: royalblue,
-                            child: Container(
-                                width: double.infinity,
-                                height: MediaQuery.of(context).size.width * 0.2,
-                                alignment: Alignment.center,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Team',
-                                      style: TextStyle(
-                                          color: lightwhite,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              16),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      'REGISTER',
-                                      style: TextStyle(
-                                          color: lightwhite,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              24),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ))))
-                  ],
-                ),
-              )
             ],
           ),
         ));

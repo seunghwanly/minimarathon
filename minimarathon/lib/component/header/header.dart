@@ -10,7 +10,7 @@ class CustomHeader extends StatelessWidget {
   Widget build(BuildContext context) {
       return new Scaffold(
           appBar: new AppBar(
-            title: title == "" ? Text("") : title,
+            title: title == "" ? Text("") : Text(title),
             // 1번
             // elevation: title == "" ? 0.0 : 2.0,
             // shadowColor: title == "" ? Colors.transparent : white,
