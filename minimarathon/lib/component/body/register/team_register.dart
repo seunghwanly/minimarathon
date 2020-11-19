@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/body/register/result_register.dart';
+import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/palette.dart';
 
 import '../../header/header.dart';
@@ -40,17 +41,32 @@ class _TeamRegisterState extends State<TeamRegister> {
   List<FocusNode> focusNameList = new List<FocusNode>();
   List<FocusNode> focusPhoneNumberList = new List<FocusNode>();
 
+  //check members before payment
+  bool checkMembers() {
+    teamData.members.map((item) {
+      if (item.name != "  Memeber name" &&
+          item.phoneNumber != "  Memeber phone number")
+        return true;
+      else
+        return false;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
 
+    //init state
     teamData = new Team();
     memberLength = 2; // team >= 2
+    teamData.teamName = "  Team name";
+    teamData.donationFee = memberLength * 10;
+    teamData.members = memberList;
     //memberList
     for (int i = 0; i < memberLength; ++i) {
       Member newMember = new Member();
-      newMember.name = null;
-      newMember.phoneNumber = null;
+      newMember.name = "  Memeber name";
+      newMember.phoneNumber = "  Member phone number";
       memberList.add(newMember);
     }
     //focusNode
@@ -105,7 +121,9 @@ class _TeamRegisterState extends State<TeamRegister> {
                                       borderRadius: BorderRadius.circular(30),
                                       borderSide: new BorderSide(
                                           color: lightwhite, width: 3)),
-                                  labelText: '  input Team name ...',
+                                  hintText: '  Please type team name ...',
+                                  hintStyle: TextStyle(color: Colors.white54),
+                                  labelText: '  ${teamData.teamName}',
                                   labelStyle: TextStyle(
                                       color: Colors.white54,
                                       fontSize: 18,
@@ -127,6 +145,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                     ),
                   ),
                   Expanded(
+                    //-------------------------------------------------------------------Buttons
                     flex: 1,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -160,10 +179,14 @@ class _TeamRegisterState extends State<TeamRegister> {
                             margin: EdgeInsets.symmetric(horizontal: 10.0),
                             child: FlatButton(
                               onPressed: () {
-                                if (memberLength < 9)
+                                if (memberLength < 9) // upto 10 members to join
                                   setState(() {
                                     memberLength++;
-                                    memberList.add(new Member());
+                                    Member newMember = new Member();
+                                    newMember.name = "  Memeber name";
+                                    newMember.phoneNumber =
+                                        "  Member phone number";
+                                    memberList.add(newMember);
                                     focusNameList.add(new FocusNode());
                                     focusPhoneNumberList.add(new FocusNode());
                                   });
@@ -241,9 +264,14 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                 borderSide: new BorderSide(
                                                     color: lightwhite,
                                                     width: 3)),
-                                            labelText: 'Member ' +
-                                                (index + 1).toString() +
-                                                ' Name',
+                                            // labelText: 'Member ' +
+                                            //     (index + 1).toString() +
+                                            //     ' Name',
+                                            labelText:
+                                                '${memberList[index].name}',
+                                            hintText: '  Please type name ...',
+                                            hintStyle: TextStyle(
+                                                color: Colors.white54),
                                             labelStyle: TextStyle(
                                                 color: Colors.white54,
                                                 fontSize: 18,
@@ -283,9 +311,15 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                 borderSide: new BorderSide(
                                                     color: lightwhite,
                                                     width: 3)),
-                                            labelText: 'Member ' +
-                                                (index + 1).toString() +
-                                                ' Phone Number',
+                                            // labelText: 'Member ' +
+                                            //     (index + 1).toString() +
+                                            //     ' Phone Number',
+                                            hintText:
+                                                '  Please type phonenumber ...',
+                                            hintStyle: TextStyle(
+                                                color: Colors.white54),
+                                            labelText:
+                                                '${memberList[index].phoneNumber}',
                                             labelStyle: TextStyle(
                                                 color: Colors.white54,
                                                 fontSize: 18,
@@ -353,7 +387,9 @@ class _TeamRegisterState extends State<TeamRegister> {
                                         borderRadius: BorderRadius.circular(30),
                                         borderSide: new BorderSide(
                                             color: lightwhite, width: 3)),
-                                    labelText: '\$${memberLength}0',
+                                    hintText: '  Please type donation fee ...',
+                                    hintStyle: TextStyle(color: Colors.white54),
+                                    labelText: '\$${teamData.donationFee}',
                                     labelStyle: TextStyle(
                                         color: Colors.white54,
                                         fontSize: 18,
@@ -371,15 +407,20 @@ class _TeamRegisterState extends State<TeamRegister> {
                                   focusNode: focusDonationFee,
                                 )),
                             Container(
-                              alignment: Alignment.centerLeft,
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 15.0, vertical: 5.0),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                  color: !isRegisterAvailable
+                                      ? mandarin
+                                      : Colors.green[400]),
                               child: Text(
                                 !isRegisterAvailable
                                     ? "You can donate from \$${memberLength}0."
                                     : "You have successfully completed your donation!",
                                 style: TextStyle(
-                                    color: !isRegisterAvailable
-                                        ? mandarin
-                                        : white,
+                                    color: white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18.0),
                               ),
@@ -401,11 +442,15 @@ class _TeamRegisterState extends State<TeamRegister> {
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: FlatButton(
                             onPressed: () {
-                              if (teamData.donationFee >= memberLength * 10) {
+                              if (teamData.donationFee >= memberLength * 10 &&
+                                  teamData.teamName != "  Team name" &&
+                                  teamData.teamName != "" &&
+                                  checkMembers()) {
                                 setState(() {
                                   isRegisterAvailable = true;
                                 });
                               } else {
+                                showMyDialog(context, "Please complete the form !");
                                 setState(() {
                                   isRegisterAvailable = false;
                                 });
@@ -418,8 +463,9 @@ class _TeamRegisterState extends State<TeamRegister> {
                               }
                             },
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),),
-                                color: mandarin,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            color: royalblue,
                             child: Container(
                               width: double.infinity,
                               // height: MediaQuery.of(context).size.width * 0.2,

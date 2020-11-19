@@ -25,8 +25,8 @@ class _SingleRegisterState extends State<SingleRegister> {
   final _formKey = GlobalKey<FormState>(); //form
 
   Map<String, dynamic> singleRegisterData = {
-    "name": "",
-    "phoneNumber": "",
+    "name": "  Please type your name . . .",
+    "phoneNumber": "  Please type your Phonenumber . . .",
     "donationFee": 10
   };
 
@@ -98,7 +98,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                                     borderRadius: BorderRadius.circular(30),
                                     borderSide: new BorderSide(
                                         color: lightwhite, width: 3)),
-                                labelText: '  input Name ...',
+                                labelText: '  ${singleRegisterData['name']}',
                                 labelStyle: TextStyle(
                                     color: Colors.white54,
                                     fontSize: 18,
@@ -150,7 +150,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                                       borderRadius: BorderRadius.circular(30),
                                       borderSide: new BorderSide(
                                           color: lightwhite, width: 3)),
-                                  labelText: '  input Phone Number ...',
+                                  labelText: '  ${singleRegisterData['phoneNumber']}',
                                   labelStyle: TextStyle(
                                       color: Colors.white54,
                                       fontSize: 18,
@@ -202,7 +202,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                                       borderRadius: BorderRadius.circular(30),
                                       borderSide: new BorderSide(
                                           color: lightwhite, width: 3)),
-                                  labelText: '  \$10',
+                                  labelText: '  \$${singleRegisterData['donationFee']}',
                                   labelStyle: TextStyle(
                                       color: Colors.white54,
                                       fontSize: 18,
@@ -221,14 +221,18 @@ class _SingleRegisterState extends State<SingleRegister> {
                                 cursorWidth: 4.0,
                               )),
                           Container(
-                            alignment: Alignment.centerLeft,
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30.0),
+                              color: !isRegisterAvailable ? mandarin : Colors.green[400]
+                            ),
                             child: Text(
                               !isRegisterAvailable
                                   ? "You can donate from \$10."
                                   : "You have successfully completed your donation!",
                               style: TextStyle(
-                                  color:
-                                      !isRegisterAvailable ? mandarin : white,
+                                  color: white,
                                   fontWeight: FontWeight.w600,
                                   fontSize: 18.0),
                             ),
