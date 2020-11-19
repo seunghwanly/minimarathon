@@ -7,6 +7,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import './paypal_services.dart';
 
 class PaypalPayment extends StatefulWidget {
+
   final Function onFinish;
   final donationFee;
 

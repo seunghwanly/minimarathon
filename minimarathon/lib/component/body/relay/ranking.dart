@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/header/header.dart';
+import 'package:minimarathon/util/palette.dart';
 import '../../../util/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -71,18 +72,27 @@ class RankingState extends State<Ranking> {
     return CustomHeader(
       title: Text("Ranking"),
       body: ListView(
-        padding: const EdgeInsets.all(2),
+        padding: const EdgeInsets.all(5),
         children: [
-          PaginatedDataTable(
-            header: makeText('Who walked fast?', Colors.black87, 20),
-            rowsPerPage: 10,
-            columns: [
-              DataColumn(label: Text('Rank')),
-              DataColumn(label: Text('Name')),
-              DataColumn(label: Text('Time')),
-            ],
-            source: _DataSource.withrows(currentRowList),
-          ),
+
+          Container(
+            decoration: BoxDecoration(
+                // color: lightwhite,
+                // border: Border.all(color: lightwhite, width: 3),
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            child: PaginatedDataTable(
+              header: makeText('Who walked fast?', Colors.black87, 20),
+              rowsPerPage: 10,
+              horizontalMargin: 30,
+              columns: [
+                DataColumn(label: Text('Rank')),
+                DataColumn(label: Text('Name')),
+                DataColumn(label: Text('Time')),
+              ],
+              source: _DataSource.withrows(currentRowList),
+            ),
+          )
+
         ],
       ),
     );

@@ -8,7 +8,7 @@ showMyDialog(BuildContext context, String title) {
       return Dialog(
           elevation: 16.0,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
           child: Container(
             width: MediaQuery.of(context).size.width * 0.6,
             height: MediaQuery.of(context).size.width * 0.6,

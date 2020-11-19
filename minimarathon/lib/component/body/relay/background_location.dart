@@ -2,6 +2,8 @@ import 'package:background_location/background_location.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import 'package:minimarathon/component/header/header.dart';
+
 class MyBackgroundLocation extends StatefulWidget {
   @override
   MyBackgroundLocationState createState() => MyBackgroundLocationState();
@@ -30,68 +32,64 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Background Location Service'),
-        ),
-        body: Center(
-          child: ListView(
-            children: <Widget>[
-              locationData("Latitude: " + latitude),
-              locationData("Longitude: " + longitude),
-              locationData("Accuracy: " + accuracy),
-              locationData("Speed: " + speed),
-              locationData("Time: " + time),
-              locationData(
-                  "TotalDistance: " + totalDistance.toStringAsFixed(2)),
-              locationData(
-                  "TotalDistance2: " + totalDistance2.toStringAsFixed(2)),
-              RaisedButton(
-                  onPressed: () async {
-                    BackgroundLocation.setNotificationTitle(
-                        "Background service running");
-                    BackgroundLocation.startLocationService();
-                    BackgroundLocation.getLocationUpdates((location) {
-                      setState(() {
-                        //초기상태
+    return CustomHeader(
+      title: Text('Background Location'),
+      body: Center(
+        child: ListView(
+          children: <Widget>[
+            locationData("Latitude: " + latitude),
+            locationData("Longitude: " + longitude),
+            locationData("Accuracy: " + accuracy),
+            locationData("Speed: " + speed),
+            locationData("Time: " + time),
+            locationData("TotalDistance: " + totalDistance.toStringAsFixed(2)),
+            locationData(
+                "TotalDistance2: " + totalDistance2.toStringAsFixed(2)),
+            RaisedButton(
+                onPressed: () async {
+                  BackgroundLocation.setNotificationTitle(
+                      "Background service running");
+                  BackgroundLocation.startLocationService();
+                  BackgroundLocation.getLocationUpdates((location) {
+                    setState(() {
+                      //초기상태
 
-                        if (beforeLat == 0 && currentLat == 1) {
-                          this.beforeLat = location.latitude;
-                          this.beforeLong = location.longitude;
-                          this.currentLat = location.latitude;
-                          this.currentLong = location.longitude;
-                        } else {
-                          this.beforeLat = double.parse(this.latitude);
-                          this.beforeLong = double.parse(this.longitude);
-                          this.currentLat = location.latitude;
-                          this.currentLong = location.longitude;
-                        }
+                      if (beforeLat == 0 && currentLat == 1) {
+                        this.beforeLat = location.latitude;
+                        this.beforeLong = location.longitude;
+                        this.currentLat = location.latitude;
+                        this.currentLong = location.longitude;
+                      } else {
+                        this.beforeLat = double.parse(this.latitude);
+                        this.beforeLong = double.parse(this.longitude);
+                        this.currentLat = location.latitude;
+                        this.currentLong = location.longitude;
+                      }
 
-                        this.latitude = location.latitude.toString();
-                        this.longitude = location.longitude.toString();
-                        this.accuracy = location.accuracy.toString();
-                        this.altitude = location.altitude.toString();
-                        this.bearing = location.bearing.toString();
-                        this.speed = location.speed.toString();
-                        this.time = DateTime.fromMillisecondsSinceEpoch(
-                                location.time.toInt())
-                            .toString();
+                      this.latitude = location.latitude.toString();
+                      this.longitude = location.longitude.toString();
+                      this.accuracy = location.accuracy.toString();
+                      this.altitude = location.altitude.toString();
+                      this.bearing = location.bearing.toString();
+                      this.speed = location.speed.toString();
+                      this.time = DateTime.fromMillisecondsSinceEpoch(
+                              location.time.toInt())
+                          .toString();
 
-                        if (((beforeLat == 0 && currentLat == 1) == false) &&
-                            ((beforeLat == currentLat) == false)) {
-                          totalDistance += distanceInKmBetweenEarthCoordinates(
-                              beforeLat,
-                              beforeLong,
-                              currentLat,
-                              currentLong,
-                              location.speed);
+                      if (((beforeLat == 0 && currentLat == 1) == false) &&
+                          ((beforeLat == currentLat) == false)) {
+                        totalDistance += distanceInKmBetweenEarthCoordinates(
+                            beforeLat,
+                            beforeLong,
+                            currentLat,
+                            currentLong,
+                            location.speed);
 
-                          totalDistance2 += distance(beforeLat, beforeLong,
-                              currentLat, currentLong, 'm', location.speed);
-                        }
-                      });
-                      print("""\n
+                        totalDistance2 += distance(beforeLat, beforeLong,
+                            currentLat, currentLong, 'm', location.speed);
+                      }
+                    });
+                    print("""\n
                         beforLat: $beforeLat
                         current: $currentLat
                         Latitude:  $latitude
@@ -100,21 +98,20 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                         Speed: $speed
                         Time: $time
                       """);
-                    });
-                  },
-                  child: Text("Start Location Service")),
-              RaisedButton(
-                  onPressed: () {
-                    BackgroundLocation.stopLocationService();
-                  },
-                  child: Text("Stop Location Service")),
-              // RaisedButton(
-              //     onPressed: () {
-              //       getCurrentLocation();
-              //     },
-              //     child: Text("Get Current Location")),
-            ],
-          ),
+                  });
+                },
+                child: Text("Start Marathon")),
+            RaisedButton(
+                onPressed: () {
+                  BackgroundLocation.stopLocationService();
+                },
+                child: Text("Stop")),
+            // RaisedButton(
+            //     onPressed: () {
+            //       getCurrentLocation();
+            //     },
+            //     child: Text("Get Current Location")),
+          ],
         ),
       ),
     );

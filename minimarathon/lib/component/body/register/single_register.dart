@@ -27,8 +27,8 @@ class _SingleRegisterState extends State<SingleRegister> {
   final _formKey = GlobalKey<FormState>(); //form
 
   Map<String, dynamic> singleRegisterData = {
-    "name": "",
-    "phoneNumber": "",
+    "name": "  Please type your name . . .",
+    "phoneNumber": "  Please type your phonenumber . . .",
     "donationFee": 10
   };
 
@@ -39,7 +39,9 @@ class _SingleRegisterState extends State<SingleRegister> {
   Widget build(BuildContext context) {
     return CustomHeader(
       title: widget.title,
-      body: isPaymentAvailable && !isRegisterAvailable ? LoadingPage() : registerBody(),
+      body: isPaymentAvailable && !isRegisterAvailable
+          ? LoadingPage()
+          : registerBody(),
     );
   }
 
@@ -63,7 +65,7 @@ class _SingleRegisterState extends State<SingleRegister> {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Container(
-            color: white,
+            // color: white,
             padding: EdgeInsets.all(20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -81,7 +83,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                           child: Text(
                             "Name",
                             style: TextStyle(
-                                color: darkgrey,
+                                color: lightwhite,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20.0),
                           ),
@@ -91,17 +93,20 @@ class _SingleRegisterState extends State<SingleRegister> {
                             child: TextField(
                               decoration: InputDecoration(
                                 focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(color: lightgrey)),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(color: lightgrey)),
-                                labelText: 'input Name ...',
+                                    borderRadius: BorderRadius.circular(30),
+                                    borderSide:
+                                        BorderSide(color: white, width: 3)),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                    borderSide: new BorderSide(
+                                        color: lightwhite, width: 3)),
+                                labelText: '  ${singleRegisterData['name']}',
                                 labelStyle: TextStyle(
-                                    color: lightgrey,
+                                    color: Colors.white54,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w500),
                               ),
+                              style: TextStyle(color: lightwhite),
                               onChanged: (name) {
                                 setState(() {
                                   singleRegisterData['name'] = name;
@@ -130,7 +135,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                             child: Text(
                               "Phone Number",
                               style: TextStyle(
-                                  color: darkgrey,
+                                  color: lightwhite,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20.0),
                             ),
@@ -140,17 +145,21 @@ class _SingleRegisterState extends State<SingleRegister> {
                               child: TextField(
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide(color: lightgrey)),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide(color: lightgrey)),
-                                  labelText: 'input Phone Number ...',
+                                      borderRadius: BorderRadius.circular(30),
+                                      borderSide:
+                                          BorderSide(color: white, width: 3)),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                      borderSide: new BorderSide(
+                                          color: lightwhite, width: 3)),
+                                  labelText:
+                                      '  ${singleRegisterData['phoneNumber']}',
                                   labelStyle: TextStyle(
-                                      color: lightgrey,
+                                      color: Colors.white54,
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500),
                                 ),
+                                style: TextStyle(color: lightwhite),
                                 onChanged: (text) {
                                   setState(() {
                                     singleRegisterData['phoneNumber'] = text;
@@ -179,7 +188,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                             child: Text(
                               "Donation Fee",
                               style: TextStyle(
-                                  color: darkgrey,
+                                  color: lightwhite,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20.0),
                             ),
@@ -189,17 +198,21 @@ class _SingleRegisterState extends State<SingleRegister> {
                               child: TextField(
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide(color: lightgrey)),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide(color: lightgrey)),
-                                  labelText: '\$10',
+                                      borderRadius: BorderRadius.circular(30),
+                                      borderSide:
+                                          BorderSide(color: white, width: 3)),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                      borderSide: new BorderSide(
+                                          color: lightwhite, width: 3)),
+                                  labelText:
+                                      '  \$${singleRegisterData['donationFee']}',
                                   labelStyle: TextStyle(
-                                      color: lightgrey,
+                                      color: Colors.white54,
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500),
                                 ),
+                                style: TextStyle(color: lightwhite),
                                 onChanged: (value) {
                                   setState(() {
                                     singleRegisterData['donationFee'] =
@@ -212,16 +225,21 @@ class _SingleRegisterState extends State<SingleRegister> {
                                 cursorWidth: 4.0,
                               )),
                           Container(
-                            alignment: Alignment.centerLeft,
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15.0, vertical: 5.0),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30.0),
+                                color: !isRegisterAvailable
+                                    ? mandarin
+                                    : Colors.green[400]),
                             child: Text(
                               !isRegisterAvailable
                                   ? "You can donate from \$10."
                                   : "You have successfully completed your donation!",
                               style: TextStyle(
-                                  color: !isRegisterAvailable
-                                      ? darkgrey
-                                      : Colors.blue[400],
-                                  fontWeight: FontWeight.normal,
+                                  color: white,
+                                  fontWeight: FontWeight.w600,
                                   fontSize: 18.0),
                             ),
                           ),
@@ -239,80 +257,90 @@ class _SingleRegisterState extends State<SingleRegister> {
                 Expanded(
                   flex: 1,
                   child: Container(
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      child: FlatButton(
-                          onPressed: () {
-                            print(isPaymentAvailable.toString() + '\t' + isRegisterAvailable.toString());
-                            if (!isRegisterAvailable) {
-                              if (singleRegisterData['donationFee'] >= 10 &&
-                                  singleRegisterData['name'] != '' &&
-                                  singleRegisterData['phoneNumber'] != '') {
-                                setState(() {
-                                  isPaymentAvailable = true;
-                                });
-                                databaseReference.child(singleRegisterData['phoneNumber']).set({
-                                  'Name': singleRegisterData['name'],
-                                  'DonationFee': singleRegisterData['donationFee'],
-                                  'More':'F'
-                                });
-                              } else {
-                                showMyDialog(context, 'The form is not Completely finished !');
-                                setState(() {
-                                  isPaymentAvailable = false;
-                                });
-                              }
-                              if (isPaymentAvailable) {
-                                // make PayPal payment
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (BuildContext c) =>
-                                        PaypalPayment(
-                                      donationFee:
-                                          singleRegisterData['donationFee'],
-                                      onFinish: (res) async {
-                                        print('> : single_register.dart :- \t' +
-                                            res.toString());
-                                        // payment done
-                                        if (res == 'approved') {
-                                          setState(() {
-                                            isRegisterAvailable = true;
-                                            isPaymentAvailable = false;
-                                          });
-                                          await showMyDialog(context, "Payment was succefully done !\n You are now avaiable to register !");
-                                        } else {
-                                          showMyDialog(context, 'Payment was not Completed !');
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                );
-                              }
-                            } else {
-                              if (isRegisterAvailable && !isPaymentAvailable) {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Register()));
-                              }
-                            }
-                          },
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              side: BorderSide(color: orange, width: 3.0)),
-                          child: Container(
-                            width: double.infinity,
-                            // height: MediaQuery.of(context).size.width * 0.2,
-                            alignment: Alignment.center,
-                            child: Text(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: FlatButton(
+                      onPressed: () {
+                        print(isPaymentAvailable.toString() +
+                            '\t' +
+                            isRegisterAvailable.toString());
+                        if (!isRegisterAvailable) {
+                          if (singleRegisterData['donationFee'] >= 10 &&
+                              singleRegisterData['name'] != '' &&
+                              singleRegisterData['name'] !=
+                                  "  Please type your name . . ." &&
+                              singleRegisterData['phoneNumber'] != '' &&
+                              singleRegisterData['phoneNumber'] !=
+                                  "  Please type your phonenumber . . .") {
+                            setState(() {
+                              isPaymentAvailable = true;
+                            });
+                          } else {
+                            showMyDialog(context,
+                                'The form is not Completely finished !');
+                            setState(() {
+                              isPaymentAvailable = false;
+                            });
+                          }
+                          if (isPaymentAvailable) {
+                            // make PayPal payment
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (BuildContext c) => PaypalPayment(
+                                  donationFee:
+                                      singleRegisterData['donationFee'],
+                                  onFinish: (res) async {
+                                    print('> : single_register.dart :- \t' +
+                                        res.toString());
+                                    // payment done
+                                    if (res == 'approved') {
+                                      setState(() {
+                                        isRegisterAvailable = true;
+                                        isPaymentAvailable = false;
+                                      });
+                                      print('> R : ' +
+                                          isRegisterAvailable.toString() +
+                                          ' P : ' +
+                                          isPaymentAvailable.toString());
+                                      await showMyDialog(context,
+                                          "Payment was succefully done !\n You are now avaiable to register !");
+                                    } else {
+                                      showMyDialog(context,
+                                          'Payment was not Completed !');
+                                    }
+                                  },
+                                ),
+                              ),
+                            );
+                          }
+                        } else {
+                          if (isRegisterAvailable && !isPaymentAvailable) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Register()));
+                          }
+                        }
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      color: royalblue,
+                      child: Container(
+                          width: double.infinity,
+                          // height: MediaQuery.of(context).size.width * 0.2,
+                          alignment: Alignment.center,
+                          child: Text(
                               !isRegisterAvailable
                                   ? 'Pay by PAYPAL'
                                   : 'REGISTER',
                               style: TextStyle(
-                                  color: orange,
+                                  color: white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 26.0),
-                            ),
-                          ))),
+                                  fontSize:
+                                      MediaQuery.of(context).size.width / 16),
+                              textAlign: TextAlign.center)),
+                    ),
+                  ),
                 ),
                 Expanded(
                   flex: 2,
