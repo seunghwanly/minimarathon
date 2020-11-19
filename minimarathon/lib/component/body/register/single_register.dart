@@ -26,7 +26,7 @@ class _SingleRegisterState extends State<SingleRegister> {
 
   Map<String, dynamic> singleRegisterData = {
     "name": "  Please type your name . . .",
-    "phoneNumber": "  Please type your Phonenumber . . .",
+    "phoneNumber": "  Please type your phonenumber . . .",
     "donationFee": 10
   };
 
@@ -150,7 +150,8 @@ class _SingleRegisterState extends State<SingleRegister> {
                                       borderRadius: BorderRadius.circular(30),
                                       borderSide: new BorderSide(
                                           color: lightwhite, width: 3)),
-                                  labelText: '  ${singleRegisterData['phoneNumber']}',
+                                  labelText:
+                                      '  ${singleRegisterData['phoneNumber']}',
                                   labelStyle: TextStyle(
                                       color: Colors.white54,
                                       fontSize: 18,
@@ -202,7 +203,8 @@ class _SingleRegisterState extends State<SingleRegister> {
                                       borderRadius: BorderRadius.circular(30),
                                       borderSide: new BorderSide(
                                           color: lightwhite, width: 3)),
-                                  labelText: '  \$${singleRegisterData['donationFee']}',
+                                  labelText:
+                                      '  \$${singleRegisterData['donationFee']}',
                                   labelStyle: TextStyle(
                                       color: Colors.white54,
                                       fontSize: 18,
@@ -222,11 +224,13 @@ class _SingleRegisterState extends State<SingleRegister> {
                               )),
                           Container(
                             alignment: Alignment.center,
-                            padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15.0, vertical: 5.0),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30.0),
-                              color: !isRegisterAvailable ? mandarin : Colors.green[400]
-                            ),
+                                borderRadius: BorderRadius.circular(30.0),
+                                color: !isRegisterAvailable
+                                    ? mandarin
+                                    : Colors.green[400]),
                             child: Text(
                               !isRegisterAvailable
                                   ? "You can donate from \$10."
@@ -260,7 +264,11 @@ class _SingleRegisterState extends State<SingleRegister> {
                         if (!isRegisterAvailable) {
                           if (singleRegisterData['donationFee'] >= 10 &&
                               singleRegisterData['name'] != '' &&
-                              singleRegisterData['phoneNumber'] != '') {
+                              singleRegisterData['name'] !=
+                                  "  Please type your name . . ." &&
+                              singleRegisterData['phoneNumber'] != '' &&
+                              singleRegisterData['phoneNumber'] !=
+                                  "  Please type your phonenumber . . .") {
                             setState(() {
                               isPaymentAvailable = true;
                             });

@@ -218,22 +218,22 @@ class _MyHomePageState extends State<MyHomePage> {
                               // ** 개발상 편의를 위해 팀 Register 버튼 -> Start Relay 로 이동으로 변경
                               // 2020-11-17
 
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        TeamRegister(
-                                      title: Text("Register"),
-                                    ),
-                                  ));
-
                               // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (BuildContext context) =>
-                              //         RelayStart(),
-                              //   ),
-                              // );
+                              //     context,
+                              //     MaterialPageRoute(
+                              //       builder: (BuildContext context) =>
+                              //           TeamRegister(
+                              //         title: Text("Register"),
+                              //       ),
+                              //     ));
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      RelayStart(),
+                                ),
+                              );
                             },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
