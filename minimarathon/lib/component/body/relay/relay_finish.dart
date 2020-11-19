@@ -4,7 +4,8 @@ import 'relay_start.dart';
 import '../../../util/palette.dart';
 import '../../../util/text_style.dart';
 import 'ranking.dart';
-
+import 'package:firebase_database/firebase_database.dart';
+final databaseReference = FirebaseDatabase.instance.reference();
 class RelayFinish extends StatefulWidget {
   @override
   RelayFinishState createState() => RelayFinishState();
@@ -112,7 +113,13 @@ class RelayFinishState extends State<RelayFinish> {
                         border: Border.all(color: lightwhite, width: 3),
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: FlatButton(
-                      onPressed: _navigationMore,
+                      //onPressed: _navigationMore,
+                      onPressed: (){
+                        //번호 가져오기 해야됨!!!
+                        databaseReference.child('1-260-123-4567').update({
+                          'More': 'T'
+                        });
+                    },
                       child: Container(
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
