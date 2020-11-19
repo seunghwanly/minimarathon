@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
             // primaryColor: Colors.white,
             ),
         home: CustomHeader(
-          title: Text(''),
+          title: "",
           body: GestureDetector(
             onTap: () {
               FocusScope.of(context).requestFocus(new FocusNode());
