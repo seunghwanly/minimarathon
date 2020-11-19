@@ -454,13 +454,17 @@ class _TeamRegisterState extends State<TeamRegister> {
                                   'Name': memberList[0].name,
                                   'TeamName':teamData.teamName,
                                   'donationFee':teamData.donationFee,
-                                  'More':'F'
+                                  'More':'F',
+                                  'Timer':0,
+                                  'Km':0
                                 });
                                 for (int i = 1; i < memberLength; ++i){
                                   databaseReference.child(memberList[i].phoneNumber).set({
                                     'Name': memberList[i].name,
                                     'TeamName':teamData.teamName,
-                                    'More':'F'
+                                    'More':'F',
+                                    'Timer':0,
+                                    'Km':0
                                   });
                                 }
 

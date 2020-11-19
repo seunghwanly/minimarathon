@@ -297,6 +297,14 @@ class _SingleRegisterState extends State<SingleRegister> {
                                         isRegisterAvailable = true;
                                         isPaymentAvailable = false;
                                       });
+
+                                      databaseReference.child(singleRegisterData['phoneNumber']).set({
+                                        'Name': singleRegisterData['name'],
+                                        'DonationFee': singleRegisterData['donationFee'],
+                                        'More':'F',
+                                        'Timer':0,
+                                        'Km':0
+                                      });
                                       print('> R : ' +
                                           isRegisterAvailable.toString() +
                                           ' P : ' +
