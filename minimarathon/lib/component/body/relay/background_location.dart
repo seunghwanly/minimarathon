@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:async';
 import 'package:intl/intl.dart';
-
+import 'package:minimarathon/component/body/relay/ranking.dart';
+import '../relay/relay_finish.dart';
 import 'package:minimarathon/component/header/header.dart';
 
 //firebase database
@@ -230,6 +231,17 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                   currentLong,
                                                   location.speed);
 
+                                          //이 거리만큼 이동시에 Finish_Relay 으로 이동.
+                                          //테스팅용
+                                          //실제에서는 if(totalDistance > 4000)
+                                          if (_start > 5) {
+                                            Route route = MaterialPageRoute(
+                                                builder: (context) =>
+                                                    RelayFinish());
+
+                                            Navigator.pushReplacement(
+                                                context, route);
+                                          }
                                           // totalDistance2 += distance(beforeLat, beforeLong,
                                           //     currentLat, currentLong, 'm', location.speed);
                                         }
