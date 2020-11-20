@@ -294,6 +294,23 @@ class _SingleRegisterState extends State<SingleRegister> {
                           if (isPaymentAvailable) {
                             // make PayPal payment
 
+                            //For testing  ***remove after testing
+                            databaseReference
+                            .child("single")
+                            .child(FirebaseAuth.instance.currentUser.uid)
+                            .set({
+                              'name' : singleRegisterData['name'],
+                              'phoneNumber' : singleRegisterData['phoneNumber'],
+                              'donationFee' : singleRegisterData['donationFee'],
+                              'isPaid': true
+                            });
+                            databaseReference
+                            .once()
+                            .then((DataSnapshot snapshot) {
+                              print('Data : ${snapshot.value}');
+                            });
+
+
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (BuildContext c) => PaypalPayment(
@@ -316,7 +333,12 @@ class _SingleRegisterState extends State<SingleRegister> {
                                       databaseReference
                                           .child("single")
                                           .child(FirebaseAuth.instance.currentUser.uid)
-                                          .set({'isPaid': true});
+                                          .set({
+                                            'name' : singleRegisterData['name'],
+                                            'phoneNumber' : singleRegisterData['phoneNumber'],
+                                            'donationFee' : singleRegisterData['donationFee'],
+                                            'isPaid': true
+                                            });
                                       databaseReference
                                           .once()
                                           .then((DataSnapshot snapshot) {

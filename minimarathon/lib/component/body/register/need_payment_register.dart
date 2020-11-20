@@ -3,6 +3,7 @@ import 'package:minimarathon/component/body/register/single_register.dart';
 import 'package:minimarathon/component/body/relay/relay_start.dart';
 import 'package:minimarathon/component/header/header.dart';
 import 'package:minimarathon/util/palette.dart';
+import 'package:minimarathon/component/body/register/team_register.dart';
 
 
 class NeedPaymentRegister extends StatefulWidget {
@@ -94,23 +95,24 @@ class _NeedPaymentRegisterState extends State<NeedPaymentRegister> {
                                 onPressed: () {
                                   // ** 개발상 편의를 위해 팀 Register 버튼 -> Start Relay 로 이동으로 변경
                                   // 2020-11-17
+                                  
+                                  // 필요하면 이 부분 주석처리 하면 됩니다.
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            TeamRegister(
+                                          title: "Team Register",
+                                        ),
+                                      ));
 
                                   // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //       builder: (BuildContext context) =>
-                                  //           TeamRegister(
-                                  //         title: "Team Register",
-                                  //       ),
-                                  //     ));
-
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          RelayStart(),
-                                    ),
-                                  );
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (BuildContext context) =>
+                                  //         RelayStart(),
+                                  //   ),
+                                  // );
                                 },
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),

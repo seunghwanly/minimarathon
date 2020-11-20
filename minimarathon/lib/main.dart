@@ -192,9 +192,9 @@ class _MyHomePageState extends State<MyHomePage> {
         timeout: Duration(seconds: 10),
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         // 한국
-        phoneNumber: '+82'+this.phoneNumber,
+        //phoneNumber: '+82'+this.phoneNumber,
         // 체코
-        // phoneNumber: '+420'+this.phoneNumber,
+        phoneNumber: '+420'+this.phoneNumber,
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         verificationCompleted: (PhoneAuthCredential authCredential) {
           _auth.signInWithCredential(authCredential).then((value) {
@@ -202,6 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
               // LOGIN FINISHED
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => NeedPaymentRegister()));
+              
             } else
               print("login error");
           });

@@ -4,6 +4,10 @@ import '../../../util/text_style.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import '../relay/relay_start.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+final databaseReference = FirebaseDatabase.instance.reference();
 
 class Register extends StatefulWidget {
   @override
@@ -41,6 +45,7 @@ class RegisterState extends State<Register> {
     return CustomHeader(
         title: "Register",
         body: new Center(
+          
           child: Column(
             children: [
               Expanded(
@@ -53,6 +58,7 @@ class RegisterState extends State<Register> {
                     makeText(
                         'Thank you for your sharing !', Colors.black54, 21),
                     makeText(username + '.', Colors.black54, 24),
+                    
                   ],
                 ),
               ),
