@@ -452,28 +452,28 @@ class _TeamRegisterState extends State<TeamRegister> {
                                   isRegisterAvailable = true;
                                 });
                                 
-                                databaseReference.child("Teams")
-                                .child(teamData.teamName)
-                                .set({
-                                  'Team Leader': memberList[0].name,
-                                  'Team Leader Phone Number' : memberList[0].phoneNumber,
-                                  'donationFee':teamData.donationFee,
-                                  'More':'F'
+                                databaseReference.child("Teams").child(teamData.teamName)
+                                  .set({ 'donationFee':teamData.donationFee });
+                                databaseReference.child("Teams").child(teamData.teamName)
+                                  .child("Team Leader")
+                                  .set({
+                                    'Name' : memberList[0].name,
+                                    'Phone Number' : memberList[0].phoneNumber,
+                                    'More' : false
                                 });
                                 for (int i = 1; i < memberLength; ++i){
-                                databaseReference
-                                          .child("Teams")
-                                          .child(teamData.teamName)
-                                          .child("Team Member")
-                                          .set({
-                                            'name' : memberList[i].name,
-                                            'Phone Number' : memberList[i].phoneNumber
-                                            });
-                                      databaseReference
-                                          .once()
-                                          .then((DataSnapshot snapshot) {
+                                databaseReference.child("Teams").child(teamData.teamName)
+                                  .child("Team Member")
+                                  .set({
+                                    'Name' : memberList[i].name,
+                                    'Phone Number' : memberList[i].phoneNumber,
+                                    'More' : false
+                                  });
+                                  databaseReference
+                                    .once()
+                                    .then((DataSnapshot snapshot) {
                                         print('Data : ${snapshot.value}');
-                                      });
+                                    });
                                 }
                               } else {
                                 showMyDialog(context, "Please complete the form !");

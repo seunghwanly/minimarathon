@@ -296,7 +296,7 @@ class _SingleRegisterState extends State<SingleRegister> {
 
                             //For testing  ***remove after testing
                             databaseReference
-                            .child("single")
+                            .child("Single")
                             .child(FirebaseAuth.instance.currentUser.uid)
                             .set({
                               'name' : singleRegisterData['name'],
@@ -331,13 +331,14 @@ class _SingleRegisterState extends State<SingleRegister> {
                                           isPaymentAvailable.toString());
 
                                       databaseReference
-                                          .child("single")
+                                          .child("Single")
                                           .child(FirebaseAuth.instance.currentUser.uid)
                                           .set({
                                             'name' : singleRegisterData['name'],
                                             'phoneNumber' : singleRegisterData['phoneNumber'],
                                             'donationFee' : singleRegisterData['donationFee'],
-                                            'isPaid': true
+                                            'isPaid': true,
+                                            'more' : false
                                             });
                                       databaseReference
                                           .once()
