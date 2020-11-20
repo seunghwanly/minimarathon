@@ -5,6 +5,9 @@ import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/palette.dart';
 import 'package:minimarathon/util/paypal/paypal_model.dart';
 import 'package:minimarathon/util/paypal/paypal_payment.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 //component
 import '../../header/header.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -23,6 +26,10 @@ class _SingleRegisterState extends State<SingleRegister> {
   FocusNode focusName = FocusNode();
   FocusNode focusPhoneNumber = FocusNode();
   FocusNode focusFee = FocusNode();
+
+  final databaseReference = FirebaseDatabase.instance.reference();
+  FirebaseAuth auth = FirebaseAuth.instance;
+
 
   final _formKey = GlobalKey<FormState>(); //form
 
@@ -57,6 +64,11 @@ class _SingleRegisterState extends State<SingleRegister> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    // Firebase.initializeApp().whenComplete(() { 
+    //   print("completed");
+    //   setState(() {});
+
+    // });
   }
 
   Widget registerBody() {
@@ -285,6 +297,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                           }
                           if (isPaymentAvailable) {
                             // make PayPal payment
+                            
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (BuildContext c) => PaypalPayment(
@@ -303,6 +316,41 @@ class _SingleRegisterState extends State<SingleRegister> {
                                           isRegisterAvailable.toString() +
                                           ' P : ' +
                                           isPaymentAvailable.toString());
+                                          
+                                      //verify phone number
+                                      await FirebaseAuth.instance.verifyPhoneNumber(  
+                                        phoneNumber: singleRegisterData['phoneNumber'],
+                                        
+                                        verificationCompleted: (PhoneAuthCredential credential) async {
+                                        // ANDROID ONLY!
+                                        // Sign the user in (or link) with the auto-generated credential
+                                          await auth.signInWithCredential(credential);
+                                        },
+                                        verificationFailed: (FirebaseAuthException e) {
+                                          if (e.code == 'invalid-phone-number') {
+                                            print('The provided phone number is not valid.');
+                                          }
+                                        },
+                                        codeSent: (String verificationId, int resendToken) async {
+                                          // Update the UI - wait for the user to enter the SMS code
+                                          String smsCode = 'xxxx';
+                                          // Create a PhoneAuthCredential with the code
+                                          PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
+                                          // Sign the user in (or link) with the credential
+                                          await auth.signInWithCredential(phoneAuthCredential);
+                                        },
+                                        codeAutoRetrievalTimeout: (String verificationId) {},
+                                      );
+
+                                      databaseReference.child("single").child("uid(have to make)").set({
+                                        'isPaid': true
+                                      });
+                                      databaseReference.once().then((DataSnapshot snapshot) {
+                                        print('Data : ${snapshot.value}');
+                                      });
+
+
+
                                       await showMyDialog(context,
                                           "Payment was succefully done !\n You are now avaiable to register !");
                                     } else {
