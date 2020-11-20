@@ -190,7 +190,12 @@ class _MyHomePageState extends State<MyHomePage> {
     print("login user " + this.phoneNumber);
     _auth.verifyPhoneNumber(
         timeout: Duration(seconds: 10),
-        phoneNumber: '+82' + this.phoneNumber,
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 한국
+        phoneNumber: '+82'+this.phoneNumber,
+        // 체코
+        // phoneNumber: '+420'+this.phoneNumber,
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
         verificationCompleted: (PhoneAuthCredential authCredential) {
           _auth.signInWithCredential(authCredential).then((value) {
             if (value.user != null) {

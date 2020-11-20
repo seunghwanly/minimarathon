@@ -20,6 +20,7 @@ class PaypalPayment extends StatefulWidget {
 }
 
 class PaypalPaymentState extends State<PaypalPayment> {
+
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String checkoutUrl;
   String executeUrl;
@@ -76,7 +77,7 @@ class PaypalPaymentState extends State<PaypalPayment> {
 
   // item name, price and quantity
   String itemName = 'Donation Fee';
-  String itemPrice = '1.99';
+  String itemPrice = '10';
   int quantity = 1;
 
   Map<String, dynamic> getOrderParams() {
