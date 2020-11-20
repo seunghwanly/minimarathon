@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 
 import 'package:minimarathon/component/header/header.dart';
 
+//firebase database
+import 'package:firebase_database/firebase_database.dart';
 //util
 import '../../../util/palette.dart';
 
@@ -15,6 +17,7 @@ class MyBackgroundLocation extends StatefulWidget {
 }
 
 class MyBackgroundLocationState extends State<MyBackgroundLocation> {
+  final databaseReference = FirebaseDatabase.instance.reference();
   double beforeLat = 0;
   double beforeLong = 0;
   double currentLat = 1;
@@ -36,10 +39,18 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
   bool isStart = false;
 
   String _printDuration(Duration duration) {
+    if (_start == 10) {
+      writeData();
+    }
     String twoDigits(int n) => n.toString().padLeft(2, "0");
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
     return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+  }
+
+  void writeData() {
+    databaseReference.child('1-260-123-4567/relay').set(
+        <String, Object>{'Timer': _start, 'Running Distance': totalDistance});
   }
 
   void startTimer() {
