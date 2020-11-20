@@ -453,7 +453,10 @@ class _TeamRegisterState extends State<TeamRegister> {
                                 });
                                 
                                 databaseReference.child("Teams").child(teamData.teamName)
-                                  .set({ 'donationFee':teamData.donationFee });
+                                  .set({ 
+                                    'donationFee':teamData.donationFee,
+                                    'isPaid' : false
+                                    });
                                 databaseReference.child("Teams").child(teamData.teamName)
                                   .child("Team Leader")
                                   .set({
@@ -461,19 +464,15 @@ class _TeamRegisterState extends State<TeamRegister> {
                                     'Phone Number' : memberList[0].phoneNumber,
                                     'More' : false
                                 });
-                                for (int i = 1; i < memberLength; ++i){
+                                //TODO: member 이름 대신 uid로 변경
+                                for (int i = 1; i <= memberLength; i++){
                                 databaseReference.child("Teams").child(teamData.teamName)
-                                  .child("Team Member")
+                                  .child("Team Member").child(memberList[i].name)
                                   .set({
                                     'Name' : memberList[i].name,
                                     'Phone Number' : memberList[i].phoneNumber,
                                     'More' : false
                                   });
-                                  databaseReference
-                                    .once()
-                                    .then((DataSnapshot snapshot) {
-                                        print('Data : ${snapshot.value}');
-                                    });
                                 }
                               } else {
                                 showMyDialog(context, "Please complete the form !");

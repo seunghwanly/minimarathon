@@ -6,6 +6,8 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import '../relay/relay_start.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../../../util/text_style.dart';
+
 
 final databaseReference = FirebaseDatabase.instance.reference();
 
@@ -45,7 +47,6 @@ class RegisterState extends State<Register> {
     return CustomHeader(
         title: "Register",
         body: new Center(
-          
           child: Column(
             children: [
               Expanded(

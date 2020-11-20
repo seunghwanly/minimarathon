@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/body/register/single_register.dart';
+import 'package:minimarathon/component/body/register/team_select.dart';
 import 'package:minimarathon/component/body/relay/relay_start.dart';
 import 'package:minimarathon/component/header/header.dart';
 import 'package:minimarathon/util/palette.dart';
@@ -101,8 +102,8 @@ class _NeedPaymentRegisterState extends State<NeedPaymentRegister> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            TeamRegister(
-                                          title: "Team Register",
+                                          TeamSelect(
+                                          // title: "Team Select",
                                         ),
                                       ));
 
