@@ -237,7 +237,11 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                           if (_start > 5) {
                                             Route route = MaterialPageRoute(
                                                 builder: (context) =>
-                                                    RelayFinish());
+                                                    RelayFinish(
+                                                      recordTime: _start,
+                                                      totalDistance:
+                                                          totalDistance,
+                                                    ));
 
                                             Navigator.pushReplacement(
                                                 context, route);
