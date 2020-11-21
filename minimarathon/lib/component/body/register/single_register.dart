@@ -1,17 +1,18 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:minimarathon/component/body/register/result_register.dart';
-import 'package:minimarathon/component/loading.dart';
+// util
 import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/palette.dart';
-import 'package:minimarathon/util/paypal/paypal_model.dart';
 import 'package:minimarathon/util/paypal/paypal_payment.dart';
-
 //component
 import '../../header/header.dart';
+import 'package:minimarathon/component/body/register/result_register.dart';
+import 'package:minimarathon/component/loading.dart';
+// firebase
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 final databaseReference = FirebaseDatabase.instance.reference();
+
 
 class SingleRegister extends StatefulWidget {
   final title;
@@ -23,16 +24,19 @@ class SingleRegister extends StatefulWidget {
 }
 
 class _SingleRegisterState extends State<SingleRegister> {
+  // text edit focus node
   FocusNode focusName = FocusNode();
   FocusNode focusPhoneNumber = FocusNode();
   FocusNode focusFee = FocusNode();
+  // Firebase Auth
+  User user = FirebaseAuth.instance.currentUser;
 
   final _formKey = GlobalKey<FormState>(); //form
 
   // TODO : 로그인 된 핸드폰 번호로 초기화 하기
   Map<String, dynamic> singleRegisterData = {
     "name": "  Please type your name . . .",
-    "phoneNumber": "  Please type your phonenumber . . .",
+    "phoneNumber": "  Please type your phone number . . .",
     // "phoneNumber": firebase.auth().currentUser.phonenumber 사실 함수 잘 모름 예시임
     "donationFee": 10
   };
@@ -58,13 +62,9 @@ class _SingleRegisterState extends State<SingleRegister> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    // Firebase.initializeApp().whenComplete(() {
-    //   print("completed");
-    //   setState(() {});
-
-    // });
+    // get user phonenumber
+    singleRegisterData['phoneNumber'] = user.phoneNumber;
   }
 
   Widget registerBody() {
@@ -124,8 +124,8 @@ class _SingleRegisterState extends State<SingleRegister> {
                               },
                               textInputAction: TextInputAction.next,
                               focusNode: focusName,
-                              onEditingComplete: () => FocusScope.of(context)
-                                  .requestFocus(focusPhoneNumber),
+                              onEditingComplete: () =>
+                                  FocusScope.of(context).requestFocus(focusFee),
                               cursorWidth: 4.0,
                             ))
                       ],
@@ -152,36 +152,17 @@ class _SingleRegisterState extends State<SingleRegister> {
                           ),
                           Container(
                               width: MediaQuery.of(context).size.width * 0.7,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                      borderSide:
-                                          BorderSide(color: white, width: 3)),
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                      borderSide: new BorderSide(
-                                          color: lightwhite, width: 3)),
-                                  labelText:
-                                      '  ${singleRegisterData['phoneNumber']}',
-                                  labelStyle: TextStyle(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 15.0, horizontal: 20.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                border: Border.all(color: lightwhite, width: 3),
+                              ),
+                              child: Text(singleRegisterData['phoneNumber'],
+                                  style: TextStyle(
                                       color: Colors.white54,
                                       fontSize: 18,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                style: TextStyle(color: lightwhite),
-                                onChanged: (text) {
-                                  setState(() {
-                                    singleRegisterData['phoneNumber'] = text;
-                                  });
-                                },
-                                keyboardType: TextInputType.phone,
-                                textInputAction: TextInputAction.next,
-                                focusNode: focusPhoneNumber,
-                                onEditingComplete: () => FocusScope.of(context)
-                                    .requestFocus(focusFee),
-                                cursorWidth: 4.0,
-                              ))
+                                      fontWeight: FontWeight.w500)))
                         ],
                       )),
                 ),
@@ -296,6 +277,10 @@ class _SingleRegisterState extends State<SingleRegister> {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (BuildContext c) => PaypalPayment(
+                                  //------------------------------------------------- send to PaypalPayment config
+                                  donor: singleRegisterData['name'],
+                                  donorPhoneNumber:
+                                      singleRegisterData['phoneNumber'],
                                   donationFee:
                                       singleRegisterData['donationFee'],
                                   onFinish: (res) async {
@@ -314,14 +299,17 @@ class _SingleRegisterState extends State<SingleRegister> {
 
                                       databaseReference
                                           .child("Single")
-                                          .child(FirebaseAuth.instance.currentUser.uid)
+                                          .child(FirebaseAuth
+                                              .instance.currentUser.uid)
                                           .set({
-                                            'name' : singleRegisterData['name'],
-                                            'phoneNumber' : '+420' + singleRegisterData['phoneNumber'],
-                                            'donationFee' : singleRegisterData['donationFee'],
-                                            'isPaid': true,
-                                            'more' : false
-                                            });
+                                        'name': singleRegisterData['name'],
+                                        'phoneNumber':
+                                            singleRegisterData['phoneNumber'],
+                                        'donationFee':
+                                            singleRegisterData['donationFee'],
+                                        'isPaid': true,
+                                        'more': false
+                                      });
                                       databaseReference
                                           .once()
                                           .then((DataSnapshot snapshot) {
