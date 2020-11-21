@@ -1,7 +1,5 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
-import 'package:loading_animations/loading_animations.dart';
-import 'package:minimarathon/component/loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import './paypal_services.dart';
@@ -10,8 +8,10 @@ class PaypalPayment extends StatefulWidget {
 
   final Function onFinish;
   final donationFee;
+  final donor;
+  final donorPhoneNumber;
 
-  PaypalPayment({this.onFinish, this.donationFee});
+  PaypalPayment({this.onFinish, this.donationFee, this.donor, this.donorPhoneNumber});
 
   @override
   State<StatefulWidget> createState() {
@@ -20,6 +20,7 @@ class PaypalPayment extends StatefulWidget {
 }
 
 class PaypalPaymentState extends State<PaypalPayment> {
+
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String checkoutUrl;
   String executeUrl;
@@ -39,6 +40,11 @@ class PaypalPaymentState extends State<PaypalPayment> {
 
   String returnURL = 'return.example.com';
   String cancelURL = 'cancel.example.com';
+
+  //--------------------------------------------------------------- set paypal config attributes
+  // item name, price and quantity
+  String itemName = 'Donation Fee';
+  int quantity = 1;
 
   @override
   void initState() {
@@ -74,34 +80,31 @@ class PaypalPaymentState extends State<PaypalPayment> {
     });
   }
 
-  // item name, price and quantity
-  String itemName = 'Donation Fee';
-  String itemPrice = '1.99';
-  int quantity = 1;
-
   Map<String, dynamic> getOrderParams() {
     List items = [
       {
         "name": itemName,
         "quantity": quantity,
-        "price": itemPrice,
+        "price": widget.donationFee,
         "currency": defaultCurrency["currency"]
       }
     ];
 
     // checkout invoice details
-    String totalAmount = '1.99';
-    String subTotalAmount = '1.99';
+    String totalAmount =  widget.donationFee.toString();
+    String subTotalAmount = widget.donationFee.toString();
+    // no shipping
     String shippingCost = '0';
     int shippingDiscountCost = 0;
-    String userFirstName = 'Gulshan';
-    String userLastName = 'Yadav';
-    String addressCity = 'Delhi';
-    String addressStreet = 'Mathura Road';
-    String addressZipCode = '110014';
-    String addressCountry = 'India';
-    String addressState = 'Delhi';
-    String addressPhoneNumber = '+919990119091';
+    // shipping is not enabled
+    String userFirstName = '';
+    String userLastName = '';
+    String addressCity = '';
+    String addressStreet = '';
+    String addressZipCode = '';
+    String addressCountry = '';
+    String addressState = '';
+    String addressPhoneNumber = widget.donorPhoneNumber;
 
     Map<String, dynamic> temp = {
       "intent": "sale",

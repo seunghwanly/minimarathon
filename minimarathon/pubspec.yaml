@@ -23,16 +23,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # firebase
   firebase_core: ^0.5.2  # add dependency for Firebase Core
   firebase_analytics: ^1.0.4  # add dependency for Google Analytics for Firebase
   firebase_database: ^4.3.0
   firebase_auth : "^ 0.18.3" 
   firebase_storage : "^ 5.0.1" 
+
   # for paypal service
   http_auth: ^0.3.1
   http: ^0.12.2
   webview_flutter: ^1.0.7
   shared_preferences: ^0.5.12+4
+
   #loading
   loading_animations: "^2.1.0"
 
@@ -42,7 +45,8 @@ dependencies:
   workmanager : ^ 0.2.0
 
   #UI
-  
+  international_phone_input: ^1.0.4
+  pin_code_fields: ^6.0.1
 
   url_launcher:
   flutter_linkify: ^4.0.2
