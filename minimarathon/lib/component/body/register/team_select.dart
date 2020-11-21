@@ -3,6 +3,9 @@ import 'package:minimarathon/component/header/header.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../../../util/text_style.dart';
 import '../relay/relay_start.dart';
+import '../register/team_register.dart';
+import 'package:minimarathon/util/palette.dart';
+
 
 final databaseReference = FirebaseDatabase.instance.reference();
 
@@ -24,7 +27,15 @@ class _TeamSelectState extends State<TeamSelect> {
       ),
     );
   }
-
+  void _navToRegister() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => TeamRegister(),
+      ),
+    );
+  }
+  
   @override
   void initState() {
     super.initState();
@@ -36,23 +47,48 @@ class _TeamSelectState extends State<TeamSelect> {
       });
     });
   }
+  
   @override
   Widget build(BuildContext context) {
-    return CustomHeader(
-        title: "Team Select",
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Team Select'),
+          elevation: 0.0,
+            bottom: PreferredSize(
+              child: Container(
+                color: lightwhite,
+                height: 1.0,
+                width: MediaQuery.of(context).size.width * 0.9,
+              ),
+              preferredSize: Size.fromHeight(1.0),
+            ),
+            backgroundColor: pastelblue,
+            textTheme: TextTheme(
+                headline6: TextStyle(
+                    color: white, fontWeight: FontWeight.bold, fontSize: 20.0)),
+          actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.add),
+            tooltip: 'Register Team',
+            onPressed: () {
+              _navToRegister();
+            },
+          ),
+        ],
+        ),
         body: new ListView.builder(
             padding: const EdgeInsets.all(8),
             itemCount: teamList.length,
             itemBuilder: (BuildContext context, int index) {
               return Container(
-                height: 50, 
-                color: Colors.black.withOpacity(0.16), 
+                color: pastelblue,
+                alignment: Alignment.center,
                 child: Center(
                   child: FlatButton(
                       onPressed: _navigation,
                       child: Container(
                         child: makeText(
-                            '${teamList[index]}', Colors.white, 20),
+                          '${teamList[index]}', Colors.white, 20),
                       ),
                     )),
                 );

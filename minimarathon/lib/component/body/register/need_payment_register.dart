@@ -140,7 +140,7 @@ class _NeedPaymentRegisterState extends State<NeedPaymentRegister> {
                                           textAlign: TextAlign.center,
                                         ),
                                         Text(
-                                          'REGISTER',
+                                          'SELECT or REGISTER',
                                           style: TextStyle(
                                               color: lightwhite,
                                               fontWeight: FontWeight.bold,

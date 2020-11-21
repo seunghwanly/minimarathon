@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:minimarathon/component/body/register/result_register.dart';
 import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/palette.dart';
-
 import '../../header/header.dart';
 import 'package:firebase_database/firebase_database.dart';
+
 final databaseReference = FirebaseDatabase.instance.reference();
 //model
 class Member {
@@ -80,7 +80,7 @@ class _TeamRegisterState extends State<TeamRegister> {
   @override
   Widget build(BuildContext context) {
     return CustomHeader(
-      title: widget.title,
+      title: "Team Register",
       body: Form(
           key: _formKey,
           child: SingleChildScrollView(
