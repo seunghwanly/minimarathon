@@ -458,10 +458,11 @@ class _TeamRegisterState extends State<TeamRegister> {
                                     'isPaid' : false
                                     });
                                 databaseReference.child("Teams").child(teamData.teamName)
-                                  .child("Team Leader")
+                                  .child("Team Leader").child(memberList[0].name)
                                   .set({
                                     'Name' : memberList[0].name,
-                                    'Phone Number' : memberList[0].phoneNumber,
+                                    // ** 국가번호 변경
+                                    'Phone Number' : '+420' + memberList[0].phoneNumber,
                                     'More' : false
                                 });
                                 //TODO: member 이름 대신 uid로 변경
@@ -470,7 +471,8 @@ class _TeamRegisterState extends State<TeamRegister> {
                                   .child("Team Member").child(memberList[i].name)
                                   .set({
                                     'Name' : memberList[i].name,
-                                    'Phone Number' : memberList[i].phoneNumber,
+                                    // ** 국가번호 변경
+                                    'Phone Number' : '+420' +  memberList[i].phoneNumber,
                                     'More' : false
                                   });
                                 }

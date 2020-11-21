@@ -300,7 +300,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                             .child(FirebaseAuth.instance.currentUser.uid)
                             .set({
                               'name' : singleRegisterData['name'],
-                              'phoneNumber' : singleRegisterData['phoneNumber'],
+                              'phoneNumber' : '+420' + singleRegisterData['phoneNumber'],
                               'donationFee' : singleRegisterData['donationFee'],
                               'isPaid': true
                             });
