@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:minimarathon/component/body/register/result_register.dart';
 import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/palette.dart';
-
 import '../../header/header.dart';
 import 'package:firebase_database/firebase_database.dart';
+
 final databaseReference = FirebaseDatabase.instance.reference();
 //model
 class Member {
@@ -80,7 +80,7 @@ class _TeamRegisterState extends State<TeamRegister> {
   @override
   Widget build(BuildContext context) {
     return CustomHeader(
-      title: widget.title,
+      title: "Team Register",
       body: Form(
           key: _formKey,
           child: SingleChildScrollView(
@@ -445,25 +445,37 @@ class _TeamRegisterState extends State<TeamRegister> {
                             onPressed: () {
                               if (teamData.donationFee >= memberLength * 10 &&
                                   teamData.teamName != "  Team name" &&
-                                  teamData.teamName != "" &&
-                                  checkMembers()) {
+                                  teamData.teamName != "" 
+                                  // && checkMembers()
+                                  ) {
                                 setState(() {
                                   isRegisterAvailable = true;
                                 });
-                                databaseReference.child(memberList[0].phoneNumber).set({
-                                  'Name': memberList[0].name,
-                                  'TeamName':teamData.teamName,
-                                  'donationFee':teamData.donationFee,
-                                  'More':'F'
+                                
+                                databaseReference.child("Teams").child(teamData.teamName)
+                                  .set({ 
+                                    'donationFee':teamData.donationFee,
+                                    'isPaid' : false
+                                    });
+                                databaseReference.child("Teams").child(teamData.teamName)
+                                  .child("Team Leader").child(memberList[0].name)
+                                  .set({
+                                    'Name' : memberList[0].name,
+                                    // ** 국가번호 변경
+                                    'Phone Number' : '+420' + memberList[0].phoneNumber,
+                                    'More' : false
                                 });
-                                for (int i = 1; i < memberLength; ++i){
-                                  databaseReference.child(memberList[i].phoneNumber).set({
-                                    'Name': memberList[i].name,
-                                    'TeamName':teamData.teamName,
-                                    'More':'F'
+                                //TODO: member 이름 대신 uid로 변경
+                                for (int i = 1; i <= memberLength; i++){
+                                databaseReference.child("Teams").child(teamData.teamName)
+                                  .child("Team Member").child(memberList[i].name)
+                                  .set({
+                                    'Name' : memberList[i].name,
+                                    // ** 국가번호 변경
+                                    'Phone Number' : '+420' +  memberList[i].phoneNumber,
+                                    'More' : false
                                   });
                                 }
-
                               } else {
                                 showMyDialog(context, "Please complete the form !");
                                 setState(() {

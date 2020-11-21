@@ -293,7 +293,6 @@ class _SingleRegisterState extends State<SingleRegister> {
                           }
                           if (isPaymentAvailable) {
                             // make PayPal payment
-
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (BuildContext c) => PaypalPayment(
@@ -314,9 +313,15 @@ class _SingleRegisterState extends State<SingleRegister> {
                                           isPaymentAvailable.toString());
 
                                       databaseReference
-                                          .child("single")
+                                          .child("Single")
                                           .child(FirebaseAuth.instance.currentUser.uid)
-                                          .set({'isPaid': true});
+                                          .set({
+                                            'name' : singleRegisterData['name'],
+                                            'phoneNumber' : '+420' + singleRegisterData['phoneNumber'],
+                                            'donationFee' : singleRegisterData['donationFee'],
+                                            'isPaid': true,
+                                            'more' : false
+                                            });
                                       databaseReference
                                           .once()
                                           .then((DataSnapshot snapshot) {

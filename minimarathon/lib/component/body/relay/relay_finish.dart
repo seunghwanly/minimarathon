@@ -1,9 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/header/header.dart';
 import 'relay_start.dart';
 import '../../../util/palette.dart';
 import '../../../util/text_style.dart';
 import 'ranking.dart';
+import 'package:firebase_database/firebase_database.dart';
+
+final databaseReference = FirebaseDatabase.instance.reference();
+final FirebaseAuth auth = FirebaseAuth.instance;
+
 
 class RelayFinish extends StatefulWidget {
   @override
@@ -12,6 +18,47 @@ class RelayFinish extends StatefulWidget {
 
 class RelayFinishState extends State<RelayFinish> {
   final String username = 'Jong Ha Park';
+  String userPhoneNumber;
+  // TODO: 이거 start할 때 정보 받아와서 저장
+  final String teamName = 'myTeam1';
+  bool isTeam = true; 
+
+    void getUserNumber () async {
+    FirebaseAuth.instance.authStateChanges().listen((User user) {
+      userPhoneNumber = user.phoneNumber.toString();
+    });
+  }
+
+  void _updateInfo () async{
+    getUserNumber();
+    if(isTeam) {
+      await databaseReference.child("Teams").child(teamName).child("Team Leader").once().then((DataSnapshot snapshot) {
+        Map<dynamic, dynamic> values = snapshot.value;
+        values.forEach((k,v) {
+          if(v["Phone Number"] == userPhoneNumber){
+            databaseReference.child("Teams").child(teamName).child("Team Leader").child(k).update({
+              'More': true
+            });
+          }
+        });
+      });
+      await databaseReference.child("Teams").child(teamName).child("Team Member").once().then((DataSnapshot snapshot) {
+        Map<dynamic, dynamic> values = snapshot.value;
+        values.forEach((k,v) {
+          if(v["Phone Number"] == userPhoneNumber){
+            databaseReference.child("Teams").child(teamName).child("Team Member").child(k).update({
+              'More': true
+            });
+          }
+        });
+      });
+    }
+    else {
+      databaseReference.child("Single").child(auth.currentUser.uid).update({
+        'More': true
+      });
+    }
+  }
 
   void _navigationMore() {
     Navigator.pop(context);
@@ -112,7 +159,7 @@ class RelayFinishState extends State<RelayFinish> {
                         border: Border.all(color: lightwhite, width: 3),
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: FlatButton(
-                      onPressed: _navigationMore,
+                      onPressed: _updateInfo,
                       child: Container(
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,

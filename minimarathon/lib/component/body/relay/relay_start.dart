@@ -41,10 +41,7 @@ class RelayStartState extends State<RelayStart> {
   @override
   Widget build(BuildContext context) {
     return CustomHeader(
-        title: Text(
-          "2020 Hope Sharing Relay",
-          style: TextStyle(color: lightwhite),
-        ),
+        title: "2020 Hope Sharing Relay",
         body: new Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -67,7 +64,7 @@ class RelayStartState extends State<RelayStart> {
                     width: MediaQuery.of(context).size.width * 0.8,
                     decoration: BoxDecoration(
                         border: Border.all(color: lightwhite, width: 3),
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                        borderRadius: BorderRadius.all(Radius.circular(30))),
                     child: FlatButton(
                       onPressed: _navigationToLocation,
                       child: Container(
@@ -83,7 +80,7 @@ class RelayStartState extends State<RelayStart> {
                     width: MediaQuery.of(context).size.width * 0.8,
                     decoration: BoxDecoration(
                         border: Border.all(color: lightwhite, width: 3),
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                        borderRadius: BorderRadius.all(Radius.circular(30))),
                     child: FlatButton(
                       onPressed: _navigation,
                       child: Container(
