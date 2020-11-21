@@ -12,6 +12,10 @@ final FirebaseAuth auth = FirebaseAuth.instance;
 
 
 class RelayFinish extends StatefulWidget {
+  final int recordTime;
+  final double totalDistance;
+
+  RelayFinish({this.recordTime, this.totalDistance});
   @override
   RelayFinishState createState() => RelayFinishState();
 }
@@ -60,6 +64,13 @@ class RelayFinishState extends State<RelayFinish> {
     }
   }
 
+  String _printDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+  }
+
   void _navigationMore() {
     Navigator.pop(context);
   }
@@ -87,7 +98,7 @@ class RelayFinishState extends State<RelayFinish> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
-                flex: 4,
+                flex: 3,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -98,7 +109,7 @@ class RelayFinishState extends State<RelayFinish> {
               ),
               Expanded(flex: 1, child: Container(child: Text(''))),
               Expanded(
-                flex: 4,
+                flex: 5,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -114,8 +125,13 @@ class RelayFinishState extends State<RelayFinish> {
                         child: Column(children: [
                           makeTextThin("Congratulations,", Colors.white, 20),
                           makeTextThin("Jong ha Park" + '!', Colors.white, 20),
-                          makeTwoColor("You walked ", "3.2km !", Colors.white,
+                          makeTwoColor("You walked ", "4.0km !", Colors.white,
                               Colors.white, 20),
+                          makeTextSemiThin(
+                              _printDuration(
+                                  Duration(seconds: widget.recordTime)),
+                              Colors.white,
+                              20),
                         ]))
                   ],
                 ),

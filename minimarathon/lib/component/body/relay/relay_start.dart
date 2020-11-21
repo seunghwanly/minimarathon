@@ -3,6 +3,7 @@ import 'package:minimarathon/component/body/relay/background_location.dart';
 import 'package:minimarathon/component/header/header.dart';
 import 'package:minimarathon/util/palette.dart';
 import '../../../util/text_style.dart';
+import '../relay/ranking.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'relay_finish.dart';
@@ -19,7 +20,7 @@ class RelayStartState extends State<RelayStart> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (BuildContext context) => RelayFinish(),
+        builder: (BuildContext context) => Ranking(),
       ),
     );
   }
@@ -47,7 +48,7 @@ class RelayStartState extends State<RelayStart> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
-                flex: 5,
+                flex: 8,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -55,7 +56,7 @@ class RelayStartState extends State<RelayStart> {
                   ],
                 ),
               ),
-              Expanded(flex: 1, child: Container(child: Text(''))),
+              Expanded(flex: 3, child: Container(child: Text(''))),
               Expanded(
                   flex: 4,
                   child: Container(
@@ -63,12 +64,13 @@ class RelayStartState extends State<RelayStart> {
                     //margin: EdgeInsets.symmetric(vertical: 10),
                     width: MediaQuery.of(context).size.width * 0.8,
                     decoration: BoxDecoration(
+                        color: mandarin,
                         border: Border.all(color: lightwhite, width: 3),
                         borderRadius: BorderRadius.all(Radius.circular(30))),
                     child: FlatButton(
                       onPressed: _navigationToLocation,
                       child: Container(
-                        child: makeText('START', lightwhite, 28),
+                        child: makeText('Relay START', lightwhite, 28),
                       ),
                     ),
                   )),
@@ -84,7 +86,7 @@ class RelayStartState extends State<RelayStart> {
                     child: FlatButton(
                       onPressed: _navigation,
                       child: Container(
-                        child: makeText('00:32:59', lightwhite, 28),
+                        child: makeText('Ranking', lightwhite, 28),
                       ),
                     ),
                   )),

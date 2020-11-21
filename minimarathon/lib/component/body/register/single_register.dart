@@ -207,6 +207,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                                     fontSize: 20.0),
                               ),
                             ),
+
                             Container(
                                 width: MediaQuery.of(context).size.width * 0.7,
                                 child: TextField(
@@ -232,6 +233,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                                       singleRegisterData.donationFee =
                                           int.parse(value);
                                     });
+
                                   },
                                   textInputAction: TextInputAction.done,
                                   focusNode: focusFee,
@@ -326,6 +328,14 @@ class _SingleRegisterState extends State<SingleRegister> {
                                             .then((DataSnapshot snapshot) {
                                           print('Data : ${snapshot.value}');
                                         });
+                                        
+//                                         databaseReference.child(singleRegisterData['phoneNumber']).set({
+//                                         'Name': singleRegisterData['name'],
+//                                         'DonationFee': singleRegisterData['donationFee'],
+//                                         'More':'F',
+//                                         'Timer':0,
+//                                         'Km':0
+//                                       });
 
                                         await showMyDialog(context,
                                             "Payment was succefully done !\n You are now avaiable to register !");

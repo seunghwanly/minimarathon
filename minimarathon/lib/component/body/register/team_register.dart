@@ -507,11 +507,30 @@ class _TeamRegisterState extends State<TeamRegister> {
                                 setState(() {
                                   isRegisterAvailable = true;
                                 });
+
                                 
                                 teamData.leader = memberList.elementAt(0);
                                 memberList.removeAt(0);
                                 teamData.members = memberList;
                                 FirebaseMethod().teamReference.child(teamData.teamName).set(teamData.toJson());
+                                
+//                              databaseReference.child(memberList[0].phoneNumber).set({
+//                                   'Name': memberList[0].name,
+//                                   'TeamName':teamData.teamName,
+//                                   'donationFee':teamData.donationFee,
+//                                   'More':'F',
+//                                   'Timer':0,
+//                                   'Km':0
+//                                 });
+//                                 for (int i = 1; i < memberLength; ++i){
+//                                   databaseReference.child(memberList[i].phoneNumber).set({
+//                                     'Name': memberList[i].name,
+//                                     'TeamName':teamData.teamName,
+//                                     'More':'F',
+//                                     'Timer':0,
+//                                     'Km':0
+//                                   });
+//                                 }
 
                               } else {
                                 showMyDialog(context, "Please complete the form !");
