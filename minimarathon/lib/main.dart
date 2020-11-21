@@ -213,6 +213,9 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         codeSent: (String verificationId, [int forceResendingToken]) {
           final _codeController = TextEditingController();
+          /////////////////////////////////////////////////////////////////////////////////////////////////////
+          ///TODO : 꾸미기
+          /////////////////////////////////////////////////////////////////////////////////////////////////////
           showModalBottomSheet(
               context: context,
               builder: (BuildContext context) {
