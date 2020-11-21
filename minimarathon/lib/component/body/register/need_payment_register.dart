@@ -6,6 +6,8 @@ import 'package:minimarathon/component/header/header.dart';
 import 'package:minimarathon/util/palette.dart';
 import 'package:minimarathon/component/body/register/team_register.dart';
 
+// firebase 
+import 'package:firebase_auth/firebase_auth.dart';
 
 class NeedPaymentRegister extends StatefulWidget {
   NeedPaymentRegister();
@@ -15,10 +17,13 @@ class NeedPaymentRegister extends StatefulWidget {
 }
 
 class _NeedPaymentRegisterState extends State<NeedPaymentRegister> {
+
+  User user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return CustomHeader(
-        title: "Register",
+        title: user.phoneNumber,
         body: Container(
             padding: EdgeInsets.all(20.0),
             child: Column(
