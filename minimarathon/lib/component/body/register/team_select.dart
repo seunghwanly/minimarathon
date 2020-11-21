@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/header/header.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:minimarathon/util/FirebaseMethod.dart';
 import '../../../util/text_style.dart';
 import '../relay/relay_start.dart';
 import '../register/team_register.dart';
@@ -24,6 +25,7 @@ class _TeamSelectState extends State<TeamSelect> {
   List<String> teamList = <String>['team1', 'team2'];
   bool isTeam = false;
   String userPhoneNumber;
+  var teamLists;
 
   Future<void> _showMyDialog() async {
     return showDialog<void>(
@@ -106,6 +108,8 @@ class _TeamSelectState extends State<TeamSelect> {
   @override
   void initState() {
     super.initState();
+
+    teamLists = FirebaseMethod().getTeamMember();
 
     databaseReference.child("Teams").once().then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> values = snapshot.value;

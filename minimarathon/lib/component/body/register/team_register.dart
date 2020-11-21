@@ -1,21 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/body/register/result_register.dart';
+import 'package:minimarathon/util/FirebaseMethod.dart';
 import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/palette.dart';
 import '../../header/header.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 final databaseReference = FirebaseDatabase.instance.reference();
-//model
+DatabaseReference teamReference = databaseReference.child("Teams");
+
 class Member {
   String name;
   String phoneNumber;
+  bool moreVolunteer;
+
+  Member({this.name, this.phoneNumber, this.moreVolunteer});
+
+  factory Member.fromJson(Map<String, dynamic> parsedJson) {
+    return Member(
+        name: parsedJson['name'],
+        phoneNumber: parsedJson['phoneNumber'],
+        moreVolunteer: parsedJson['moreVolunteer']);
+  }
+  Map toJson() => {
+        'name': name,
+        'phoneNumber': phoneNumber,
+        'moreVolunteer': moreVolunteer
+      };
 }
 
 class Team {
   String teamName;
+  Member leader;
   List<Member> members;
   int donationFee;
+  bool isPaid;
+
+  Team(
+      {this.teamName,
+      this.leader,
+      this.members,
+      this.donationFee,
+      this.isPaid});
+
+  // read
+  factory Team.fromJson(Map<String, dynamic> parsedJson) {
+    var list = parsedJson['Team Member'] as List;
+    List<Member> memberList =
+        list.map((index) => Member.fromJson(index)).toList();
+
+    return Team(
+        teamName: parsedJson['teamName'],
+        leader: parsedJson['Team Leader'],
+        members: memberList,
+        donationFee: parsedJson['donationFee'],
+        isPaid: parsedJson['isPaid']);
+  }
+  // write
+  Map toJson() {
+    List<Map> members = this.members != null
+        ? this.members.map((i) => i.toJson()).toList()
+        : null;
+
+    return {
+      'teamName': teamName,
+      'leader': leader.toJson(),
+      'members': members,
+      'donationFee': donationFee,
+      'isPaid': isPaid
+    };
+  }
 }
 
 class TeamRegister extends StatefulWidget {
@@ -63,11 +117,13 @@ class _TeamRegisterState extends State<TeamRegister> {
     teamData.teamName = "  Team name";
     teamData.donationFee = memberLength * 10;
     teamData.members = memberList;
+
     //memberList
     for (int i = 0; i < memberLength; ++i) {
       Member newMember = new Member();
       newMember.name = "  Memeber name";
       newMember.phoneNumber = "  Member phone number";
+      newMember.moreVolunteer = false;
       memberList.add(newMember);
     }
     //focusNode
@@ -187,6 +243,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                     newMember.name = "  Memeber name";
                                     newMember.phoneNumber =
                                         "  Member phone number";
+                                    newMember.moreVolunteer = false;
                                     memberList.add(newMember);
                                     focusNameList.add(new FocusNode());
                                     focusPhoneNumberList.add(new FocusNode());
@@ -329,8 +386,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                           style: TextStyle(color: lightwhite),
                                           onChanged: (number) {
                                             setState(() {
-                                              memberList[index].phoneNumber =
-                                                  number;
+                                              memberList[index].phoneNumber = number;
                                             });
                                           },
                                           textInputAction: TextInputAction.next,
@@ -452,30 +508,11 @@ class _TeamRegisterState extends State<TeamRegister> {
                                   isRegisterAvailable = true;
                                 });
                                 
-                                databaseReference.child("Teams").child(teamData.teamName)
-                                  .set({ 
-                                    'donationFee':teamData.donationFee,
-                                    'isPaid' : false
-                                    });
-                                databaseReference.child("Teams").child(teamData.teamName)
-                                  .child("Team Leader").child(memberList[0].name)
-                                  .set({
-                                    'Name' : memberList[0].name,
-                                    // ** 국가번호 변경
-                                    'Phone Number' : '+420' + memberList[0].phoneNumber,
-                                    'More' : false
-                                });
-                                //TODO: member 이름 대신 uid로 변경
-                                for (int i = 1; i <= memberLength; i++){
-                                databaseReference.child("Teams").child(teamData.teamName)
-                                  .child("Team Member").child(memberList[i].name)
-                                  .set({
-                                    'Name' : memberList[i].name,
-                                    // ** 국가번호 변경
-                                    'Phone Number' : '+420' +  memberList[i].phoneNumber,
-                                    'More' : false
-                                  });
-                                }
+                                teamData.leader = memberList.elementAt(0);
+                                memberList.removeAt(0);
+                                teamData.members = memberList;
+                                FirebaseMethod().teamReference.child(teamData.teamName).set(teamData.toJson());
+
                               } else {
                                 showMyDialog(context, "Please complete the form !");
                                 setState(() {
