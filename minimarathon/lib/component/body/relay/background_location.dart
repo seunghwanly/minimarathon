@@ -29,7 +29,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
   String altitude = "waiting...";
   String accuracy = "waiting...";
   String bearing = "waiting...";
-  String speed = "waiting...";
+  String speed = "0.0";
   String time = "waiting...";
 
   double totalDistance = 0;
@@ -95,78 +95,143 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                       child: FlatButton(
                           onPressed: () {},
                           shape: RoundedRectangleBorder(
+                            side: BorderSide(color: lightwhite, width: 3),
                             borderRadius: BorderRadius.circular(30),
                           ),
                           color: royalblue,
                           child: Container(
-                              width: double.infinity,
-                              // height: MediaQuery.of(context).size.width * 0.2,
-                              alignment: Alignment.center,
-                              child: Column(
+                            width: double.infinity,
+                            // height: MediaQuery.of(context).size.width * 0.2,
+                            alignment: Alignment.center,
+                            child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    'Goal is 4.0 km !',
-                                    style: TextStyle(
-                                        color: lightwhite,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width /
-                                                14),
-                                    textAlign: TextAlign.center,
+                                  Expanded(
+                                    flex: 5,
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Goal is 5.0 km !',
+                                            style: TextStyle(
+                                                color: lightwhite,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    14),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ]),
                                   ),
-                                  Text(
-                                    ('Current Distance'),
-                                    style: TextStyle(
-                                        color: lightwhite,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width /
-                                                16),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  Text(
-                                    totalDistance.toStringAsFixed(1) + ' m',
-                                    style: TextStyle(
-                                        color: lightwhite,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width /
-                                                16),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  Text(
-                                    'Time Recode',
-                                    style: TextStyle(
-                                        color: lightwhite,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width /
-                                                16),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  Text(
-                                    '$_start',
-                                    style: TextStyle(
-                                        color: lightwhite,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width /
-                                                16),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  Text(
-                                    _printDuration(Duration(seconds: _start)),
-                                    style: TextStyle(
-                                        color: lightwhite,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width /
-                                                16),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              )))),
+                                  Expanded(
+                                      flex: 2,
+                                      child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              ('Current Speed'),
+                                              style: TextStyle(
+                                                  color: lightwhite,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width /
+                                                          16),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            Text(
+                                              (double.parse(speed)
+                                                      .toStringAsFixed(1) +
+                                                  ' m/s'),
+                                              style: TextStyle(
+                                                  color: lightwhite,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width /
+                                                          16),
+                                              textAlign: TextAlign.center,
+                                            )
+                                          ])),
+                                  Expanded(
+                                      flex: 2,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            ('Current Distance'),
+                                            style: TextStyle(
+                                                color: lightwhite,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    16),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          Text(
+                                            totalDistance.toStringAsFixed(1) +
+                                                ' m',
+                                            style: TextStyle(
+                                                color: lightwhite,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    16),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ],
+                                      )),
+                                  Expanded(
+                                      flex: 2,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Time Recode',
+                                            style: TextStyle(
+                                                color: lightwhite,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    16),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          // Text(
+                                          //   '$_start',
+                                          //   style: TextStyle(
+                                          //       color: lightwhite,
+                                          //       fontWeight: FontWeight.bold,
+                                          //       fontSize:
+                                          //           MediaQuery.of(context).size.width /
+                                          //               16),
+                                          //   textAlign: TextAlign.center,
+                                          // ),
+                                          Text(
+                                            _printDuration(
+                                                Duration(seconds: _start)),
+                                            style: TextStyle(
+                                                color: lightwhite,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    16),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ],
+                                      ))
+                                ]),
+                          ))),
                   Expanded(
                     flex: 1,
                     child: Text(''),
@@ -176,7 +241,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                       child: Row(
                         children: [
                           Expanded(
-                              flex: 4,
+                              flex: 10,
                               child: FlatButton(
                                   onPressed: () async {
                                     startTimer();
@@ -233,8 +298,8 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
 
                                           //이 거리만큼 이동시에 Finish_Relay 으로 이동.
                                           //테스팅용
-                                          //실제에서는 if(totalDistance > 4000)
-                                          if (_start > 5) {
+                                          //실제에서는 if(totalDistance > 5000)
+                                          if (totalDistance > 5000) {
                                             Route route = MaterialPageRoute(
                                                 builder: (context) =>
                                                     RelayFinish(
@@ -262,6 +327,8 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                     });
                                   },
                                   shape: RoundedRectangleBorder(
+                                    side:
+                                        BorderSide(color: lightwhite, width: 3),
                                     borderRadius: BorderRadius.circular(30),
                                   ),
                                   color: royalblue,
@@ -289,7 +356,11 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                         ],
                                       )))),
                           Expanded(
-                              flex: 4,
+                            flex: 1,
+                            child: Text(''),
+                          ),
+                          Expanded(
+                              flex: 10,
                               child: FlatButton(
                                   onPressed: () {
                                     isStart = false;
@@ -298,10 +369,13 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                     BackgroundLocation.stopLocationService();
                                   },
                                   shape: RoundedRectangleBorder(
+                                    side:
+                                        BorderSide(color: lightwhite, width: 3),
                                     borderRadius: BorderRadius.circular(30),
                                   ),
                                   color: royalblue,
                                   child: Container(
+                                      //margin: EdgeInsets.only(left: 10),
                                       width: double.infinity,
                                       // height:
                                       //     MediaQuery.of(context).size.width *
