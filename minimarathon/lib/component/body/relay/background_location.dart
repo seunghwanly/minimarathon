@@ -331,7 +331,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                         BorderSide(color: lightwhite, width: 3),
                                     borderRadius: BorderRadius.circular(30),
                                   ),
-                                  color: royalblue,
+                                  color: mandarin,
                                   child: Container(
                                       width: double.infinity,
                                       // height:

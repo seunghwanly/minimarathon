@@ -10,12 +10,19 @@ import 'relay_finish.dart';
 import 'package:background_location/background_location.dart';
 
 class RelayStart extends StatefulWidget {
+  final bool isTeam;
+  final bool isLeader;
+  final bool ismember;
+
+  final String username;
+
+  RelayStart({this.isLeader, this.isTeam, this.ismember, this.username});
   @override
   RelayStartState createState() => RelayStartState();
 }
 
 class RelayStartState extends State<RelayStart> {
-  final String username = 'Jong Ha Park';
+  String username = 'Jong Ha Park';
   void _navigation() {
     Navigator.push(
       context,
@@ -37,6 +44,9 @@ class RelayStartState extends State<RelayStart> {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      username = widget.username;
+    });
   }
 
   @override

@@ -4,9 +4,13 @@ import 'package:minimarathon/component/body/register/team_select.dart';
 import 'package:minimarathon/component/body/relay/relay_start.dart';
 import 'package:minimarathon/component/header/header.dart';
 import 'package:minimarathon/util/palette.dart';
+import '../relay/relay_start.dart';
 import 'package:minimarathon/component/body/register/team_register.dart';
+import 'package:intl/intl.dart';
+//firebase database
+import 'package:firebase_database/firebase_database.dart';
 
-// firebase 
+// firebase
 import 'package:firebase_auth/firebase_auth.dart';
 
 class NeedPaymentRegister extends StatefulWidget {
@@ -17,11 +21,28 @@ class NeedPaymentRegister extends StatefulWidget {
 }
 
 class _NeedPaymentRegisterState extends State<NeedPaymentRegister> {
-
+  String username = '';
+  DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
+  // user State
   User user = FirebaseAuth.instance.currentUser;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    // if (isPaidUser == true) {
+    //   Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //           builder: (context) => RelayStart(
+    //                 isLeader: isLeader,
+    //                 isTeam: isTeam,
+    //                 ismember: ismember,
+    //                 username: username,
+    //               )));
+    // }
     return CustomHeader(
         title: user.phoneNumber,
         body: Container(
@@ -101,15 +122,15 @@ class _NeedPaymentRegisterState extends State<NeedPaymentRegister> {
                                 onPressed: () {
                                   // ** 개발상 편의를 위해 팀 Register 버튼 -> Start Relay 로 이동으로 변경
                                   // 2020-11-17
-                                  
+
                                   // 필요하면 이 부분 주석처리 하면 됩니다.
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                          TeamSelect(
-                                          // title: "Team Select",
-                                        ),
+                                            TeamSelect(
+                                                // title: "Team Select",
+                                                ),
                                       ));
 
                                   // Navigator.push(

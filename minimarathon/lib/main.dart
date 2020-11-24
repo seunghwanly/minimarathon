@@ -79,6 +79,14 @@ class _MyHomePageState extends State<MyHomePage> {
   // user authentication
   DateTime serviceStateDate = new DateTime.utc(2020, 12, 10);
 
+  // user State
+  User user = FirebaseAuth.instance.currentUser;
+  bool isPaidUser = false;
+  bool isTeam = false;
+  bool isLeader = false;
+  bool ismember = false;
+
+  String username = '';
   // focus Node
   FocusNode smsCode = new FocusNode();
 
@@ -86,6 +94,79 @@ class _MyHomePageState extends State<MyHomePage> {
   String phoneNumber;
   String phoneIsoCode;
   String phoneInternationalNumber;
+
+  void isPaidCheck() {
+    print('실행');
+    DatabaseReference readDatabaseReference =
+        FirebaseDatabase.instance.reference();
+
+    // check Single User isPaid
+    readDatabaseReference
+        .child('Single')
+        .child(user.uid)
+        .once()
+        .then((DataSnapshot dataSnapshot) {
+      Map<dynamic, dynamic> values = dataSnapshot.value;
+      setState(() {
+        print('탐색!');
+        username = values['name'];
+        isPaidUser = true;
+      });
+    });
+    // check Team User isPaid
+    readDatabaseReference
+        .child('Teams')
+        .once()
+        .then((DataSnapshot dataSnapshot) {
+      Map<dynamic, dynamic> values = dataSnapshot.value;
+      values.forEach((key, value) {
+        // check Leader
+        readDatabaseReference
+            .child('Teams')
+            .child(key)
+            .child('leader')
+            .child('phoneNumber')
+            .once()
+            .then((DataSnapshot dataSnapshot) {
+          if (dataSnapshot.value.toString() == user.phoneNumber) {
+            readDatabaseReference
+                .child('Teams')
+                .child(key)
+                .child('leader')
+                .child('name')
+                .once()
+                .then((DataSnapshot dataSnapshot) {
+                  print('탐색!');
+              isTeam = true;
+              isLeader = true;
+              isPaidUser = true;
+              username = dataSnapshot.value.toString();
+            });
+          }
+        });
+
+        // check Member
+        readDatabaseReference
+            .child('Teams')
+            .child(key)
+            .child('members')
+            .once()
+            .then((DataSnapshot dataSnapshot) {
+          List<dynamic> values = dataSnapshot.value;
+          for (var i = 0; i < values.length; i++) {
+            if (values[i]['phoneNumber'] == user.phoneNumber) {
+              print('탐색!');
+              username = values[i]['name'];
+              isTeam = true;
+              ismember = true;
+              isPaidUser = true;
+            }
+          }
+        });
+      });
+    });
+    setState(() {});
+  }
 
   //phone number
   @override
@@ -177,6 +258,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    isPaidCheck();
   }
 
   isOpenned(BuildContext context) {
@@ -210,8 +292,21 @@ class _MyHomePageState extends State<MyHomePage> {
           _auth.signInWithCredential(authCredential).then((value) {
             if (value.user != null) {
               // LOGIN FINISHED
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => NeedPaymentRegister()));
+              isPaidCheck();
+              if (isPaidUser == true) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RelayStart(
+                              isLeader: isLeader,
+                              isTeam: isTeam,
+                              ismember: ismember,
+                              username: username,
+                            )));
+              } else {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => NeedPaymentRegister()));
+              }
             } else
               print("login error");
           });
@@ -376,11 +471,31 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         phoneAuthCredential)
                                                     .then((value) {
                                                   if (value.user != null) {
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                NeedPaymentRegister()));
+
+                                                  isPaidCheck() {
+                                                        function() {
+                                                        if (isPaidUser == true) {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => RelayStart(
+                                                                        isLeader: isLeader,
+                                                                        isTeam: isTeam,
+                                                                        ismember: ismember,
+                                                                        username: username,
+                                                                      )));
+                                                        } else {
+                                                          Navigator.of(context).push(MaterialPageRoute(
+                                                              builder: (context) => NeedPaymentRegister()));
+                                                        }
+                                                      }
+                                                    }
+              
+                                                    // Navigator.push(
+                                                    //     context,
+                                                    //     MaterialPageRoute(
+                                                    //         builder: (context) =>
+                                                    //             NeedPaymentRegister()));
                                                   } else {
                                                     print("Error");
                                                   }
