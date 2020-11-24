@@ -79,13 +79,13 @@ class RankingState extends State<Ranking> {
           tmpList.add(new _Mem(name, timer));
 
           // get members information
-          // dynamic members = value['members'];
-          // members.forEach((key, value){
-          //   name = members['name'];
-          //   dynamic relay = members['relay'];
-          //   timer = relay['timer'];
-          //   tmpList.add(new _Mem(name, timer));
-          // });
+          List<dynamic> members = value['members'];
+          members.forEach((i) {
+            name = i['name'];
+            dynamic relay = i['relay'];
+            timer = relay['timer'];
+            tmpList.add(new _Mem(name, timer));
+          });
         });
       }
     });
