@@ -78,7 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   // user authentication
   DateTime serviceStateDate = new DateTime.utc(2020, 12, 10);
-
+  DatabaseReference readDatabaseReference =
+      FirebaseDatabase.instance.reference();
   // user State
   User user = FirebaseAuth.instance.currentUser;
   bool isPaidUser = false;
@@ -87,6 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool ismember = false;
 
   String username = '';
+  String teamname = '';
   // focus Node
   FocusNode smsCode = new FocusNode();
 
@@ -97,8 +99,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void isPaidCheck() {
     print('실행');
-    DatabaseReference readDatabaseReference =
-        FirebaseDatabase.instance.reference();
 
     // check Single User isPaid
     readDatabaseReference
@@ -108,7 +108,6 @@ class _MyHomePageState extends State<MyHomePage> {
         .then((DataSnapshot dataSnapshot) {
       Map<dynamic, dynamic> values = dataSnapshot.value;
       setState(() {
-        print('탐색!');
         username = values['name'];
         isPaidUser = true;
       });
@@ -136,11 +135,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 .child('name')
                 .once()
                 .then((DataSnapshot dataSnapshot) {
-                  print('탐색!');
-              isTeam = true;
-              isLeader = true;
-              isPaidUser = true;
-              username = dataSnapshot.value.toString();
+              setState(() {
+                isTeam = true;
+                isLeader = true;
+                isPaidUser = true;
+                teamname = key.toString();
+                username = dataSnapshot.value.toString();
+              });
+              return;
             });
           }
         });
@@ -155,17 +157,20 @@ class _MyHomePageState extends State<MyHomePage> {
           List<dynamic> values = dataSnapshot.value;
           for (var i = 0; i < values.length; i++) {
             if (values[i]['phoneNumber'] == user.phoneNumber) {
-              print('탐색!');
-              username = values[i]['name'];
-              isTeam = true;
-              ismember = true;
-              isPaidUser = true;
+              print('팀명 : ' + key.toString());
+              setState(() {
+                username = values[i]['name'];
+                isTeam = true;
+                ismember = true;
+                teamname = key.toString();
+                isPaidUser = true;
+              });
+              return;
             }
           }
         });
       });
     });
-    setState(() {});
   }
 
   //phone number
@@ -256,6 +261,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  void dispose() {
+    readDatabaseReference.onDisconnect();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     isPaidCheck();
@@ -302,6 +313,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               isTeam: isTeam,
                               ismember: ismember,
                               username: username,
+                              teamname: teamname,
                             )));
               } else {
                 Navigator.of(context).push(MaterialPageRoute(
@@ -471,26 +483,32 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         phoneAuthCredential)
                                                     .then((value) {
                                                   if (value.user != null) {
-
-                                                  isPaidCheck() {
-                                                        function() {
-                                                        if (isPaidUser == true) {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (context) => RelayStart(
-                                                                        isLeader: isLeader,
-                                                                        isTeam: isTeam,
-                                                                        ismember: ismember,
-                                                                        username: username,
+                                                    isPaidCheck();
+                                                    if (isPaidUser == true) {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder:
+                                                                  (context) =>
+                                                                      RelayStart(
+                                                                        isLeader:
+                                                                            isLeader,
+                                                                        isTeam:
+                                                                            isTeam,
+                                                                        ismember:
+                                                                            ismember,
+                                                                        username:
+                                                                            username,
+                                                                        teamname:
+                                                                            teamname,
                                                                       )));
-                                                        } else {
-                                                          Navigator.of(context).push(MaterialPageRoute(
-                                                              builder: (context) => NeedPaymentRegister()));
-                                                        }
-                                                      }
+                                                    } else {
+                                                      Navigator.of(context).push(
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  NeedPaymentRegister()));
                                                     }
-              
+
                                                     // Navigator.push(
                                                     //     context,
                                                     //     MaterialPageRoute(

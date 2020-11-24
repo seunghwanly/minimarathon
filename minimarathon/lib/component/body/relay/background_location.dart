@@ -81,7 +81,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
   @override
   Widget build(BuildContext context) {
     return CustomHeader(
-        title: Text('Relay Start'),
+        title: 'Relay Start',
         body: Center(
             child: Container(
                 padding:
@@ -132,7 +132,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              ('Current Speed'),
+                                              'Current Speed',
                                               style: TextStyle(
                                                   color: lightwhite,
                                                   fontWeight: FontWeight.w600,
@@ -144,9 +144,9 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                               textAlign: TextAlign.center,
                                             ),
                                             Text(
-                                              (double.parse(speed)
+                                              double.parse(speed)
                                                       .toStringAsFixed(1) +
-                                                  ' m/s'),
+                                                  ' m/s',
                                               style: TextStyle(
                                                   color: lightwhite,
                                                   fontWeight: FontWeight.w600,
@@ -165,7 +165,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            ('Current Distance'),
+                                            'Current Distance',
                                             style: TextStyle(
                                                 color: lightwhite,
                                                 fontWeight: FontWeight.w600,
