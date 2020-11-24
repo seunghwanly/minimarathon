@@ -4,8 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 // amaterial
 import 'package:flutter/material.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:flutter/services.dart';
 import 'package:international_phone_input/international_phone_input.dart';
+import 'dart:io';
 //route
 import 'package:minimarathon/component/body/register/need_payment_register.dart';
 import 'package:minimarathon/component/body/register/single_register.dart';
@@ -272,6 +274,18 @@ class _MyHomePageState extends State<MyHomePage> {
     isPaidCheck();
   }
 
+  Widget loading() {
+    // widget.onFinish(widget.res);
+
+    return Container(
+        child: LoadingBouncingGrid.circle(
+      borderColor: orange,
+      size: 50.0,
+      backgroundColor: Colors.transparent,
+      duration: Duration(milliseconds: 5000),
+    ));
+  }
+
   isOpenned(BuildContext context) {
     if (serviceStateDate.compareTo(DateTime.now()) != 0) {
       //begin service
@@ -304,6 +318,8 @@ class _MyHomePageState extends State<MyHomePage> {
             if (value.user != null) {
               // LOGIN FINISHED
               isPaidCheck();
+
+              sleep(const Duration(seconds: 2));
               if (isPaidUser == true) {
                 Navigator.push(
                     context,
@@ -484,6 +500,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     .then((value) {
                                                   if (value.user != null) {
                                                     isPaidCheck();
+
+                                                    sleep(const Duration(
+                                                        seconds: 2));
                                                     if (isPaidUser == true) {
                                                       Navigator.push(
                                                           context,
