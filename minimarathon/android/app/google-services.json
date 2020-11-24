@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:949723521719:android:fe578b6cdf22ba25fea332",
+        "mobilesdk_app_id": "1:949723521719:android:059a8765789f3f3afea332",
         "android_client_info": {
           "package_name": "com.example.minimarathon"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "949723521719-ioumcdhg41i8iq78qncjdm9s2jp4ejhu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.minimarathon",
+            "certificate_hash": "b0a3011042532be7cf738781fdc7c5c4fd0a4d50"
+          }
+        },
         {
           "client_id": "949723521719-0j5gqfdn9qdcklmcgtnl3q8m1bpdd995.apps.googleusercontent.com",
           "client_type": 3
