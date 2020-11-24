@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:minimarathon/component/body/register/team_register.dart';
 import 'package:minimarathon/component/header/header.dart';
 import 'package:minimarathon/util/palette.dart';
 import '../../../util/text_style.dart';
@@ -13,6 +14,7 @@ class Ranking extends StatefulWidget {
   RankingState createState() => RankingState();
 }
 
+List<Member> memberList = new List<Member>();
 //List<_Row> _rows= new List<_Row>(10);
 class RankingState extends State<Ranking> {
   final String username = 'Jong Ha Park';
@@ -32,35 +34,80 @@ class RankingState extends State<Ranking> {
     });
   }
 
+  String makeTimeString(int timer){
+    int ihour = timer ~/ 3600;
+    int imin = (timer - (ihour * 3600)) ~/ 60;
+    int isec = timer - (ihour * 3600) - (imin * 60);
+    String hour = (ihour < 10 ? "0" : "") + ihour.toString();
+    String min = (imin < 10 ? "0" : "") + imin.toString();
+    String sec = (isec < 10 ? "0" : "") + isec.toString();
+    String time = hour + ":" + min + ":" + sec;
+    return time;
+  }
+
+
   void readList() async {
     String name;
     int timer;
-    var query = referenceDatabase.orderByChild('Timer');
-    await query.once().then((DataSnapshot dataSnapshot) {
+    List<_Mem> tmpList = new List<_Mem>();
+
+    // Single
+    var squery = referenceDatabase.child('Single');
+    await squery.once().then((DataSnapshot dataSnapshot) {
       if (dataSnapshot.value != null) {
         dynamic values = dataSnapshot.value;
-        List<_Row> tmpList = new List<_Row>();
         values.forEach((key, value) {
-          name = value['Name'];
-          timer = value['Timer'];
-
-          int ihour = timer ~/ 3600;
-          int imin = (timer - (ihour * 3600)) ~/ 60;
-          int isec = timer - (ihour * 3600) - (imin * 60);
-          String hour = (ihour < 10 ? "0" : "") + ihour.toString();
-          String min = (imin < 10 ? "0" : "") + imin.toString();
-          String sec = (isec < 10 ? "0" : "") + isec.toString();
-          String time = hour + ":" + min + ":" + sec;
-          tmpList.add(new _Row(name, time));
+          name = value['name'];
+          dynamic relay = value['relay'];
+          timer = relay['timer'];
+          tmpList.add(new _Mem(name, timer));
         });
-
-        setState(() {
-          currentRowList = tmpList;
-        });
-
-        setData();
       }
     });
+
+    // Team
+    var tquery = referenceDatabase.child('Teams');
+    await tquery.once().then((DataSnapshot dataSnapshot){
+      if (dataSnapshot.value != null) {
+        dynamic values = dataSnapshot.value;
+        values.forEach((key, value) {
+          // get leaders information
+          dynamic leader = value['leader'];
+          name = leader['name'];
+          dynamic relay = leader['relay'];
+          timer = relay['timer'];
+          tmpList.add(new _Mem(name, timer));
+
+          // get members information
+          // dynamic members = value['members'];
+          // members.forEach((key, value){
+          //   name = members['name'];
+          //   dynamic relay = members['relay'];
+          //   timer = relay['timer'];
+          //   tmpList.add(new _Mem(name, timer));
+          // });
+        });
+      }
+    });
+
+
+
+    bool isSort = false;
+    List<_Row> sortedList = new List<_Row>();
+
+    setState(() {
+      tmpList.sort((a, b) => isSort ? (a.time).compareTo(b.time) : (b.time).compareTo(a.time));
+      isSort = !isSort;
+      tmpList.forEach((i) {
+        String name = i.name;
+        String time = makeTimeString(i.time);
+        _Row r = new _Row(name, time);
+        sortedList.add(r);
+      });
+      currentRowList = sortedList;
+    });
+
+    setData();
   }
 
   haha() {
@@ -70,7 +117,7 @@ class RankingState extends State<Ranking> {
   @override
   Widget build(BuildContext context) {
     return CustomHeader(
-      title: Text("Ranking"),
+      title: "Ranking",
       body: ListView(
         padding: const EdgeInsets.all(5),
         children: [
@@ -97,6 +144,11 @@ class RankingState extends State<Ranking> {
       ),
     );
   }
+}
+class _Mem {
+  _Mem(this.name, this.time);
+  final String name;
+  final int time;
 }
 
 class _Row {
