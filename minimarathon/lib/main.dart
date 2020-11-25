@@ -1,13 +1,14 @@
 //firebase
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 // amaterial
 import 'package:flutter/material.dart';
-import 'package:loading_animations/loading_animations.dart';
 import 'package:flutter/services.dart';
 import 'package:international_phone_input/international_phone_input.dart';
-import 'dart:io';
+import 'package:loading_animations/loading_animations.dart';
 //route
 import 'package:minimarathon/component/body/register/need_payment_register.dart';
 import 'package:minimarathon/component/body/register/single_register.dart';
@@ -43,16 +44,10 @@ class MyApp extends StatelessWidget {
                 theme: ThemeData(
                     // primaryColor: Colors.white,
                     ),
-                home: CustomHeader(
-                  title: "",
-                  body: GestureDetector(
-                    onTap: () {
-                      FocusScope.of(context).requestFocus(new FocusNode());
-                    },
-                    child: MyHomePage(),
-                    // child: TeamRegister(),
-                  ),
-                ));
+                home: Scaffold(
+                  body: MyHomePage(),
+                )
+                );
           }
           if (snapshot.hasError) {
             return Text("Firebase initalize error !");
@@ -76,6 +71,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  //firebase init
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   //firebase auth
   FirebaseAuth _auth = FirebaseAuth.instance;
   // user authentication
@@ -98,6 +95,129 @@ class _MyHomePageState extends State<MyHomePage> {
   String phoneNumber;
   String phoneIsoCode = "+82";
   String phoneInternationalNumber;
+
+  @override
+  Widget build(BuildContext context) {
+    if (_auth.currentUser == null) {
+      return SingleChildScrollView(
+          controller: new ScrollController(
+              initialScrollOffset: MediaQuery.of(context).size.height),
+          child: Container(
+            padding: EdgeInsets.all(20.0),
+            // color: Colors.white,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: Image(
+                    image: AssetImage('images/home.png'),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                Expanded(
+                  // ---------------------------------------------------------------------------LOGIN
+                  flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          padding: EdgeInsets.symmetric(horizontal: 10.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: white),
+                          child: InternationalPhoneInput(
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              labelText: '  Phone number',
+                              labelStyle: TextStyle(
+                                  color: lightgrey,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            onPhoneNumberChange: onPhoneNumberChange,
+                            initialPhoneNumber: phoneNumber,
+                            initialSelection: phoneIsoCode,
+                            enabledCountries: ['+82', '+1', '+420'],
+                            showCountryCodes: false,
+                          )),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          child: RaisedButton(
+                              // onPressed: () async {
+                              //   // showMyDialog(context,
+                              //   //     "You can't use this application before the marathon starts");
+
+                              //   // Navigator.of(context).push(MaterialPageRoute(
+                              //   //     builder: (context) => NeedPaymentRegister()));
+                              // },
+                              onPressed: () => loginUser(context),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                // side: BorderSide(color: mandarin, width: 3.0)
+                              ),
+                              color: mandarin,
+                              child: Container(
+                                width: double.infinity,
+                                height: MediaQuery.of(context).size.width * 0.2,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'LOGIN',
+                                  style: TextStyle(
+                                      color: white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 26.0),
+                                ),
+                              )))
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ));
+    } else {
+      // auth is not null
+      if (isPaidUser) {
+        return RelayStart(
+          isLeader: this.isLeader,
+          isTeam: this.isTeam,
+          ismember: this.ismember,
+          username: this.username,
+          teamname: this.teamname,
+        );
+      } else {
+        return NeedPaymentRegister(isoCode: this.phoneIsoCode);
+      }
+    }
+  }
+
+  //phone number
+  @override
+  void dispose() {
+    readDatabaseReference.onDisconnect();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    isPaidCheck();
+  }
+
+  isOpenned(BuildContext context) {
+    if (serviceStateDate.compareTo(DateTime.now()) != 0) {
+      //begin service
+    } else {
+      showMyDialog(
+          context, "You can't use this application before the marathon starts");
+    }
+  }
 
   void isPaidCheck() {
     print('실행');
@@ -175,105 +295,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  //phone number
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        controller: new ScrollController(
-            initialScrollOffset: MediaQuery.of(context).size.height),
-        child: Container(
-          padding: EdgeInsets.all(20.0),
-          // color: Colors.white,
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            children: [
-              Expanded(
-                flex: 5,
-                child: Image(
-                  image: AssetImage('images/home.png'),
-                  fit: BoxFit.contain,
-                ),
-              ),
-              Expanded(
-                // ---------------------------------------------------------------------------LOGIN
-                flex: 5,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        padding: EdgeInsets.symmetric(horizontal: 10.0),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: white),
-                        child: InternationalPhoneInput(
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            labelText: '  Phone number',
-                            labelStyle: TextStyle(
-                                color: lightgrey,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          onPhoneNumberChange: onPhoneNumberChange,
-                          initialPhoneNumber: phoneNumber,
-                          initialSelection: phoneIsoCode,
-                          enabledCountries: ['+82', '+1', '+420'],
-                          showCountryCodes: false,
-                        )),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        child: RaisedButton(
-                            // onPressed: () async {
-                            //   // showMyDialog(context,
-                            //   //     "You can't use this application before the marathon starts");
-
-                            //   // Navigator.of(context).push(MaterialPageRoute(
-                            //   //     builder: (context) => NeedPaymentRegister()));
-                            // },
-                            onPressed: () => loginUser(context),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              // side: BorderSide(color: mandarin, width: 3.0)
-                            ),
-                            color: mandarin,
-                            child: Container(
-                              width: double.infinity,
-                              height: MediaQuery.of(context).size.width * 0.2,
-                              alignment: Alignment.center,
-                              child: Text(
-                                'LOGIN',
-                                style: TextStyle(
-                                    color: white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 26.0),
-                              ),
-                            )))
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ));
-  }
-
-  @override
-  void dispose() {
-    readDatabaseReference.onDisconnect();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    isPaidCheck();
-  }
-
   Widget loading() {
     // widget.onFinish(widget.res);
 
@@ -284,25 +305,6 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: Colors.transparent,
       duration: Duration(milliseconds: 5000),
     ));
-  }
-
-  isOpenned(BuildContext context) {
-    if (serviceStateDate.compareTo(DateTime.now()) != 0) {
-      //begin service
-    } else {
-      showMyDialog(
-          context, "You can't use this application before the marathon starts");
-    }
-  }
-
-  void onPhoneNumberChange(
-      String number, String internationalizedPhoneNumber, String isoCode) {
-    setState(() {
-      phoneNumber = number;
-      phoneIsoCode = isoCode;
-      phoneInternationalNumber = internationalizedPhoneNumber;
-    });
-    print(internationalizedPhoneNumber);
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -526,7 +528,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                                       Navigator.of(context).push(
                                                           MaterialPageRoute(
                                                               builder: (context) =>
-                                                                  NeedPaymentRegister(isoCode: phoneIsoCode)));
+                                                                  NeedPaymentRegister(
+                                                                      isoCode:
+                                                                          phoneIsoCode)));
                                                     }
 
                                                     // Navigator.push(
@@ -535,7 +539,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     //         builder: (context) =>
                                                     //             NeedPaymentRegister()));
                                                   } else {
-                                                    showMyDialog(context, "SignIn Failed !");
+                                                    showMyDialog(context,
+                                                        "SignIn Failed !");
                                                     print("Error");
                                                   }
                                                 });
@@ -570,5 +575,15 @@ class _MyHomePageState extends State<MyHomePage> {
         codeAutoRetrievalTimeout: (String verificationId) {
           verificationId = verificationId;
         });
+  }
+
+  void onPhoneNumberChange(
+      String number, String internationalizedPhoneNumber, String isoCode) {
+    setState(() {
+      phoneNumber = number;
+      phoneIsoCode = isoCode;
+      phoneInternationalNumber = internationalizedPhoneNumber;
+    });
+    print(internationalizedPhoneNumber);
   }
 }

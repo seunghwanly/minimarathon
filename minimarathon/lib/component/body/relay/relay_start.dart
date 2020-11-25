@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/body/relay/background_location.dart';
 import 'package:minimarathon/component/header/header.dart';
+import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/palette.dart';
 import '../../../util/text_style.dart';
 import '../relay/ranking.dart';
@@ -41,31 +42,32 @@ class RelayStartState extends State<RelayStart> {
   }
 
   void _showDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Sorry, " + username),
-          content: new Text("Relay is Available on December 10th.",
-              style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600)),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text(
-                "Close",
-                style: TextStyle(color: royalblue, fontSize: 20),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      },
-    );
+    // showDialog(
+    //   context: context,
+    //   builder: (BuildContext context) {
+    //     // return object of type Dialog
+    //     return AlertDialog(
+    //       title: new Text("Sorry, " + username),
+    //       content: new Text("Relay is Available on December 10th.",
+    //           style: TextStyle(
+    //               color: Colors.black87,
+    //               fontSize: 16,
+    //               fontWeight: FontWeight.w600)),
+    //       actions: <Widget>[
+    //         new FlatButton(
+    //           child: new Text(
+    //             "Close",
+    //             style: TextStyle(color: royalblue, fontSize: 20),
+    //           ),
+    //           onPressed: () {
+    //             Navigator.pop(context);
+    //           },
+    //         ),
+    //       ],
+    //     );
+    //   },
+    // );
+    showMyDialog(context, "Sorry, " + username + '\n\n' + "Relay is Available on December 10th.");
   }
 
   void _navigationToLocation() {
@@ -129,7 +131,9 @@ class RelayStartState extends State<RelayStart> {
   Widget build(BuildContext context) {
     return CustomHeader(
         title: "2020 Hope Sharing Relay",
-        body: new Center(
+        body: new Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(10.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

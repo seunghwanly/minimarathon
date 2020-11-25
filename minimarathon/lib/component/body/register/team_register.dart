@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:minimarathon/component/body/relay/relay_start.dart';
 import '../../header/header.dart';
 import 'package:minimarathon/component/body/register/result_register.dart';
 import 'package:minimarathon/util/FirebaseMethod.dart';
@@ -798,11 +799,13 @@ class _TeamRegisterState extends State<TeamRegister> {
                                   } else {
                                     if (isRegisterAvailable &&
                                         !isPaymentAvailable) {
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Register()));
+                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RelayStart(
+                                        isLeader: true,
+                                        isTeam: true,
+                                        ismember: false,
+                                        username: teamData.leader.name,
+                                        teamname: teamData.teamName,
+                                      )));
                                     }
                                   }
                                 } else
