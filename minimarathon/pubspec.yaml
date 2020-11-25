@@ -26,7 +26,7 @@ dependencies:
   # firebase
   firebase_core: ^0.5.2  # add dependency for Firebase Core
   firebase_analytics: ^1.0.4  # add dependency for Google Analytics for Firebase
-  # firebase_crashlytics: ^0.2.3
+  firebase_crashlytics: ^0.2.3
   firebase_database: ^4.3.0
   firebase_auth : "^ 0.18.3" 
   firebase_storage : "^ 5.0.1" 

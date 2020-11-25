@@ -1,31 +1,44 @@
+import 'dart:async';
+import 'package:flutter/foundation.dart' show kDebugMode;
+
 //firebase
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
-// amaterial
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+// material
 import 'package:flutter/material.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:flutter/services.dart';
-import 'package:international_phone_input/international_phone_input.dart';
 import 'dart:io';
 //route
 import 'package:minimarathon/component/body/register/need_payment_register.dart';
-import 'package:minimarathon/component/body/register/single_register.dart';
-import 'package:minimarathon/component/body/register/team_register.dart';
 import 'package:minimarathon/component/body/relay/relay_start.dart';
 import 'package:minimarathon/component/loading.dart';
 import 'package:minimarathon/util/custom_container.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-
 //header
 import './component/header/header.dart';
 import './util/custom_dialog.dart';
 //util
+import 'package:international_phone_input/international_phone_input.dart';
 import './util/palette.dart';
 
-void main() {
+void main() async {
+  //send errors
+  // Pass all uncaught errors from the framework to Crashlytics.
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  // initialize App
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+
+  if (kDebugMode) {
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+    runApp(MyApp());
+  } else {
+    runZonedGuarded<Future<void>>(() async {
+      runApp(MyApp());
+    }, FirebaseCrashlytics.instance.recordError);
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -526,7 +539,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                                       Navigator.of(context).push(
                                                           MaterialPageRoute(
                                                               builder: (context) =>
-                                                                  NeedPaymentRegister(isoCode: phoneIsoCode)));
+                                                                  NeedPaymentRegister(
+                                                                      isoCode:
+                                                                          phoneIsoCode)));
                                                     }
 
                                                     // Navigator.push(
@@ -535,7 +550,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     //         builder: (context) =>
                                                     //             NeedPaymentRegister()));
                                                   } else {
-                                                    showMyDialog(context, "SignIn Failed !");
+                                                    showMyDialog(context,
+                                                        "SignIn Failed !");
                                                     print("Error");
                                                   }
                                                 });
