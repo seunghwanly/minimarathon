@@ -2,16 +2,24 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert' as convert;
 import 'package:http_auth/http_auth.dart';
-import 'package:minimarathon/util/paypal/paypal_model.dart';
 
 class PaypalServices {
 
+  /*
+      PAYPAL ACCOUNT : ksccla@gmail.com
+  */
+  // ! ALERT !
+  // TODO :  SELECT YOUR MODE !!
+  //PAYPAL SANDBOX MODE !
   String domain = "https://api.sandbox.paypal.com"; // for sandbox mode
-//  String domain = "https://api.paypal.com"; // for production mode
+  String clientId = 'ARahzR1w-18UQHwWNJwHNGjPLAJqqqsYj2jVTXvO76qj1aRZyBl-lW_kaAX4McKqlK3UgkzNw99wOUQ-';
+  String secret = 'EA_dz86eXTo229RBItz0hR30QO2SicYFBUZ1yq3yAejaGvhX5PNT8UkC0RIEVE3hQumP4-tZlhNIBtxC';
 
-  // change clientId and secret with your own, provided by paypal
-  String clientId = 'AbseDKjAeYcuuIinaV6GIv6mDYynn6eQOluPYLmvXtJwNqRJnOEoGN3JezHDmNUEJunsgNzg6b6_IYy8';
-  String secret = 'EJhObkfj2ceXQFtouWqkxjI8wNj3Y5WI_YvdFm-ojQrHg0OFhQ9cJWXi7kqWzjSp5im6ynS3i28qqyDc';
+  //PAYPAL LIVE MODE !
+  //  String domain = "https://api.paypal.com"; // for production mode
+  // String clientId = 'AcJIOyUMTQJypdrxI40RcOvHxsGGBquYVEBnZlozp3Ia5FmTpxrXSqKc3uuhh3Yri4jq9cU_4SwVhcMj';
+  // String secret = 'EELx1Yn5oNgU7MO-T6yc3xju7h9E1hvVv5jXzevar0tdkmGeWPsJCg1fVvJXbmO01r11wtZQiAfmHSKW';
+
 
   // for getting the access token from Paypal
   Future<String> getAccessToken() async {
