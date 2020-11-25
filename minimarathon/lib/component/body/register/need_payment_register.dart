@@ -4,7 +4,11 @@ import 'package:minimarathon/component/body/register/team_select.dart';
 import 'package:minimarathon/component/body/relay/relay_start.dart';
 import 'package:minimarathon/component/header/header.dart';
 import 'package:minimarathon/util/palette.dart';
+import '../relay/relay_start.dart';
 import 'package:minimarathon/component/body/register/team_register.dart';
+import 'package:intl/intl.dart';
+//firebase database
+import 'package:firebase_database/firebase_database.dart';
 
 // firebase
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,10 +24,28 @@ class NeedPaymentRegister extends StatefulWidget {
 }
 
 class _NeedPaymentRegisterState extends State<NeedPaymentRegister> {
+  String username = '';
+  DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
+  // user State
   User user = FirebaseAuth.instance.currentUser;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    // if (isPaidUser == true) {
+    //   Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //           builder: (context) => RelayStart(
+    //                 isLeader: isLeader,
+    //                 isTeam: isTeam,
+    //                 ismember: ismember,
+    //                 username: username,
+    //               )));
+    // }
     return CustomHeader(
         title: user.phoneNumber,
         body: Container(

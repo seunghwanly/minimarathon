@@ -125,7 +125,7 @@ class RelayFinishState extends State<RelayFinish> {
                         child: Column(children: [
                           makeTextThin("Congratulations,", Colors.white, 20),
                           makeTextThin("Jong ha Park" + '!', Colors.white, 20),
-                          makeTwoColor("You walked ", "4.0km !", Colors.white,
+                          makeTwoColor("You walked ", "5.0km !", Colors.white,
                               Colors.white, 20),
                           makeTextSemiThin(
                               _printDuration(
