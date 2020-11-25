@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
                       FocusScope.of(context).requestFocus(new FocusNode());
                     },
                     child: MyHomePage(),
-                    // child: LoginScreen(),
+                    // child: TeamRegister(),
                   ),
                 ));
           }
@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // for login
   String phoneNumber;
-  String phoneIsoCode;
+  String phoneIsoCode = "+82";
   String phoneInternationalNumber;
 
   //phone number
@@ -195,6 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
       phoneIsoCode = isoCode;
       phoneInternationalNumber = internationalizedPhoneNumber;
     });
+    print(internationalizedPhoneNumber);
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -376,12 +377,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         phoneAuthCredential)
                                                     .then((value) {
                                                   if (value.user != null) {
+                                                    showMyDialog(context, "Successfully signed in !");
                                                     Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                NeedPaymentRegister()));
+                                                                NeedPaymentRegister(isoCode: phoneIsoCode,)));
                                                   } else {
+                                                    showMyDialog(context, "SignIn Failed !");
                                                     print("Error");
                                                   }
                                                 });

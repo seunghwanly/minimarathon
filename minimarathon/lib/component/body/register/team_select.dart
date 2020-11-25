@@ -9,10 +9,8 @@ import '../register/team_register.dart';
 import 'package:minimarathon/util/palette.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 final databaseReference = FirebaseDatabase.instance.reference();
 final FirebaseAuth auth = FirebaseAuth.instance;
-
 
 class TeamSelect extends StatefulWidget {
   TeamSelect();
@@ -37,12 +35,12 @@ class _TeamSelectState extends State<TeamSelect> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-               Text('This is not your team.'),
+                Text('This is not your team.'),
                 Text('CHOOSE another team or REGISTER by yourself.'),
               ],
-           ),
-         ),
-            actions: <Widget>[
+            ),
+          ),
+          actions: <Widget>[
             TextButton(
               child: Text('OK'),
               onPressed: () {
@@ -54,31 +52,42 @@ class _TeamSelectState extends State<TeamSelect> {
       },
     );
   }
-  void checkTeamMember(teamName) async{
+
+  void checkTeamMember(teamName) async {
     getUserNumber();
-    await databaseReference.child("Teams").child(teamName).child("Team Leader").once().then((DataSnapshot snapshot) {
+    await databaseReference
+        .child("Teams")
+        .child(teamName)
+        .child("Team Leader")
+        .once()
+        .then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> values = snapshot.value;
-      values.forEach((k,v) {
-        if(v["Phone Number"] == userPhoneNumber){
+      values.forEach((k, v) {
+        if (v["Phone Number"] == userPhoneNumber) {
           isTeam = true;
           print("here?");
         }
       });
     });
-    await databaseReference.child("Teams").child(teamName).child("Team Member").once().then((DataSnapshot snapshot) {
+    await databaseReference
+        .child("Teams")
+        .child(teamName)
+        .child("Team Member")
+        .once()
+        .then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> values = snapshot.value;
-      values.forEach((k,v) {
+      values.forEach((k, v) {
         print(v["Phone Number"]);
         print(userPhoneNumber);
-        if(v["Phone Number"] == userPhoneNumber){
-          isTeam =  true;
-                    print("or here?");
-
+        if (v["Phone Number"] == userPhoneNumber) {
+          isTeam = true;
+          print("or here?");
         }
       });
     });
   }
-  void getUserNumber () async {
+
+  void getUserNumber() async {
     FirebaseAuth.instance.authStateChanges().listen((User user) {
       userPhoneNumber = user.phoneNumber.toString();
     });
@@ -86,16 +95,18 @@ class _TeamSelectState extends State<TeamSelect> {
 
   void _navigation(teamName) {
     checkTeamMember(teamName);
-    if(isTeam) {
+    if (isTeam) {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (BuildContext context) => RelayStart(),
-          ),
-        );
+          builder: (BuildContext context) => RelayStart(),
+        ),
+      );
+    } else {
+      _showMyDialog();
     }
-    else { _showMyDialog(); }
   }
+
   void _navToRegister() {
     Navigator.push(
       context,
@@ -104,7 +115,7 @@ class _TeamSelectState extends State<TeamSelect> {
       ),
     );
   }
-  
+
   @override
   void initState() {
     super.initState();
@@ -113,32 +124,31 @@ class _TeamSelectState extends State<TeamSelect> {
 
     databaseReference.child("Teams").once().then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> values = snapshot.value;
-      values.forEach((k,v) {
+      values.forEach((k, v) {
         teamList.add(k.toString());
       });
     });
-    
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Team Select'),
-          elevation: 0.0,
-            bottom: PreferredSize(
-              child: Container(
-                color: lightwhite,
-                height: 1.0,
-                width: MediaQuery.of(context).size.width * 0.9,
-              ),
-              preferredSize: Size.fromHeight(1.0),
-            ),
-            backgroundColor: pastelblue,
-            textTheme: TextTheme(
-                headline6: TextStyle(
-                    color: white, fontWeight: FontWeight.bold, fontSize: 20.0)),
-          actions: <Widget>[
+      appBar: AppBar(
+        title: const Text('Team Select'),
+        elevation: 0.0,
+        // bottom: PreferredSize(
+        //   child: Container(
+        //     color: lightwhite,
+        //     height: 10.0,
+        //     width: MediaQuery.of(context).size.width * 0.9,
+        //   ),
+        //   preferredSize: Size.fromHeight(1.0),
+        // ),
+        backgroundColor: pastelblue,
+        textTheme: TextTheme(
+            headline6: TextStyle(
+                color: white, fontWeight: FontWeight.bold, fontSize: 20.0)),
+        actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.add),
             tooltip: 'Register Team',
@@ -147,27 +157,23 @@ class _TeamSelectState extends State<TeamSelect> {
             },
           ),
         ],
-        ),
-        
-        body: new ListView.builder(
-          
-            padding: const EdgeInsets.all(8),
-            itemCount: teamList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return new Container(
-                color: pastelblue,
-                alignment: Alignment.center,
-                child: Center(
+      ),
+      body: new ListView.builder(
+          padding: const EdgeInsets.all(8),
+          itemCount: teamList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return new Container(
+              color: pastelblue,
+              alignment: Alignment.center,
+              child: Center(
                   child: FlatButton(
-                      onPressed: () => _navigation(teamList[index]),
-                      child: Container(
-                        child: makeText(
-                          '${teamList[index]}', Colors.white, 20),
-                      ),
-                    )),
-                );
-              }
-        ),
+                onPressed: () => _navigation(teamList[index]),
+                child: Container(
+                  child: makeText('${teamList[index]}', Colors.white, 20),
+                ),
+              )),
+            );
+          }),
     );
   }
 }

@@ -6,18 +6,20 @@ import 'package:minimarathon/component/header/header.dart';
 import 'package:minimarathon/util/palette.dart';
 import 'package:minimarathon/component/body/register/team_register.dart';
 
-// firebase 
+// firebase
 import 'package:firebase_auth/firebase_auth.dart';
 
 class NeedPaymentRegister extends StatefulWidget {
-  NeedPaymentRegister();
+
+  final isoCode;
+
+  NeedPaymentRegister({this.isoCode});
 
   @override
   _NeedPaymentRegisterState createState() => _NeedPaymentRegisterState();
 }
 
 class _NeedPaymentRegisterState extends State<NeedPaymentRegister> {
-
   User user = FirebaseAuth.instance.currentUser;
 
   @override
@@ -32,7 +34,7 @@ class _NeedPaymentRegisterState extends State<NeedPaymentRegister> {
                 children: [
                   Expanded(
                     //----------------------------speech bubble for single Register
-                    flex: 3,
+                    flex: 2,
                     child: Container(
                         alignment: Alignment.bottomCenter,
                         width: MediaQuery.of(context).size.width * 0.8,
@@ -45,7 +47,7 @@ class _NeedPaymentRegisterState extends State<NeedPaymentRegister> {
                       children: [
                         Expanded(
                             flex: 4,
-                            child: FlatButton(
+                            child: RaisedButton(
                                 onPressed: () {
                                   Navigator.push(
                                       context,
@@ -97,19 +99,17 @@ class _NeedPaymentRegisterState extends State<NeedPaymentRegister> {
                         ),
                         Expanded(
                             flex: 4,
-                            child: FlatButton(
+                            child: RaisedButton(
                                 onPressed: () {
                                   // ** 개발상 편의를 위해 팀 Register 버튼 -> Start Relay 로 이동으로 변경
                                   // 2020-11-17
-                                  
+
                                   // 필요하면 이 부분 주석처리 하면 됩니다.
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                          TeamSelect(
-                                          // title: "Team Select",
-                                        ),
+                                            TeamRegister(title: "Team Register",isoCode: widget.isoCode,)
                                       ));
 
                                   // Navigator.push(
@@ -145,7 +145,7 @@ class _NeedPaymentRegisterState extends State<NeedPaymentRegister> {
                                           textAlign: TextAlign.center,
                                         ),
                                         Text(
-                                          'SELECT or REGISTER',
+                                          'REGISTER',
                                           style: TextStyle(
                                               color: lightwhite,
                                               fontWeight: FontWeight.bold,
@@ -162,12 +162,63 @@ class _NeedPaymentRegisterState extends State<NeedPaymentRegister> {
                   ),
                   Expanded(
                     //----------------------------speech bubble for single Register
-                    flex: 3,
+                    flex: 1,
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: makeDescription("Team", royalblue),
                     ),
                   ),
+                  Expanded(
+                      flex: 3,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          makeDescription("Member", Colors.green[400]),
+                          RaisedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => TeamSelect()));
+                              },
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              color: Colors.green[400],
+                              child: Container(
+                                  width: double.infinity,
+                                  height:
+                                      MediaQuery.of(context).size.width * 0.3,
+                                  alignment: Alignment.center,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Member',
+                                        style: TextStyle(
+                                            color: lightwhite,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                12),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      Text(
+                                        'REGISTER',
+                                        style: TextStyle(
+                                            color: lightwhite,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                24),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ))),
+                        ],
+                      )),
                   Expanded(
                     flex: 1,
                     child: Text(
