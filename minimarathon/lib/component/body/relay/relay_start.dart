@@ -67,7 +67,8 @@ class RelayStartState extends State<RelayStart> {
     //     );
     //   },
     // );
-    showMyDialog(context, "Sorry, " + username + '\n\n' + "Relay is Available on December 10th.");
+    showMyDialog(context,
+        "Sorry, " + username + '\n\n' + "Relay is Available on December 10th.");
   }
 
   void _navigationToLocation() {
@@ -147,30 +148,89 @@ class RelayStartState extends State<RelayStart> {
                 ),
               ),
               Expanded(
-                flex: 5,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    makeText(
-                        " The Distance measurement is measured based on your device's GPS. Please, take your device outside with you for the marathon!",
-                        lightwhite,
-                        19),
-                  ],
-                ),
+                flex: 2,
+                child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(children: <TextSpan>[
+                        TextSpan(
+                          text: "Thanks for joining\n",
+                          style: TextStyle(
+                            color: white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            letterSpacing: 2.0,
+                          )
+                        ),
+                        TextSpan(
+                          text: "2020 Hope Sharing Relay !",
+                          style: TextStyle(
+                            color: white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            letterSpacing: 2.0,
+                          )
+                        ),
+                      ]),
+                    ),
               ),
+              Expanded(
+                  flex: 5,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30.0),
+                      color: deepPastelblue
+                    ),
+                    alignment: Alignment.center,
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(children: <TextSpan>[
+                        TextSpan(
+                          text: "Tips\n\n",
+                          style: TextStyle(
+                            color: white,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 20,
+                            letterSpacing: 2.0,
+                          )
+                        ),
+                        TextSpan(
+                            text:
+                                "The Distance measurement is based on your device's ",
+                            style: TextStyle(
+                                color: lightwhite,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18)),
+                        TextSpan(
+                            text: "GPS",
+                            style: TextStyle(
+                                color: lightwhite,
+                                backgroundColor: mandarin,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20)),
+                        TextSpan(
+                            text:
+                                ".\nPlease, take your device outside with you for the marathon!",
+                            style: TextStyle(
+                                color: lightwhite,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18)),
+                      ]),
+                    ),
+                  )),
               Expanded(flex: 1, child: Container(child: Text(''))),
               Expanded(
-                  flex: 4,
+                  flex: 3,
                   child: Container(
                     // height:  MediaQuery.of(context).size.height * 0.8,
                     //margin: EdgeInsets.symmetric(vertical: 10),
                     width: MediaQuery.of(context).size.width * 0.8,
-                    decoration: BoxDecoration(
-                        color: mandarin,
-                        border: Border.all(color: lightwhite, width: 3),
-                        borderRadius: BorderRadius.all(Radius.circular(30))),
-                    child: FlatButton(
+                    child: RaisedButton(
                       onPressed: _navigationToLocation,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(30))
+                      ),
+                      color: mandarin,
                       child: Container(
                         child: makeText('Relay START', lightwhite, 28),
                       ),
@@ -178,15 +238,16 @@ class RelayStartState extends State<RelayStart> {
                   )),
               Expanded(flex: 1, child: Container(child: Text(''))),
               Expanded(
-                  flex: 4,
+                  flex: 3,
                   child: Container(
                     // height:  MediaQuery.of(context).size.height * 0.8,
                     width: MediaQuery.of(context).size.width * 0.8,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: lightwhite, width: 3),
-                        borderRadius: BorderRadius.all(Radius.circular(30))),
-                    child: FlatButton(
+                    child: RaisedButton(
                       onPressed: _navigation,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(30))
+                      ),
+                      color: Colors.green[400],
                       child: Container(
                         child: makeText('Ranking', lightwhite, 28),
                       ),

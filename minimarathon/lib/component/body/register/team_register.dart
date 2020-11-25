@@ -736,10 +736,6 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                     donationFee:
                                                         teamData.donationFee,
                                                     onFinish: (res) async {
-                                                      setState(() {
-                                                        isPaymentFinished =
-                                                            true;
-                                                      });
                                                       // payment successful
                                                       if (res == "approved") {
                                                         setState(() {
@@ -747,6 +743,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                               true;
                                                           isPaymentAvailable =
                                                               false;
+                                                          isPaymentFinished = !isPaymentFinished;
                                                         });
                                                         teamData.leader =
                                                             memberList
@@ -789,6 +786,9 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                             context,
                                                             "Payment was succefully done !\n You are now avaiable to register !");
                                                       } else {
+                                                        setState(() {
+                                                          isPaymentFinished = !isPaymentFinished;
+                                                        });
                                                         await showMyDialog(
                                                             context,
                                                             'Payment was not Completed !');
