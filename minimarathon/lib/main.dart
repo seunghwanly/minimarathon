@@ -15,6 +15,7 @@ import 'package:minimarathon/component/body/register/single_register.dart';
 import 'package:minimarathon/component/body/register/team_register.dart';
 import 'package:minimarathon/component/body/relay/relay_start.dart';
 import 'package:minimarathon/component/loading.dart';
+import 'package:minimarathon/component/route_page.dart';
 import 'package:minimarathon/util/custom_container.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -164,6 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               //   //     builder: (context) => NeedPaymentRegister()));
                               // },
                               onPressed: () => loginUser(context),
+                              // onPressed: () => checkUserisPaid(),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                                 // side: BorderSide(color: mandarin, width: 3.0)
@@ -218,7 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    // if (_auth.currentUser != null) isPaidCheck();
+    if (_auth.currentUser != null) isPaidCheck();
     // isPaidCheck();
   }
 
@@ -236,22 +238,25 @@ class _MyHomePageState extends State<MyHomePage> {
     user = FirebaseAuth.instance.currentUser;
     print("uid 머임 ? " + user.uid);
     // check Single User isPaid
-    await readDatabaseReference
+
+    readDatabaseReference
         .child('Single')
         .child(user.uid)
         .once()
         .then((DataSnapshot dataSnapshot) {
       Map<dynamic, dynamic> values = dataSnapshot.value;
-      print(values.toString());
       if (dataSnapshot.value != null) {
-        username = values['name'];
-        isPaidUser = true;
-        return isPaidUser;
+        setState(() {
+          username = values['name'];
+          isPaidUser = true;
+        });
+        return;
       }
     });
     //.whenComplete(() => print("Single read complete!"));
     // check Team User isPaid
-    await readDatabaseReference
+
+    readDatabaseReference
         .child('Teams')
         .once()
         .then((DataSnapshot dataSnapshot) {
@@ -340,25 +345,8 @@ class _MyHomePageState extends State<MyHomePage> {
             if (value.user != null) {
               print('value user not null');
               // LOGIN FINISHED
-              isPaidCheck();
-
-              sleep(const Duration(seconds: 2));
-              if (isPaidUser == true) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => RelayStart(
-                              isLeader: isLeader,
-                              isTeam: isTeam,
-                              ismember: ismember,
-                              username: username,
-                              teamname: teamname,
-                            )));
-              } else {
-                print('not paid user');
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => NeedPaymentRegister()));
-              }
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => RoutePage()));
             } else
               print("login error");
           });
@@ -486,9 +474,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                               0.7,
                                           child: FlatButton(
                                               onPressed: () {
-                                                setState(() {
-                                                  isLoading = true;
-                                                });
                                                 // Create a PhoneAuthCredential with the code
                                                 final code =
                                                     _codeController.text.trim();
@@ -504,54 +489,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     .then((value) async {
                                                   if (value.user != null) {
                                                     print('in modal');
-                                                    print(value
-                                                        .additionalUserInfo
-                                                        .isNewUser
-                                                        .toString());
-                                                    print('before : ' +
-                                                        isPaidUser.toString());
 
-                                                    await isPaidCheck();
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                RoutePage()));
 
-                                                    print('after : ' +
-                                                        isPaidUser.toString());
-                                                    // sleep(const Duration(
-                                                    //     seconds: 2));
-                                                    print('after sleep !');
-                                                    // sleep(const Duration(seconds: 8));
-                                                    if (isPaidUser == true) {
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder:
-                                                                  (context) =>
-                                                                      RelayStart(
-                                                                        isLeader:
-                                                                            isLeader,
-                                                                        isTeam:
-                                                                            isTeam,
-                                                                        ismember:
-                                                                            ismember,
-                                                                        username:
-                                                                            username,
-                                                                        teamname:
-                                                                            teamname,
-                                                                      )));
-                                                    } else {
-                                                      print('여기로옴 ?');
-                                                      Navigator.of(context).push(
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  NeedPaymentRegister(
-                                                                      isoCode:
-                                                                          phoneIsoCode)));
-                                                    }
-
-                                                    // Navigator.push(
-                                                    //     context,
-                                                    //     MaterialPageRoute(
-                                                    //         builder: (context) =>
-                                                    //             NeedPaymentRegister()));
                                                   } else {
                                                     showMyDialog(modalContext,
                                                         "SignIn Failed !");
