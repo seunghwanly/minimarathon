@@ -148,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             onPhoneNumberChange: onPhoneNumberChange,
                             initialPhoneNumber: phoneNumber,
                             initialSelection: phoneIsoCode,
-                            enabledCountries: ['+82', '+1', '+420'],
+                            enabledCountries: ['+82', '+1'],
                             showCountryCodes: false,
                           )),
                       SizedBox(
@@ -387,7 +387,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 children: [
                                   Expanded(flex: 1, child: SizedBox()),
                                   Expanded(
-                                      flex: 2,
+                                      flex: 3,
                                       child: Container(
                                           alignment: Alignment.center,
                                           child: Column(

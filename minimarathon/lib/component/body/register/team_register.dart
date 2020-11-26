@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/body/relay/relay_start.dart';
 import '../../header/header.dart';
@@ -91,7 +93,7 @@ class _TeamRegisterState extends State<TeamRegister> {
     memberLength = 2; // team >= 2
     teamData.teamName = "ex) han's Family";
     teamData.donationFee = memberLength * 10;
-
+    
     //memberList
     for (int i = 0; i < memberLength; ++i) {
       Member newMember = new Member();
@@ -131,6 +133,7 @@ class _TeamRegisterState extends State<TeamRegister> {
 
   @override
   Widget build(BuildContext context) {
+    
     if (!isPaymentFinished && isPaymentAvailable) {
       return LoadingPage();
     } else {
@@ -234,8 +237,9 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                 BorderRadius.circular(20.0),
                                             color: lightwhite,
                                           ),
-                                          child: Container(
-                                              alignment: Alignment.center,
+                                          child: FlatButton(
+                                            onPressed: () => print(memberList.length),
+                                              // alignment: Alignment.center,
                                               child: isTeamnameDuplicate == 0
                                                   ? Icon(
                                                       Icons.search,
@@ -296,7 +300,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                       fontWeight: FontWeight.bold,
                                       fontSize:
                                           MediaQuery.of(context).size.width /
-                                              24)),
+                                              26)),
                               TextSpan(
                                   text: "\nPlease, enter the ",
                                   style: TextStyle(
@@ -304,7 +308,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                       fontWeight: FontWeight.bold,
                                       fontSize:
                                           MediaQuery.of(context).size.width /
-                                              24)),
+                                              26)),
                               TextSpan(
                                   text: "CORRECT NUMBER",
                                   style: TextStyle(
@@ -321,7 +325,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                       fontWeight: FontWeight.bold,
                                       fontSize:
                                           MediaQuery.of(context).size.width /
-                                              24)),
+                                              26)),
                             ]),
                           ),
                         )),
@@ -611,6 +615,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                               BorderRadius.circular(30),
                                           borderSide: new BorderSide(
                                               color: lightwhite, width: 3)),
+                                      prefixText: '\$',
                                       hintText:
                                           '  Please type donation fee ...',
                                       hintStyle:
@@ -719,48 +724,29 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                           isPaymentFinished =
                                                               !isPaymentFinished;
                                                         });
-                                                        teamData.leader =
-                                                            memberList
-                                                                .elementAt(0);
-                                                        // memberList.removeAt(0);
-
-                                                        var listPush =
-                                                            memberList;
-                                                        listPush.removeAt(0);
-                                                        print(teamData
-                                                                .members.length
+                                                        print('> R : ' +
+                                                            isRegisterAvailable
                                                                 .toString() +
-                                                            '<<멤버수');
-                                                        print(teamData.leader
-                                                            .toJson());
-                                                        //  print(
-                                                        // teamData.members.toJson().toString());
-                                                        // teamData.members =
-                                                        //     memberList;
-                                                        teamData.members =
-                                                            listPush;
-                                                        // load to firebase
-                                                        memberList
-                                                            .forEach((element) {
-                                                          if (widget.isoCode ==
-                                                              "US")
-                                                            element.phoneNumber =
-                                                                "+1" +
-                                                                    element
-                                                                        .phoneNumber;
-                                                          else if (widget
-                                                                  .isoCode ==
-                                                              "KR")
-                                                            element.phoneNumber =
-                                                                "+82" +
-                                                                    element
-                                                                        .phoneNumber;
-                                                        });
-                                                        print('파베 직전');
+                                                            ' P : ' +
+                                                            isPaymentAvailable
+                                                                .toString());
+
+                                                        // copy List
+                                                        List<Member> listForPushDatabase;
+                                                        listForPushDatabase = List.from(memberList);
+                                                        print(listForPushDatabase.length.toString());
+
+                                                        teamData.leader = listForPushDatabase.elementAt(0);
+                                                        listForPushDatabase.removeAt(0);
+                                                        teamData.members = List.from(listForPushDatabase);
+                                                        print(listForPushDatabase.toString());
+                                                        print(listForPushDatabase.length.toString());
+
                                                         print(teamData
+                                                            .toJson()
                                                             .toString());
-                                                        await FirebaseMethod()
-                                                            .teamReference
+
+                                                        await teamReference
                                                             .child(teamData
                                                                 .teamName)
                                                             .set(teamData

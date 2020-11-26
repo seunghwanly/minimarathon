@@ -19,6 +19,8 @@ class _LoadingPageState extends State<LoadingPage> {
 
     return Center(
         child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
             color: pastelblue,
             child: LoadingBouncingGrid.circle(
               borderColor: orange,
