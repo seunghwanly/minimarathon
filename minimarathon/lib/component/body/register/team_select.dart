@@ -9,7 +9,8 @@ import '../register/team_register.dart';
 import 'package:minimarathon/util/palette.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-final databaseReference = FirebaseDatabase.instance.reference();
+final databaseReference =
+    FirebaseDatabase.instance.reference().child('2020HopeRelay');
 final FirebaseAuth auth = FirebaseAuth.instance;
 
 class TeamSelect extends StatefulWidget {

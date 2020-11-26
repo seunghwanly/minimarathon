@@ -7,7 +7,8 @@ import '../../../util/text_style.dart';
 import 'ranking.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-final databaseReference = FirebaseDatabase.instance.reference();
+final databaseReference =
+    FirebaseDatabase.instance.reference().child('2020HopeRelay');
 final FirebaseAuth auth = FirebaseAuth.instance;
 
 class RelayFinish extends StatefulWidget {

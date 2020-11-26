@@ -13,7 +13,8 @@ import 'package:firebase_database/firebase_database.dart';
 // model
 import '../../../model/model_register.dart';
 
-final databaseReference = FirebaseDatabase.instance.reference();
+final databaseReference =
+    FirebaseDatabase.instance.reference().child('2020HopeRelay');
 
 class SingleRegister extends StatefulWidget {
   final title;
@@ -183,7 +184,6 @@ class _SingleRegisterState extends State<SingleRegister> {
                                     fontSize: 20.0),
                               ),
                             ),
-
                             Container(
                                 width: MediaQuery.of(context).size.width * 0.7,
                                 child: TextField(
@@ -209,7 +209,6 @@ class _SingleRegisterState extends State<SingleRegister> {
                                       singleRegisterData.donationFee =
                                           int.parse(value);
                                     });
-
                                   },
                                   textInputAction: TextInputAction.done,
                                   focusNode: focusFee,
@@ -293,7 +292,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                                             ' P : ' +
                                             isPaymentAvailable.toString());
 
-                                      await databaseReference
+                                        await databaseReference
                                             .child("Single/" + user.uid)
                                             .set(singleRegisterData.toJson())
                                             .then((value) {
@@ -304,7 +303,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                                             .then((DataSnapshot snapshot) {
                                           print('Data : ${snapshot.value}');
                                         });
-                                        
+
 //                                         databaseReference.child(singleRegisterData['phoneNumber']).set({
 //                                         'Name': singleRegisterData['name'],
 //                                         'DonationFee': singleRegisterData['donationFee'],

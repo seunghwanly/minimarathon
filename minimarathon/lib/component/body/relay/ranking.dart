@@ -8,7 +8,8 @@ import 'package:firebase_database/firebase_database.dart';
 // model
 import '../../../model/model_register.dart';
 
-final referenceDatabase = FirebaseDatabase.instance.reference();
+final referenceDatabase =
+    FirebaseDatabase.instance.reference().child('2020HopeRelay');
 
 class Ranking extends StatefulWidget {
   @override

@@ -14,7 +14,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class NeedPaymentRegister extends StatefulWidget {
-
   final isoCode;
 
   NeedPaymentRegister({this.isoCode});
@@ -25,7 +24,8 @@ class NeedPaymentRegister extends StatefulWidget {
 
 class _NeedPaymentRegisterState extends State<NeedPaymentRegister> {
   String username = '';
-  DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
+  DatabaseReference databaseReference =
+      FirebaseDatabase.instance.reference().child('2020HopeRelay');
   // user State
   User user = FirebaseAuth.instance.currentUser;
   @override
@@ -130,9 +130,11 @@ class _NeedPaymentRegisterState extends State<NeedPaymentRegister> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            TeamRegister(title: "Team Register",isoCode: widget.isoCode,)
-                                      ));
+                                          builder: (BuildContext context) =>
+                                              TeamRegister(
+                                                title: "Team Register",
+                                                isoCode: widget.isoCode,
+                                              )));
 
                                   // Navigator.push(
                                   //   context,
@@ -191,58 +193,58 @@ class _NeedPaymentRegisterState extends State<NeedPaymentRegister> {
                     ),
                   ),
                   Expanded(
-                      flex: 3,
-                      child: SizedBox(),
-                      // child: Column(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //   children: [
-                      //     makeDescription("Member", Colors.green[400]),
-                      //     RaisedButton(
-                      //         onPressed: () {
-                      //           Navigator.push(
-                      //               context,
-                      //               MaterialPageRoute(
-                      //                   builder: (context) => TeamSelect()));
-                      //         },
-                      //         shape: RoundedRectangleBorder(
-                      //           borderRadius: BorderRadius.circular(30),
-                      //         ),
-                      //         color: Colors.green[400],
-                      //         child: Container(
-                      //             width: double.infinity,
-                      //             height:
-                      //                 MediaQuery.of(context).size.width * 0.3,
-                      //             alignment: Alignment.center,
-                      //             child: Column(
-                      //               mainAxisAlignment: MainAxisAlignment.center,
-                      //               children: [
-                      //                 Text(
-                      //                   'Member',
-                      //                   style: TextStyle(
-                      //                       color: lightwhite,
-                      //                       fontWeight: FontWeight.bold,
-                      //                       fontSize: MediaQuery.of(context)
-                      //                               .size
-                      //                               .width /
-                      //                           12),
-                      //                   textAlign: TextAlign.center,
-                      //                 ),
-                      //                 Text(
-                      //                   'REGISTER',
-                      //                   style: TextStyle(
-                      //                       color: lightwhite,
-                      //                       fontWeight: FontWeight.bold,
-                      //                       fontSize: MediaQuery.of(context)
-                      //                               .size
-                      //                               .width /
-                      //                           24),
-                      //                   textAlign: TextAlign.center,
-                      //                 ),
-                      //               ],
-                      //             ))),
-                      //   ],
-                      // )
-                      ),
+                    flex: 3,
+                    child: SizedBox(),
+                    // child: Column(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //   children: [
+                    //     makeDescription("Member", Colors.green[400]),
+                    //     RaisedButton(
+                    //         onPressed: () {
+                    //           Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                   builder: (context) => TeamSelect()));
+                    //         },
+                    //         shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.circular(30),
+                    //         ),
+                    //         color: Colors.green[400],
+                    //         child: Container(
+                    //             width: double.infinity,
+                    //             height:
+                    //                 MediaQuery.of(context).size.width * 0.3,
+                    //             alignment: Alignment.center,
+                    //             child: Column(
+                    //               mainAxisAlignment: MainAxisAlignment.center,
+                    //               children: [
+                    //                 Text(
+                    //                   'Member',
+                    //                   style: TextStyle(
+                    //                       color: lightwhite,
+                    //                       fontWeight: FontWeight.bold,
+                    //                       fontSize: MediaQuery.of(context)
+                    //                               .size
+                    //                               .width /
+                    //                           12),
+                    //                   textAlign: TextAlign.center,
+                    //                 ),
+                    //                 Text(
+                    //                   'REGISTER',
+                    //                   style: TextStyle(
+                    //                       color: lightwhite,
+                    //                       fontWeight: FontWeight.bold,
+                    //                       fontSize: MediaQuery.of(context)
+                    //                               .size
+                    //                               .width /
+                    //                           24),
+                    //                   textAlign: TextAlign.center,
+                    //                 ),
+                    //               ],
+                    //             ))),
+                    //   ],
+                    // )
+                  ),
                   Expanded(
                     flex: 1,
                     child: Text(
