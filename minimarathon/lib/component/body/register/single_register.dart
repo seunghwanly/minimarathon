@@ -10,32 +10,8 @@ import 'package:minimarathon/component/loading.dart';
 // firebase
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-
 // model
-class Single {
-  String name = "  Please type your name . . .";
-  String phoneNumber;
-  int donationFee = 10;
-  bool isPaid = false;
-  bool moreVolunteer = false;
-  Relay relay = new Relay();
-
-  Map toJson() => {
-        'name': name,
-        'phoneNumber': phoneNumber,
-        'donationFee': donationFee,
-        'isPaid': isPaid,
-        'moreVolunteer': moreVolunteer,
-        'relay': relay.toJson()
-      };
-}
-
-class Relay {
-  double runningDistance = 0.0;
-  int timer = 0;
-
-  Map toJson() => {'runningDistance': runningDistance, 'timer': timer};
-}
+import '../../../model/model_register.dart';
 
 final databaseReference = FirebaseDatabase.instance.reference();
 

@@ -1,11 +1,12 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:minimarathon/component/body/register/team_register.dart';
 import 'package:minimarathon/component/header/header.dart';
 import 'package:minimarathon/util/palette.dart';
 import '../../../util/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+// model
+import '../../../model/model_register.dart';
 
 final referenceDatabase = FirebaseDatabase.instance.reference();
 

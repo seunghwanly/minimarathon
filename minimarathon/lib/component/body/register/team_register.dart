@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/body/relay/relay_start.dart';
 import '../../header/header.dart';
-import 'package:minimarathon/component/body/register/result_register.dart';
 import 'package:minimarathon/util/FirebaseMethod.dart';
 import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/palette.dart';
@@ -15,69 +12,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:libphonenumber/libphonenumber.dart';
 
 import '../../loading.dart';
-
-class Member {
-  String name;
-  String phoneNumber;
-  bool moreVolunteer;
-
-  Member({this.name, this.phoneNumber, this.moreVolunteer});
-
-  factory Member.fromJson(Map<String, dynamic> parsedJson) {
-    return Member(
-        name: parsedJson['name'],
-        phoneNumber: parsedJson['phoneNumber'],
-        moreVolunteer: parsedJson['moreVolunteer']);
-  }
-  Map toJson() => {
-        'name': name,
-        'phoneNumber': phoneNumber,
-        'moreVolunteer': moreVolunteer
-      };
-}
-
-class Team {
-  String teamName;
-  Member leader;
-  List<Member> members;
-  int donationFee;
-  bool isPaid;
-
-  Team(
-      {this.teamName,
-      this.leader,
-      this.members,
-      this.donationFee,
-      this.isPaid});
-
-  // read
-  factory Team.fromJson(Map<String, dynamic> parsedJson) {
-    var list = parsedJson['Team Member'] as List;
-    List<Member> memberList =
-        list.map((index) => Member.fromJson(index)).toList();
-
-    return Team(
-        teamName: parsedJson['teamName'],
-        leader: parsedJson['Team Leader'],
-        members: memberList,
-        donationFee: parsedJson['donationFee'],
-        isPaid: parsedJson['isPaid']);
-  }
-  // write
-  Map toJson() {
-    List<Map> members = this.members != null
-        ? this.members.map((i) => i.toJson()).toList()
-        : null;
-
-    return {
-      'teamName': teamName,
-      'leader': leader.toJson(),
-      'members': members,
-      'donationFee': donationFee,
-      'isPaid': isPaid
-    };
-  }
-}
+// model
+import '../../../model/model_register.dart';
 
 class TeamRegister extends StatefulWidget {
   final title;
@@ -121,41 +57,6 @@ class _TeamRegisterState extends State<TeamRegister> {
   bool isMemberCheckedAvailable = false;
   bool isTeamnameChecked = false;
   int isTeamnameDuplicate = 0;
-
-  //check members before payment
-  // available -> true
-  checkMembers() {
-    teamData.members.toList().asMap().forEach((index, element) {
-      if (index != 0 && element.name != null) {
-        // valid check
-        _isValidNumber(element.phoneNumber, "US").then((res) {
-          if (res) {
-            //noramlize number
-            _normalizePhonNumber(element.phoneNumber, "US")
-                .then((value) => teamData.members[index].phoneNumber = value)
-                .then((value) {
-              setState(() {
-                isMemberCheckedAvailable = true;
-              });
-            });
-          }
-        });
-      }
-    });
-  }
-
-  // check for valid phone number
-  Future<bool> _isValidNumber(String number, String isoCode) async {
-    var isValid = await PhoneNumberUtil.isValidPhoneNumber(
-        phoneNumber: number, isoCode: isoCode);
-    return isValid;
-  }
-
-  Future<String> _normalizePhonNumber(String number, String isoCode) async {
-    var generatedNumber = await PhoneNumberUtil.normalizePhoneNumber(
-        phoneNumber: number, isoCode: isoCode);
-    return generatedNumber;
-  }
 
   //check team name
   bool checkTeamname(BuildContext context) {
@@ -559,9 +460,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                   borderSide: new BorderSide(
                                                       color: lightwhite,
                                                       width: 3)),
-                                              // labelText: 'Member ' +
-                                              //     (index + 1).toString() +
-                                              //     ' Phone Number',
+                                              // TODO : prefix to input
                                               prefixText: '+1', // US
                                               hintText:
                                                   '  Please type phonenumber ...',
@@ -744,7 +643,8 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                               true;
                                                           isPaymentAvailable =
                                                               false;
-                                                          isPaymentFinished = !isPaymentFinished;
+                                                          isPaymentFinished =
+                                                              !isPaymentFinished;
                                                         });
                                                         teamData.leader =
                                                             memberList
@@ -788,7 +688,8 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                             "Payment was succefully done !\n You are now avaiable to register !");
                                                       } else {
                                                         setState(() {
-                                                          isPaymentFinished = !isPaymentFinished;
+                                                          isPaymentFinished =
+                                                              !isPaymentFinished;
                                                         });
                                                         await showMyDialog(
                                                             context,
@@ -800,13 +701,16 @@ class _TeamRegisterState extends State<TeamRegister> {
                                   } else {
                                     if (isRegisterAvailable &&
                                         !isPaymentAvailable) {
-                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RelayStart(
-                                        isLeader: true,
-                                        isTeam: true,
-                                        ismember: false,
-                                        username: teamData.leader.name,
-                                        teamname: teamData.teamName,
-                                      )));
+                                      Navigator.of(context)
+                                          .pushReplacement(MaterialPageRoute(
+                                              builder: (context) => RelayStart(
+                                                    isLeader: true,
+                                                    isTeam: true,
+                                                    ismember: false,
+                                                    username:
+                                                        teamData.leader.name,
+                                                    teamname: teamData.teamName,
+                                                  )));
                                     }
                                   }
                                 } else
