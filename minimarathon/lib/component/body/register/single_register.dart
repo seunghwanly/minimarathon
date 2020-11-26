@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minimarathon/component/body/relay/relay_start.dart';
 // util
 import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/palette.dart';
@@ -304,14 +305,6 @@ class _SingleRegisterState extends State<SingleRegister> {
                                           print('Data : ${snapshot.value}');
                                         });
 
-//                                         databaseReference.child(singleRegisterData['phoneNumber']).set({
-//                                         'Name': singleRegisterData['name'],
-//                                         'DonationFee': singleRegisterData['donationFee'],
-//                                         'More':'F',
-//                                         'Timer':0,
-//                                         'Km':0
-//                                       });
-
                                         await showMyDialog(context,
                                             "Payment was succefully done !\n You are now avaiable to register !");
                                       } else {
@@ -328,7 +321,13 @@ class _SingleRegisterState extends State<SingleRegister> {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Register()));
+                                      builder: (context) => RelayStart(
+                                        isLeader: false,
+                                        isTeam: false,
+                                        ismember: false,
+                                        username: singleRegisterData.name,
+                                        teamname: "",
+                                      )));
                             }
                           }
                         },

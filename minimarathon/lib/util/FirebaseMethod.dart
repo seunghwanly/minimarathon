@@ -2,7 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 
 class FirebaseMethod {
   // DataReference
-  DatabaseReference teamReference = FirebaseDatabase.instance.reference().child('2020HopeRelay').child('Teams');
+  DatabaseReference teamReference = FirebaseDatabase.instance.reference().child('2020HopeRelay/Teams');
 
   // Team Member
   getTeamMember() async {

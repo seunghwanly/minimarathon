@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/body/relay/relay_start.dart';
 import '../../header/header.dart';
@@ -36,8 +38,10 @@ class _TeamRegisterState extends State<TeamRegister> {
   TextEditingController teamnameControlller = new TextEditingController();
 
   //firebase auth
-  DatabaseReference teamReference =
-      FirebaseDatabase.instance.reference().child('2020HopeRelay').child("Teams");
+  DatabaseReference teamReference = FirebaseDatabase.instance
+      .reference()
+      .child('2020HopeRelay')
+      .child("Teams");
   User _user = FirebaseAuth.instance.currentUser;
 
   final _formKey = GlobalKey<FormState>(); //form
@@ -89,8 +93,7 @@ class _TeamRegisterState extends State<TeamRegister> {
     memberLength = 2; // team >= 2
     teamData.teamName = "ex) han's Family";
     teamData.donationFee = memberLength * 10;
-    teamData.members = memberList;
-
+    
     //memberList
     for (int i = 0; i < memberLength; ++i) {
       Member newMember = new Member();
@@ -105,6 +108,7 @@ class _TeamRegisterState extends State<TeamRegister> {
       newMember.moreVolunteer = false;
       memberList.add(newMember);
     }
+    teamData.members = memberList;
     //focusNode
     for (int i = 0; i < memberLength; ++i) {
       focusNameList.add(new FocusNode());
@@ -125,6 +129,7 @@ class _TeamRegisterState extends State<TeamRegister> {
 
   @override
   Widget build(BuildContext context) {
+    
     if (!isPaymentFinished && isPaymentAvailable) {
       return LoadingPage();
     } else {
@@ -228,8 +233,9 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                 BorderRadius.circular(20.0),
                                             color: lightwhite,
                                           ),
-                                          child: Container(
-                                              alignment: Alignment.center,
+                                          child: FlatButton(
+                                            onPressed: () => print(memberList.length),
+                                              // alignment: Alignment.center,
                                               child: isTeamnameDuplicate == 0
                                                   ? Icon(
                                                       Icons.search,
@@ -288,28 +294,34 @@ class _TeamRegisterState extends State<TeamRegister> {
                                   style: TextStyle(
                                       color: lightwhite,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: MediaQuery.of(context).size.width / 26)),
+                                      fontSize:
+                                          MediaQuery.of(context).size.width /
+                                              26)),
                               TextSpan(
-                                  text:
-                                      "\nPlease, enter the ",
+                                  text: "\nPlease, enter the ",
                                   style: TextStyle(
                                       color: lightwhite,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: MediaQuery.of(context).size.width / 26)),
+                                      fontSize:
+                                          MediaQuery.of(context).size.width /
+                                              26)),
                               TextSpan(
                                   text: "CORRECT NUMBER",
                                   style: TextStyle(
                                       color: lightwhite,
                                       backgroundColor: mandarin,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: MediaQuery.of(context).size.width / 24)),
+                                      fontSize:
+                                          MediaQuery.of(context).size.width /
+                                              24)),
                               TextSpan(
-                                  text:
-                                      ".\nSo the other members can sign-in !",
+                                  text: ".\nSo the other members can sign-in !",
                                   style: TextStyle(
                                       color: lightwhite,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: MediaQuery.of(context).size.width / 26)),
+                                      fontSize:
+                                          MediaQuery.of(context).size.width /
+                                              26)),
                             ]),
                           ),
                         )),
@@ -492,7 +504,9 @@ class _TeamRegisterState extends State<TeamRegister> {
                                           child: TextField(
                                             decoration: InputDecoration(
                                               filled: true,
-                                              fillColor: index == 0 ? mandarin : Colors.transparent,
+                                              fillColor: index == 0
+                                                  ? mandarin
+                                                  : Colors.transparent,
                                               disabledBorder:
                                                   OutlineInputBorder(
                                                       borderRadius:
@@ -595,6 +609,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                               BorderRadius.circular(30),
                                           borderSide: new BorderSide(
                                               color: lightwhite, width: 3)),
+                                      prefixText: '\$',
                                       hintText:
                                           '  Please type donation fee ...',
                                       hintStyle:
@@ -700,35 +715,35 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                           isPaymentFinished =
                                                               !isPaymentFinished;
                                                         });
-                                                        teamData.leader =
-                                                            memberList
-                                                                .elementAt(0);
+                                                        print('> R : ' +
+                                                            isRegisterAvailable
+                                                                .toString() +
+                                                            ' P : ' +
+                                                            isPaymentAvailable
+                                                                .toString());
+
+                                                        // copy List
+                                                        List<Member> listForPushDatabase;
+                                                        listForPushDatabase = List.from(memberList);
+                                                        print(listForPushDatabase.length.toString());
+
+                                                        teamData.leader = listForPushDatabase.elementAt(0);
+                                                        listForPushDatabase.removeAt(0);
+                                                        teamData.members = List.from(listForPushDatabase);
+                                                        print(listForPushDatabase.toString());
+                                                        print(listForPushDatabase.length.toString());
+
+                                                        print(teamData
+                                                            .toJson()
+                                                            .toString());
+                                                        // teamData.leader = memberList.elementAt(0);
                                                         // memberList.removeAt(0);
+                                                        // // var newList = memberList;
+                                                        // // newList.removeAt(0);
+                                                        // teamData.members = memberList;
                                                         
-                                                        var listPush = List.from(memberList);
-                                                        listPush.removeAt(0);
-                                                        // teamData.members =
-                                                        //     memberList;
-                                                        teamData.members = listPush;
-                                                        // load to firebase
-                                                        memberList
-                                                            .forEach((element) {
-                                                          if (widget.isoCode ==
-                                                              "US")
-                                                            element.phoneNumber =
-                                                                "+1" +
-                                                                    element
-                                                                        .phoneNumber;
-                                                          else if (widget
-                                                                  .isoCode ==
-                                                              "KR")
-                                                            element.phoneNumber =
-                                                                "+82" +
-                                                                    element
-                                                                        .phoneNumber;
-                                                        });
-                                                        await FirebaseMethod()
-                                                            .teamReference
+
+                                                        await teamReference
                                                             .child(teamData
                                                                 .teamName)
                                                             .set(teamData
