@@ -298,8 +298,9 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
 
                                           //이 거리만큼 이동시에 Finish_Relay 으로 이동.
                                           //테스팅용
-                                          //실제에서는 if(totalDistance > 5000)
-                                          if (totalDistance > 5000) {
+                                          //실제에서는 if(totalDistance > 3500)
+                                          //if (totalDistance > 3500) {
+                                          if (_start > 5) {
                                             Route route = MaterialPageRoute(
                                                 builder: (context) =>
                                                     RelayFinish(

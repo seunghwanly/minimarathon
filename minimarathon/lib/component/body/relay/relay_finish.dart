@@ -10,7 +10,6 @@ import 'package:firebase_database/firebase_database.dart';
 final databaseReference = FirebaseDatabase.instance.reference();
 final FirebaseAuth auth = FirebaseAuth.instance;
 
-
 class RelayFinish extends StatefulWidget {
   final int recordTime;
   final double totalDistance;
@@ -25,42 +24,58 @@ class RelayFinishState extends State<RelayFinish> {
   String userPhoneNumber;
   // TODO: 이거 start할 때 정보 받아와서 저장
   final String teamName = 'myTeam1';
-  bool isTeam = true; 
+  bool isTeam = true;
 
-    void getUserNumber () async {
+  void getUserNumber() async {
     FirebaseAuth.instance.authStateChanges().listen((User user) {
       userPhoneNumber = user.phoneNumber.toString();
     });
   }
 
-  void _updateInfo () async{
+  void _updateInfo() async {
     getUserNumber();
-    if(isTeam) {
-      await databaseReference.child("Teams").child(teamName).child("Team Leader").once().then((DataSnapshot snapshot) {
+    if (isTeam) {
+      await databaseReference
+          .child("Teams")
+          .child(teamName)
+          .child("Team Leader")
+          .once()
+          .then((DataSnapshot snapshot) {
         Map<dynamic, dynamic> values = snapshot.value;
-        values.forEach((k,v) {
-          if(v["Phone Number"] == userPhoneNumber){
-            databaseReference.child("Teams").child(teamName).child("Team Leader").child(k).update({
-              'More': true
-            });
+        values.forEach((k, v) {
+          if (v["Phone Number"] == userPhoneNumber) {
+            databaseReference
+                .child("Teams")
+                .child(teamName)
+                .child("Team Leader")
+                .child(k)
+                .update({'More': true});
           }
         });
       });
-      await databaseReference.child("Teams").child(teamName).child("Team Member").once().then((DataSnapshot snapshot) {
+      await databaseReference
+          .child("Teams")
+          .child(teamName)
+          .child("Team Member")
+          .once()
+          .then((DataSnapshot snapshot) {
         Map<dynamic, dynamic> values = snapshot.value;
-        values.forEach((k,v) {
-          if(v["Phone Number"] == userPhoneNumber){
-            databaseReference.child("Teams").child(teamName).child("Team Member").child(k).update({
-              'More': true
-            });
+        values.forEach((k, v) {
+          if (v["Phone Number"] == userPhoneNumber) {
+            databaseReference
+                .child("Teams")
+                .child(teamName)
+                .child("Team Member")
+                .child(k)
+                .update({'More': true});
           }
         });
       });
-    }
-    else {
-      databaseReference.child("Single").child(auth.currentUser.uid).update({
-        'More': true
-      });
+    } else {
+      databaseReference
+          .child("Single")
+          .child(auth.currentUser.uid)
+          .update({'More': true});
     }
   }
 
@@ -92,7 +107,7 @@ class RelayFinishState extends State<RelayFinish> {
   @override
   Widget build(BuildContext context) {
     return CustomHeader(
-        title: Text("Finish Marathon"),
+        title: "Finish Marathon",
         body: new Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -125,7 +140,7 @@ class RelayFinishState extends State<RelayFinish> {
                         child: Column(children: [
                           makeTextThin("Congratulations,", Colors.white, 20),
                           makeTextThin("Jong ha Park" + '!', Colors.white, 20),
-                          makeTwoColor("You walked ", "5.0km !", Colors.white,
+                          makeTwoColor("You walked ", "3.5km !", Colors.white,
                               Colors.white, 20),
                           makeTextSemiThin(
                               _printDuration(

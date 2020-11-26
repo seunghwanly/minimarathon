@@ -41,47 +41,36 @@ class RelayStartState extends State<RelayStart> {
     );
   }
 
-  void _showDialog() {
-    // showDialog(
-    //   context: context,
-    //   builder: (BuildContext context) {
-    //     // return object of type Dialog
-    //     return AlertDialog(
-    //       title: new Text("Sorry, " + username),
-    //       content: new Text("Relay is Available on December 10th.",
-    //           style: TextStyle(
-    //               color: Colors.black87,
-    //               fontSize: 16,
-    //               fontWeight: FontWeight.w600)),
-    //       actions: <Widget>[
-    //         new FlatButton(
-    //           child: new Text(
-    //             "Close",
-    //             style: TextStyle(color: royalblue, fontSize: 20),
-    //           ),
-    //           onPressed: () {
-    //             Navigator.pop(context);
-    //           },
-    //         ),
-    //       ],
-    //     );
-    //   },
-    // );
+  void _showDialogbefore() {
     showMyDialog(context,
         "Sorry, " + username + '\n\n' + "Relay is Available on December 10th.");
+  }
+
+  void _showDialogAfter() {
+    showMyDialog(context, "Sorry, " + username + '\n\n' + "Relay is Finished.");
   }
 
   void _navigationToLocation() {
     DateTime currentTime = DateTime.now();
 
     // TODO : 마라톤 일정에 맞게 D-Day
-    // TODO : 2020,12,10,00,00 으로 바꾸기.
+    // TODO : 2020,12,18,00,00 으로 바꾸기.
 
-    DateTime d_day = DateTime(2020, 12, 7, 23, 34, 00);
-    if (d_day.compareTo(currentTime) == 1) {
+    // TODO : 마라톤 일정에 맞게 Finish Day
+    // TODO : 2020,12,20,00,00 으로 바꾸기.
+    // DateTime d_day = DateTime(2020, 12, 18, 20, 00, 00);
+    // DateTime finish_day = DateTime(2020, 12, 20, 20, 00, 00);
+
+    DateTime d_day = DateTime(2020, 11, 18, 20, 00, 00);
+    DateTime finish_day = DateTime(2020, 12, 20, 20, 00, 00);
+    if (currentTime.isBefore(d_day) == true) {
       //마라톤날짜 이전
       print(widget.teamname);
-      _showDialog();
+      _showDialogbefore();
+    }
+    //마라톤날짜 종료시점
+    else if (currentTime.isAfter(d_day) && currentTime.isAfter(finish_day)) {
+      _showDialogAfter();
     }
 
     //마라톤 시작 !
@@ -150,50 +139,47 @@ class RelayStartState extends State<RelayStart> {
               Expanded(
                 flex: 2,
                 child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(children: <TextSpan>[
-                        TextSpan(
-                          text: "Thanks for joining\n",
-                          style: TextStyle(
-                            color: white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            letterSpacing: 2.0,
-                          )
-                        ),
-                        TextSpan(
-                          text: "2020 Hope Sharing Relay !",
-                          style: TextStyle(
-                            color: white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            letterSpacing: 2.0,
-                          )
-                        ),
-                      ]),
-                    ),
+                  textAlign: TextAlign.center,
+                  text: TextSpan(children: <TextSpan>[
+                    TextSpan(
+                        text: "Thanks for joining\n",
+                        style: TextStyle(
+                          color: white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          letterSpacing: 2.0,
+                        )),
+                    TextSpan(
+                        text: "2020 Hope Sharing Relay !",
+                        style: TextStyle(
+                          color: white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          letterSpacing: 2.0,
+                        )),
+                  ]),
+                ),
               ),
               Expanded(
                   flex: 5,
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.0),
-                      color: deepPastelblue
-                    ),
+                        borderRadius: BorderRadius.circular(30.0),
+                        color: deepPastelblue),
                     alignment: Alignment.center,
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(children: <TextSpan>[
                         TextSpan(
-                          text: "Tips\n\n",
-                          style: TextStyle(
-                            color: white,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 20,
-                            letterSpacing: 2.0,
-                          )
-                        ),
+                            text: "Tips\n\n",
+                            style: TextStyle(
+                              color: white,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 20,
+                              letterSpacing: 2.0,
+                            )),
                         TextSpan(
                             text:
                                 "The Distance measurement is based on your device's ",
@@ -228,8 +214,7 @@ class RelayStartState extends State<RelayStart> {
                     child: RaisedButton(
                       onPressed: _navigationToLocation,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30))
-                      ),
+                          borderRadius: BorderRadius.all(Radius.circular(30))),
                       color: mandarin,
                       child: Container(
                         child: makeText('Relay START', lightwhite, 28),
@@ -245,8 +230,7 @@ class RelayStartState extends State<RelayStart> {
                     child: RaisedButton(
                       onPressed: _navigation,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30))
-                      ),
+                          borderRadius: BorderRadius.all(Radius.circular(30))),
                       color: Colors.green[400],
                       child: Container(
                         child: makeText('Ranking', lightwhite, 28),
