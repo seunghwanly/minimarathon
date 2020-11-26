@@ -21,6 +21,15 @@ class Relay {
   double runningDistance = 0.0;
   int timer = 0;
 
+  Relay({this.runningDistance, this.timer});
+
+  factory Relay.fromJson(Map<String, dynamic> parsedJson) {
+    return Relay(
+      runningDistance: parsedJson['runningDistance'] as double,
+      timer : parsedJson['timer'] as int
+    );
+  }
+
   Map toJson() => {'runningDistance': runningDistance, 'timer': timer};
 }
 
@@ -38,7 +47,7 @@ class Member {
         name: parsedJson['name'],
         phoneNumber: parsedJson['phoneNumber'],
         moreVolunteer: parsedJson['moreVolunteer'],
-        relay: parsedJson['relay']
+        relay: Relay.fromJson(parsedJson['relay']) 
         );
   }
   Map toJson() => {
@@ -71,7 +80,7 @@ class Team {
 
     return Team(
         teamName: parsedJson['teamName'],
-        leader: parsedJson['Team Leader'],
+        leader: Member.fromJson(parsedJson['Team Leader']),
         members: memberList,
         donationFee: parsedJson['donationFee'],
         isPaid: parsedJson['isPaid']);
