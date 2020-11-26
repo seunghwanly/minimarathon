@@ -18,27 +18,28 @@ class Single {
 }
 
 class Relay {
-  double runningDistance = 0.0;
+  double runningDistance = 0;
   int timer = 0;
 
   Relay({this.runningDistance, this.timer});
 
   factory Relay.fromJson(Map<String, dynamic> parsedJson) {
     return Relay(
-      runningDistance: parsedJson['runningDistance'] as double,
-      timer : parsedJson['timer'] as int
-    );
+        runningDistance: parsedJson['runningDistance'] as double,
+        timer: parsedJson['timer'] as int);
   }
 
-  Map toJson() => {'runningDistance': runningDistance, 'timer': timer};
+  Map toJson() => {
+        'runningDistance': runningDistance.toString(),
+        'timer': timer.toString()
+      };
 }
 
-
 class Member {
-  String name;
-  String phoneNumber;
-  bool moreVolunteer;
-  Relay relay;
+  String name = '';
+  String phoneNumber = '';
+  bool moreVolunteer = false;
+  Relay relay = Relay(runningDistance: 0, timer: 0);
 
   Member({this.name, this.phoneNumber, this.moreVolunteer, this.relay});
 
@@ -47,14 +48,16 @@ class Member {
         name: parsedJson['name'],
         phoneNumber: parsedJson['phoneNumber'],
         moreVolunteer: parsedJson['moreVolunteer'],
-        relay: Relay.fromJson(parsedJson['relay']) 
-        );
+        relay: Relay.fromJson(parsedJson['relay']));
   }
   Map toJson() => {
         'name': name,
         'phoneNumber': phoneNumber,
-        'moreVolunteer': moreVolunteer,
-        'relay': relay.toJson()
+        'moreVolunteer': moreVolunteer.toString(),
+        'relay': {
+          'timer': relay.timer.toString(),
+          'runningDistance': relay.runningDistance.toString()
+        }
       };
 }
 

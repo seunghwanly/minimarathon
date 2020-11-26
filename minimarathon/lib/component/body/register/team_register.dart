@@ -36,8 +36,10 @@ class _TeamRegisterState extends State<TeamRegister> {
   TextEditingController teamnameControlller = new TextEditingController();
 
   //firebase auth
-  DatabaseReference teamReference =
-      FirebaseDatabase.instance.reference().child('2020HopeRelay').child("Teams");
+  DatabaseReference teamReference = FirebaseDatabase.instance
+      .reference()
+      .child('2020HopeRelay')
+      .child("Teams");
   User _user = FirebaseAuth.instance.currentUser;
 
   final _formKey = GlobalKey<FormState>(); //form
@@ -89,7 +91,6 @@ class _TeamRegisterState extends State<TeamRegister> {
     memberLength = 2; // team >= 2
     teamData.teamName = "ex) han's Family";
     teamData.donationFee = memberLength * 10;
-    teamData.members = memberList;
 
     //memberList
     for (int i = 0; i < memberLength; ++i) {
@@ -97,14 +98,19 @@ class _TeamRegisterState extends State<TeamRegister> {
       if (i == 0) {
         newMember.name = "  Leader name";
         newMember.phoneNumber = _user.phoneNumber;
+        newMember.moreVolunteer = false;
+        newMember.relay = Relay(runningDistance: 0, timer: 0);
       } else {
         newMember.name = "  Memeber name";
         newMember.phoneNumber = "  Member phone number";
+        newMember.moreVolunteer = false;
+        newMember.relay = Relay(runningDistance: 0, timer: 0);
       }
 
       newMember.moreVolunteer = false;
       memberList.add(newMember);
     }
+    teamData.members = memberList;
     //focusNode
     for (int i = 0; i < memberLength; ++i) {
       focusNameList.add(new FocusNode());
@@ -263,7 +269,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                       ),
                     ),
                     Expanded(
-                        flex: 2,
+                        flex: 3,
                         child: Container(
                           padding: EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 10.0),
@@ -288,28 +294,34 @@ class _TeamRegisterState extends State<TeamRegister> {
                                   style: TextStyle(
                                       color: lightwhite,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: MediaQuery.of(context).size.width / 26)),
+                                      fontSize:
+                                          MediaQuery.of(context).size.width /
+                                              24)),
                               TextSpan(
-                                  text:
-                                      "\nPlease, enter the ",
+                                  text: "\nPlease, enter the ",
                                   style: TextStyle(
                                       color: lightwhite,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: MediaQuery.of(context).size.width / 26)),
+                                      fontSize:
+                                          MediaQuery.of(context).size.width /
+                                              24)),
                               TextSpan(
                                   text: "CORRECT NUMBER",
                                   style: TextStyle(
                                       color: lightwhite,
                                       backgroundColor: mandarin,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: MediaQuery.of(context).size.width / 24)),
+                                      fontSize:
+                                          MediaQuery.of(context).size.width /
+                                              24)),
                               TextSpan(
-                                  text:
-                                      ".\nSo the other members can sign-in !",
+                                  text: ".\nSo the other members can sign-in !",
                                   style: TextStyle(
                                       color: lightwhite,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: MediaQuery.of(context).size.width / 26)),
+                                      fontSize:
+                                          MediaQuery.of(context).size.width /
+                                              24)),
                             ]),
                           ),
                         )),
@@ -357,6 +369,8 @@ class _TeamRegisterState extends State<TeamRegister> {
                                       newMember.phoneNumber =
                                           "  Member phone number";
                                       newMember.moreVolunteer = false;
+                                      newMember.relay = new Relay(
+                                          runningDistance: 0, timer: 0);
                                       memberList.add(newMember);
                                       focusNameList.add(new FocusNode());
                                       focusPhoneNumberList.add(new FocusNode());
@@ -492,7 +506,9 @@ class _TeamRegisterState extends State<TeamRegister> {
                                           child: TextField(
                                             decoration: InputDecoration(
                                               filled: true,
-                                              fillColor: index == 0 ? mandarin : Colors.transparent,
+                                              fillColor: index == 0
+                                                  ? mandarin
+                                                  : Colors.transparent,
                                               disabledBorder:
                                                   OutlineInputBorder(
                                                       borderRadius:
@@ -679,6 +695,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                           "Please donate least \$10 per members");
                                     }
                                     if (isPaymentAvailable) {
+                                      print('if문 입장');
                                       // make payment
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
@@ -690,6 +707,8 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                     donationFee:
                                                         teamData.donationFee,
                                                     onFinish: (res) async {
+                                                      print('중간 result:' +
+                                                          res.toString());
                                                       // payment successful
                                                       if (res == "approved") {
                                                         setState(() {
@@ -704,12 +723,22 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                             memberList
                                                                 .elementAt(0);
                                                         // memberList.removeAt(0);
-                                                        
-                                                        var listPush = List.from(memberList);
+
+                                                        var listPush =
+                                                            memberList;
                                                         listPush.removeAt(0);
+                                                        print(teamData
+                                                                .members.length
+                                                                .toString() +
+                                                            '<<멤버수');
+                                                        print(teamData.leader
+                                                            .toJson());
+                                                        //  print(
+                                                        // teamData.members.toJson().toString());
                                                         // teamData.members =
                                                         //     memberList;
-                                                        teamData.members = listPush;
+                                                        teamData.members =
+                                                            listPush;
                                                         // load to firebase
                                                         memberList
                                                             .forEach((element) {
@@ -727,6 +756,9 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                                     element
                                                                         .phoneNumber;
                                                         });
+                                                        print('파베 직전');
+                                                        print(teamData
+                                                            .toString());
                                                         await FirebaseMethod()
                                                             .teamReference
                                                             .child(teamData
