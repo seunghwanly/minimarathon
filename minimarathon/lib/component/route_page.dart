@@ -5,6 +5,7 @@ import 'package:minimarathon/component/body/register/need_payment_register.dart'
 import 'package:minimarathon/component/body/relay/relay_start.dart';
 import 'package:minimarathon/component/header/header.dart';
 import 'package:minimarathon/component/loading.dart';
+import 'package:minimarathon/util/palette.dart';
 
 class PaidUser {
   final bool isPaidUser;
@@ -34,11 +35,12 @@ class _RoutePageState extends State<RoutePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      backgroundColor: pastelblue,
       body: FutureBuilder(
         future: checkUserisPaid(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
-            return LoadingPage();
+            return new Center(child: LoadingPage());
           } else if (snapshot.hasError) {
             return Text("LOGIN ERROR !");
           } else {
@@ -95,6 +97,7 @@ class _RoutePageState extends State<RoutePage> {
         var fetchedData = Map<String, dynamic>.from(teamSnapshot.value);
         print("Team");
         fetchedData.forEach((key, value) {
+          String checkTeamname = key.toString();
           // key -> teamname
           print('> ' + key);
           var eachTeamData = Map<dynamic, dynamic>.from(value);
@@ -104,7 +107,7 @@ class _RoutePageState extends State<RoutePage> {
             bool checkTeamLeader = false;
             bool checkMember = false;
             String checkUsername = "";
-            String checkTeamname = "";
+
             // Team Leader
             if (key == "leader") {
               if (value['phoneNumber'] == currentUser.phoneNumber) {
@@ -126,10 +129,7 @@ class _RoutePageState extends State<RoutePage> {
                   checkUsername = eachMemberData['name'];
                 }
               });
-            } else if (key == "teamName") {
-              checkTeamname = key.toString();
             }
-
             if (checkMember || checkTeamLeader) {
               result = PaidUser(
                   isLeader: checkTeamLeader,
@@ -138,6 +138,8 @@ class _RoutePageState extends State<RoutePage> {
                   isTeam: true,
                   username: checkUsername,
                   teamname: checkTeamname);
+
+              return;
             }
           });
         });

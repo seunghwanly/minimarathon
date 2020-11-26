@@ -161,7 +161,7 @@ class RelayStartState extends State<RelayStart> {
                 ),
               ),
               Expanded(
-                  flex: 5,
+                  flex: 7,
                   child: Container(
                     padding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
@@ -206,7 +206,7 @@ class RelayStartState extends State<RelayStart> {
                   )),
               Expanded(flex: 1, child: Container(child: Text(''))),
               Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: Container(
                     // height:  MediaQuery.of(context).size.height * 0.8,
                     //margin: EdgeInsets.symmetric(vertical: 10),
@@ -223,7 +223,7 @@ class RelayStartState extends State<RelayStart> {
                   )),
               Expanded(flex: 1, child: Container(child: Text(''))),
               Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: Container(
                     // height:  MediaQuery.of(context).size.height * 0.8,
                     width: MediaQuery.of(context).size.width * 0.8,

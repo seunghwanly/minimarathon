@@ -191,17 +191,18 @@ class _MyHomePageState extends State<MyHomePage> {
           ));
     } else {
       // auth is not null
-      if (isPaidUser) {
-        return RelayStart(
-          isLeader: this.isLeader,
-          isTeam: this.isTeam,
-          ismember: this.ismember,
-          username: this.username,
-          teamname: this.teamname,
-        );
-      } else {
-        return NeedPaymentRegister(isoCode: this.phoneIsoCode);
-      }
+      // if (isPaidUser) {
+      //   return RelayStart(
+      //     isLeader: this.isLeader,
+      //     isTeam: this.isTeam,
+      //     ismember: this.ismember,
+      //     username: this.username,
+      //     teamname: this.teamname,
+      //   );
+      // } else {
+      //   return NeedPaymentRegister(isoCode: this.phoneIsoCode);
+      // }
+      return RoutePage();
     }
   }
 
