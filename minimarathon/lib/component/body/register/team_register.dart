@@ -100,9 +100,13 @@ class _TeamRegisterState extends State<TeamRegister> {
       if (i == 0) {
         newMember.name = "  Leader name";
         newMember.phoneNumber = _user.phoneNumber;
+        newMember.moreVolunteer = false;
+        newMember.relay = Relay(runningDistance: 0, timer: 0);
       } else {
         newMember.name = "  Memeber name";
         newMember.phoneNumber = "  Member phone number";
+        newMember.moreVolunteer = false;
+        newMember.relay = Relay(runningDistance: 0, timer: 0);
       }
 
       newMember.moreVolunteer = false;
@@ -369,6 +373,8 @@ class _TeamRegisterState extends State<TeamRegister> {
                                       newMember.phoneNumber =
                                           "  Member phone number";
                                       newMember.moreVolunteer = false;
+                                      newMember.relay = new Relay(
+                                          runningDistance: 0, timer: 0);
                                       memberList.add(newMember);
                                       focusNameList.add(new FocusNode());
                                       focusPhoneNumberList.add(new FocusNode());
@@ -694,6 +700,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                           "Please donate least \$10 per members");
                                     }
                                     if (isPaymentAvailable) {
+                                      print('if문 입장');
                                       // make payment
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
@@ -705,6 +712,8 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                     donationFee:
                                                         teamData.donationFee,
                                                     onFinish: (res) async {
+                                                      print('중간 result:' +
+                                                          res.toString());
                                                       // payment successful
                                                       if (res == "approved") {
                                                         setState(() {
@@ -736,12 +745,6 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                         print(teamData
                                                             .toJson()
                                                             .toString());
-                                                        // teamData.leader = memberList.elementAt(0);
-                                                        // memberList.removeAt(0);
-                                                        // // var newList = memberList;
-                                                        // // newList.removeAt(0);
-                                                        // teamData.members = memberList;
-                                                        
 
                                                         await teamReference
                                                             .child(teamData

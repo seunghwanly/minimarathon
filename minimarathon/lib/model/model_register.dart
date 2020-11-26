@@ -16,7 +16,7 @@ class Single {
 }
 
 class Relay {
-  double runningDistance = 0.0;
+  double runningDistance = 0;
   int timer = 0;
 
   Relay({this.runningDistance, this.timer});
@@ -27,14 +27,17 @@ class Relay {
         timer: parsedJson['timer'] as int);
   }
 
-  Map toJson() => {'runningDistance': runningDistance, 'timer': timer};
+  Map toJson() => {
+        'runningDistance': runningDistance.toString(),
+        'timer': timer.toString()
+      };
 }
 
 class Member {
-  String name;
-  String phoneNumber;
-  bool moreVolunteer;
-  Relay relay = new Relay();
+  String name = '';
+  String phoneNumber = '';
+  bool moreVolunteer = false;
+  Relay relay = Relay(runningDistance: 0, timer: 0);
 
   Member({this.name, this.phoneNumber, this.moreVolunteer, this.relay});
 
