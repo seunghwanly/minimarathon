@@ -163,7 +163,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               //   // Navigator.of(context).push(MaterialPageRoute(
                               //   //     builder: (context) => NeedPaymentRegister()));
                               // },
-                              onPressed: () => loginUser(context),
+                              // onPressed: () => loginUser(context),
+                              onPressed: () => checkUserisPaid(),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                                 // side: BorderSide(color: mandarin, width: 3.0)
@@ -202,10 +203,11 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     }
   }
-@override
-void didUpdateWidget(Widget oldWidget) {
-  print('update !');
-}
+
+  @override
+  void didUpdateWidget(Widget oldWidget) {
+    print('update !');
+  }
 
   //phone number
   @override
@@ -235,23 +237,23 @@ void didUpdateWidget(Widget oldWidget) {
     user = FirebaseAuth.instance.currentUser;
     print("uid 머임 ? " + user.uid);
     // check Single User isPaid
-     readDatabaseReference
+    readDatabaseReference
         .child('Single')
         .child(user.uid)
         .once()
         .then((DataSnapshot dataSnapshot) {
       Map<dynamic, dynamic> values = dataSnapshot.value;
-      if(dataSnapshot.value != null){
-      setState(() {
-        username = values['name'];
-        isPaidUser = true;
-      });
-      return;
+      if (dataSnapshot.value != null) {
+        setState(() {
+          username = values['name'];
+          isPaidUser = true;
+        });
+        return;
       }
     });
     //.whenComplete(() => print("Single read complete!"));
     // check Team User isPaid
-     readDatabaseReference
+    readDatabaseReference
         .child('Teams')
         .once()
         .then((DataSnapshot dataSnapshot) {
@@ -285,7 +287,6 @@ void didUpdateWidget(Widget oldWidget) {
           }
         });
         //.whenComplete(() => print("Teams read complete!"));
-        
 
         // check Member
         readDatabaseReference
@@ -312,7 +313,7 @@ void didUpdateWidget(Widget oldWidget) {
       });
     });
     //.whenComplete(() => print("Member read complete!"));
-    
+
     sleep(const Duration(seconds: 4));
     print("isPaidCheck end" + isPaidUser.toString());
     //return isPaidUser;
@@ -603,4 +604,85 @@ void didUpdateWidget(Widget oldWidget) {
     });
     print(internationalizedPhoneNumber);
   }
+
+  Future checkUserisPaid() async {
+    
+    // database
+    DatabaseReference dbRef = FirebaseDatabase.instance.reference();
+    // user
+    User currentUser = FirebaseAuth.instance.currentUser;
+    //return value
+    PaidUser result;
+
+    if (currentUser != null) {
+    //Single
+      await dbRef.child('Single').once().then((DataSnapshot singleSnapshot) {
+        var fetchedUids = Map<String, dynamic>.from(singleSnapshot.value);
+        fetchedUids.forEach((key, value) {
+          if (currentUser.uid == key) {
+            print("this user is paid for single > " +
+                key +
+                ' | ' +
+                currentUser.uid);
+            result = PaidUser(
+              isLeader: false,
+              isMember: false,
+              isTeam: false,
+              isPaidUser: true,
+              username: value['name'],
+              teamname: ""
+            );
+            print(result.toString());
+            return result;
+          }
+        });
+      });
+      
+      await dbRef.child("Teams").once().then((DataSnapshot teamSnapshot) {
+        var fetchedData = Map<String, dynamic>.from(teamSnapshot.value);
+        print("Team");
+        fetchedData.forEach((key, value) {
+          // key -> teamname
+          print(key);
+          var eachTeamData = Map<String, dynamic>.from(value);
+          eachTeamData.forEach((key, value) { 
+            // Team Leader
+            if(key == "leader") {
+              if(value['phoneNumber'] == currentUser.phoneNumber) {
+                // is Team Leader !
+                print('Team Leader');
+
+              }
+            }
+            // Member
+            else if(key == "member") {
+              var memberListData = List<Map<String, dynamic>>.from(value);
+              memberListData.forEach((element) {
+                var eachMemberData = Map<String, dynamic>.from(element);
+              });
+
+            }
+            else if(key == "teamName") {
+
+            }
+          });
+        });
+      });
+      
+    }
+
+  
+  }
+
+  
+}
+class PaidUser {
+   final bool isPaidUser;
+   final bool isTeam;
+   final bool isMember;
+   final bool isLeader;
+   final String username;
+   final String teamname;
+
+  PaidUser({this.isPaidUser, this.isTeam, this.isMember, this.isLeader, this.username, this.teamname});
 }
