@@ -39,6 +39,7 @@ class CustomHeader extends StatelessWidget {
             FlatButton.icon(
                 onPressed: () async{
                   await FirebaseAuth.instance.signOut();
+                  Navigator.of(context).pushNamedAndRemoveUntil('/main', (Route<dynamic> route) => false);
                 },
                 icon: Icon(Icons.logout, color: white),
                 label: Text(""))

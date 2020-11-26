@@ -44,10 +44,15 @@ class MyApp extends StatelessWidget {
                 theme: ThemeData(
                     // primaryColor: Colors.white,
                     ),
+                routes: {'/main': (BuildContext context) => MyApp()},
                 home: Scaffold(
-                  body: MyHomePage(),
-                )
-                );
+                    backgroundColor: pastelblue,
+                    body: GestureDetector(
+                      onTap: () {
+                        FocusScope.of(context).requestFocus(new FocusNode());
+                      },
+                      child: MyHomePage(),
+                    )));
           }
           if (snapshot.hasError) {
             return Text("Firebase initalize error !");
@@ -71,8 +76,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  //firebase init
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   //firebase auth
   FirebaseAuth _auth = FirebaseAuth.instance;
   // user authentication
@@ -85,9 +88,12 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isTeam = false;
   bool isLeader = false;
   bool ismember = false;
-
   String username = '';
   String teamname = '';
+
+  // loading page in signin
+  bool isLoading = false;
+
   // focus Node
   FocusNode smsCode = new FocusNode();
 
@@ -207,7 +213,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    isPaidCheck();
+    // if (_auth.currentUser != null) isPaidCheck();
+    // isPaidCheck();
   }
 
   isOpenned(BuildContext context) {
@@ -219,11 +226,11 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void isPaidCheck() {
+  Future<bool> isPaidCheck() async {
     print('실행');
 
     // check Single User isPaid
-    readDatabaseReference
+    await readDatabaseReference
         .child('Single')
         .child(user.uid)
         .once()
@@ -233,9 +240,9 @@ class _MyHomePageState extends State<MyHomePage> {
         username = values['name'];
         isPaidUser = true;
       });
-    });
+    }).whenComplete(() => print("Single read complete!"));
     // check Team User isPaid
-    readDatabaseReference
+    await readDatabaseReference
         .child('Teams')
         .once()
         .then((DataSnapshot dataSnapshot) {
@@ -267,7 +274,8 @@ class _MyHomePageState extends State<MyHomePage> {
               return;
             });
           }
-        });
+        }).whenComplete(() => print("Teams read complete!"));
+        ;
 
         // check Member
         readDatabaseReference
@@ -292,7 +300,11 @@ class _MyHomePageState extends State<MyHomePage> {
           }
         });
       });
-    });
+    }).whenComplete(() => print("Member read complete!"));
+    ;
+
+    print("isPaidCheck end" + isPaidUser.toString());
+    return isPaidUser;
   }
 
   Widget loading() {
@@ -319,6 +331,7 @@ class _MyHomePageState extends State<MyHomePage> {
         verificationCompleted: (PhoneAuthCredential authCredential) {
           _auth.signInWithCredential(authCredential).then((value) {
             if (value.user != null) {
+              print('value user not null');
               // LOGIN FINISHED
               isPaidCheck();
 
@@ -335,6 +348,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               teamname: teamname,
                             )));
               } else {
+                print('not paid user');
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => NeedPaymentRegister()));
               }
@@ -356,10 +370,10 @@ class _MyHomePageState extends State<MyHomePage> {
               isDismissible: true,
               isScrollControlled: true,
               context: context,
-              builder: (BuildContext context) {
+              builder: (BuildContext modalContext) {
                 return GestureDetector(
                     onTap: () {
-                      FocusScope.of(context).requestFocus(new FocusNode());
+                      FocusScope.of(modalContext).requestFocus(new FocusNode());
                     },
                     child: SingleChildScrollView(
                         child: SizedBox(
@@ -455,29 +469,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        // child: TextField(
-                                        //   controller: _codeController,
-                                        //   decoration: InputDecoration(
-                                        //       focusedBorder: OutlineInputBorder(
-                                        //           borderRadius: BorderRadius.circular(30),
-                                        //           borderSide:
-                                        //               BorderSide(color: lightgrey, width: 1)),
-                                        //       enabledBorder: OutlineInputBorder(
-                                        //           borderRadius: BorderRadius.circular(30),
-                                        //           borderSide: new BorderSide(
-                                        //               color: lightgrey, width: 1)),
-                                        //       labelText: '  SMS CODE',
-                                        //       labelStyle: TextStyle(
-                                        //           color: lightgrey,
-                                        //           fontSize: 18,
-                                        //           fontWeight: FontWeight.w500),
-                                        //       helperText:
-                                        //           "Please enter the code sent by text message.",
-                                        //       helperStyle: TextStyle(
-                                        //           color: lightgrey,
-                                        //           fontSize: 14.0,
-                                        //           fontWeight: FontWeight.normal)),
-                                        // )
                                       )),
                                   Expanded(
                                       flex: 1,
@@ -488,6 +479,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                               0.7,
                                           child: FlatButton(
                                               onPressed: () {
+                                                setState(() {
+                                                  isLoading = true;
+                                                });
                                                 // Create a PhoneAuthCredential with the code
                                                 final code =
                                                     _codeController.text.trim();
@@ -502,10 +496,19 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         phoneAuthCredential)
                                                     .then((value) {
                                                   if (value.user != null) {
+                                                    print('in modal');
+                                                    print(value
+                                                        .additionalUserInfo
+                                                        .isNewUser
+                                                        .toString());
+                                                    print('before : ' +
+                                                        isPaidUser.toString());
                                                     isPaidCheck();
-
+                                                    print('after : ' +
+                                                        isPaidUser.toString());
                                                     sleep(const Duration(
                                                         seconds: 2));
+                                                    print('after sleep !');
                                                     if (isPaidUser == true) {
                                                       Navigator.push(
                                                           context,
@@ -539,7 +542,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     //         builder: (context) =>
                                                     //             NeedPaymentRegister()));
                                                   } else {
-                                                    showMyDialog(context,
+                                                    showMyDialog(modalContext,
                                                         "SignIn Failed !");
                                                     print("Error");
                                                   }
@@ -557,7 +560,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     0.15,
                                                 alignment: Alignment.center,
                                                 child: Text(
-                                                  'SIGN-IN',
+                                                  !isLoading
+                                                      ? 'SIGN-IN'
+                                                      : 'Please Wait',
                                                   style: TextStyle(
                                                       color: white,
                                                       fontWeight:
