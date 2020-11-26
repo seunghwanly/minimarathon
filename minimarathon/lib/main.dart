@@ -202,6 +202,10 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     }
   }
+@override
+void didUpdateWidget(Widget oldWidget) {
+  print('update !');
+}
 
   //phone number
   @override
@@ -226,23 +230,28 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  Future<bool> isPaidCheck() async {
+  void isPaidCheck() {
     print('실행');
-
+    user = FirebaseAuth.instance.currentUser;
+    print("uid 머임 ? " + user.uid);
     // check Single User isPaid
-    await readDatabaseReference
+     readDatabaseReference
         .child('Single')
         .child(user.uid)
         .once()
         .then((DataSnapshot dataSnapshot) {
       Map<dynamic, dynamic> values = dataSnapshot.value;
+      if(dataSnapshot.value != null){
       setState(() {
         username = values['name'];
         isPaidUser = true;
       });
-    }).whenComplete(() => print("Single read complete!"));
+      return;
+      }
+    });
+    //.whenComplete(() => print("Single read complete!"));
     // check Team User isPaid
-    await readDatabaseReference
+     readDatabaseReference
         .child('Teams')
         .once()
         .then((DataSnapshot dataSnapshot) {
@@ -274,8 +283,9 @@ class _MyHomePageState extends State<MyHomePage> {
               return;
             });
           }
-        }).whenComplete(() => print("Teams read complete!"));
-        ;
+        });
+        //.whenComplete(() => print("Teams read complete!"));
+        
 
         // check Member
         readDatabaseReference
@@ -300,11 +310,12 @@ class _MyHomePageState extends State<MyHomePage> {
           }
         });
       });
-    }).whenComplete(() => print("Member read complete!"));
-    ;
-
+    });
+    //.whenComplete(() => print("Member read complete!"));
+    
+    sleep(const Duration(seconds: 4));
     print("isPaidCheck end" + isPaidUser.toString());
-    return isPaidUser;
+    //return isPaidUser;
   }
 
   Widget loading() {
@@ -506,8 +517,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     isPaidCheck();
                                                     print('after : ' +
                                                         isPaidUser.toString());
-                                                    sleep(const Duration(
-                                                        seconds: 2));
+                                                    // sleep(const Duration(
+                                                    //     seconds: 2));
                                                     print('after sleep !');
                                                     if (isPaidUser == true) {
                                                       Navigator.push(
@@ -528,6 +539,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                             teamname,
                                                                       )));
                                                     } else {
+                                                      print('여기로옴 ?');
                                                       Navigator.of(context).push(
                                                           MaterialPageRoute(
                                                               builder: (context) =>
