@@ -13,6 +13,10 @@ import 'package:firebase_database/firebase_database.dart';
 import '../../../util/palette.dart';
 
 class MyBackgroundLocation extends StatefulWidget {
+  final String teamName;
+  final String userName;
+
+  MyBackgroundLocation({this.teamName, this.userName});
   @override
   MyBackgroundLocationState createState() => MyBackgroundLocationState();
 }
@@ -308,6 +312,8 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                       recordTime: _start,
                                                       totalDistance:
                                                           totalDistance,
+                                                      teamName: widget.teamName,
+                                                      userName: widget.userName,
                                                     ));
 
                                             Navigator.pushReplacement(

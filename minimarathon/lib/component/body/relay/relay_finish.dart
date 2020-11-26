@@ -14,17 +14,21 @@ final FirebaseAuth auth = FirebaseAuth.instance;
 class RelayFinish extends StatefulWidget {
   final int recordTime;
   final double totalDistance;
+  final String teamName;
+  final String userName;
 
-  RelayFinish({this.recordTime, this.totalDistance});
+  RelayFinish(
+      {this.recordTime, this.totalDistance, this.teamName, this.userName});
   @override
   RelayFinishState createState() => RelayFinishState();
 }
 
 class RelayFinishState extends State<RelayFinish> {
-  final String username = 'Jong Ha Park';
-  String userPhoneNumber;
+  String username = 'Jong Ha Park';
+  User _user = FirebaseAuth.instance.currentUser;
+  String userPhoneNumber = '';
   // TODO: 이거 start할 때 정보 받아와서 저장
-  final String teamName = 'myTeam1';
+  String teamName = 'myTeam1';
   bool isTeam = true;
 
   void getUserNumber() async {
@@ -34,7 +38,7 @@ class RelayFinishState extends State<RelayFinish> {
   }
 
   void _updateInfo() async {
-    getUserNumber();
+    //getUserNumber();
     if (isTeam) {
       await databaseReference
           .child("Teams")
@@ -103,6 +107,9 @@ class RelayFinishState extends State<RelayFinish> {
   @override
   void initState() {
     super.initState();
+    userPhoneNumber = _user.phoneNumber;
+    username = widget.userName;
+    teamName = widget.teamName;
   }
 
   @override
@@ -125,7 +132,7 @@ class RelayFinishState extends State<RelayFinish> {
               ),
               Expanded(flex: 1, child: Container(child: Text(''))),
               Expanded(
-                flex: 5,
+                flex: 6,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -154,7 +161,7 @@ class RelayFinishState extends State<RelayFinish> {
               ),
               Expanded(flex: 1, child: Container(child: Text(''))),
               Expanded(
-                flex: 3,
+                flex: 4,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -180,7 +187,7 @@ class RelayFinishState extends State<RelayFinish> {
               ),
               Expanded(flex: 1, child: Container(child: Text(''))),
               Expanded(
-                  flex: 3,
+                  flex: 4,
                   child: Container(
                     // height:  MediaQuery.of(context).size.height * 0.8,
                     //margin: EdgeInsets.symmetric(vertical: 10),
@@ -196,8 +203,8 @@ class RelayFinishState extends State<RelayFinish> {
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          makeTextSemiThin('More Volunteer', white, 25),
-                          makeTextSemiThin('Opportunities', white, 25),
+                          makeTextSemiThin('More Volunteer', white, 24),
+                          makeTextSemiThin('Opportunities', white, 24),
                         ],
                       )),
                     ),
@@ -215,7 +222,7 @@ class RelayFinishState extends State<RelayFinish> {
                     child: FlatButton(
                       onPressed: _navigationRanking,
                       child: Container(
-                        child: makeTextSemiThin('Show Ranking', lightwhite, 26),
+                        child: makeTextSemiThin('Show Ranking', lightwhite, 24),
                       ),
                     ),
                   )),

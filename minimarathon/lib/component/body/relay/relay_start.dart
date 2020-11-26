@@ -78,7 +78,10 @@ class RelayStartState extends State<RelayStart> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (BuildContext context) => MyBackgroundLocation(),
+          builder: (BuildContext context) => MyBackgroundLocation(
+            teamName: teamname,
+            userName: username,
+          ),
         ),
       );
     }
