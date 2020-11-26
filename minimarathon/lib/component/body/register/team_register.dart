@@ -134,7 +134,7 @@ class _TeamRegisterState extends State<TeamRegister> {
             key: _formKey,
             child: SingleChildScrollView(
                 child: SizedBox(
-              height: MediaQuery.of(context).size.height * 1.5,
+              height: MediaQuery.of(context).size.height * 1.8,
               width: MediaQuery.of(context).size.width,
               child: Container(
                 padding: EdgeInsets.all(20.0),
@@ -143,7 +143,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                   children: [
                     Expanded(
                       // ---------------------------------------------------------------------------TEAM NAME
-                      flex: 2,
+                      flex: 3,
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.8,
                         margin: EdgeInsets.only(bottom: 10.0),
@@ -152,7 +152,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Expanded(
-                                flex: 3,
+                                flex: 2,
                                 child: Container(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
@@ -164,7 +164,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                   ),
                                 )),
                             Expanded(
-                                flex: 4,
+                                flex: 5,
                                 child: Container(
                                     child: Row(
                                   mainAxisAlignment:
@@ -263,7 +263,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                       ),
                     ),
                     Expanded(
-                        flex: 2,
+                        flex: 3,
                         child: Container(
                           padding: EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 10.0),
