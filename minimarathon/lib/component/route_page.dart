@@ -87,8 +87,6 @@ class _RoutePageState extends State<RoutePage> {
                 isPaidUser: true,
                 username: value['name'],
                 teamname: "");
-            print(result.toString());
-            return result;
           }
         });
       });
@@ -138,13 +136,11 @@ class _RoutePageState extends State<RoutePage> {
                   isTeam: true,
                   username: checkUsername,
                   teamname: checkTeamname);
-
-              return;
             }
           });
         });
       });
     }
-    return result;
+    return result != null ? result : result = PaidUser(isPaidUser: false);
   }
 }

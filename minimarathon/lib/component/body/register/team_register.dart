@@ -462,6 +462,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                       width: 3)),
                                               // TODO : prefix to input
                                               prefixText: '+1', // US
+                                              prefixIcon: Text('+1'),
                                               hintText:
                                                   '  Please type phonenumber ...',
                                               hintStyle: TextStyle(
