@@ -37,7 +37,7 @@ class _TeamRegisterState extends State<TeamRegister> {
 
   //firebase auth
   DatabaseReference teamReference =
-      FirebaseDatabase.instance.reference().child("Teams");
+      FirebaseDatabase.instance.reference().child('2020HopeRelay').child("Teams");
   User _user = FirebaseAuth.instance.currentUser;
 
   final _formKey = GlobalKey<FormState>(); //form
