@@ -87,7 +87,7 @@ class _TeamRegisterState extends State<TeamRegister> {
     //init state
     teamData = new Team();
     memberLength = 2; // team >= 2
-    teamData.teamName = "";
+    teamData.teamName = "ex) han's Family";
     teamData.donationFee = memberLength * 10;
     teamData.members = memberList;
 
@@ -134,7 +134,7 @@ class _TeamRegisterState extends State<TeamRegister> {
             key: _formKey,
             child: SingleChildScrollView(
                 child: SizedBox(
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery.of(context).size.height * 1.5,
               width: MediaQuery.of(context).size.width,
               child: Container(
                 padding: EdgeInsets.all(20.0),
@@ -164,12 +164,12 @@ class _TeamRegisterState extends State<TeamRegister> {
                                   ),
                                 )),
                             Expanded(
-                                flex: 6,
-                                child: Row(
+                                flex: 4,
+                                child: Container(
+                                    child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Expanded(
                                       flex: 7,
@@ -219,6 +219,10 @@ class _TeamRegisterState extends State<TeamRegister> {
                                     Expanded(
                                       flex: 2,
                                       child: Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              15,
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(20.0),
@@ -243,23 +247,70 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                           size: 30))),
                                     )
                                   ],
-                                ))
+                                ))),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                "Team name duplication check will be done before payment !",
+                                style: TextStyle(
+                                    color: lightwhite,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.0),
+                              ),
+                            )
                           ],
                         ),
                       ),
                     ),
                     Expanded(
-                        flex: 1,
+                        flex: 2,
                         child: Container(
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 20.0, vertical: 5.0),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "name duplication check will be done before payment !",
-                            style: TextStyle(
-                                color: lightwhite,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14.0),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30.0),
+                              color: deepPastelblue),
+                          alignment: Alignment.center,
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(children: <TextSpan>[
+                              TextSpan(
+                                  text: "Tips\n\n",
+                                  style: TextStyle(
+                                    color: white,
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 20,
+                                    letterSpacing: 2.0,
+                                  )),
+                              TextSpan(
+                                  text:
+                                      "You can set up the members with the buttons below !",
+                                  style: TextStyle(
+                                      color: lightwhite,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: MediaQuery.of(context).size.width / 26)),
+                              TextSpan(
+                                  text:
+                                      "\nPlease, enter the ",
+                                  style: TextStyle(
+                                      color: lightwhite,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: MediaQuery.of(context).size.width / 26)),
+                              TextSpan(
+                                  text: "CORRECT NUMBER",
+                                  style: TextStyle(
+                                      color: lightwhite,
+                                      backgroundColor: mandarin,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: MediaQuery.of(context).size.width / 24)),
+                              TextSpan(
+                                  text:
+                                      ".\nSo the other members can sign-in !",
+                                  style: TextStyle(
+                                      color: lightwhite,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: MediaQuery.of(context).size.width / 26)),
+                            ]),
                           ),
                         )),
                     Expanded(
@@ -335,7 +386,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                             padding: EdgeInsets.symmetric(vertical: 5.0),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30.0),
-                                color: royalblue),
+                                color: deepPastelblue),
                             child: ListView.builder(
                               //TODO:scrollcontroller height
                               // physics: NeverScrollableScrollPhysics(),
@@ -440,6 +491,8 @@ class _TeamRegisterState extends State<TeamRegister> {
                                               vertical: 5.0),
                                           child: TextField(
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: index == 0 ? mandarin : Colors.transparent,
                                               disabledBorder:
                                                   OutlineInputBorder(
                                                       borderRadius:
@@ -460,9 +513,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                   borderSide: new BorderSide(
                                                       color: lightwhite,
                                                       width: 3)),
-                                              // TODO : prefix to input
                                               prefixText: '+1', // US
-                                              prefixIcon: Text('+1'),
                                               hintText:
                                                   '  Please type phonenumber ...',
                                               hintStyle: TextStyle(
@@ -471,7 +522,9 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                   ? _user.phoneNumber
                                                   : '${memberList[index].phoneNumber}',
                                               labelStyle: TextStyle(
-                                                  color: Colors.white54,
+                                                  color: index == 0
+                                                      ? white
+                                                      : Colors.white54,
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.w500),
                                             ),
@@ -480,7 +533,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                             onChanged: (number) {
                                               setState(() {
                                                 memberList[index].phoneNumber =
-                                                    number;
+                                                    '+1' + number;
                                               });
                                             },
                                             textInputAction:
@@ -650,10 +703,13 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                         teamData.leader =
                                                             memberList
                                                                 .elementAt(0);
-                                                        memberList.removeAt(0);
-
-                                                        teamData.members =
-                                                            memberList;
+                                                        // memberList.removeAt(0);
+                                                        
+                                                        var listPush = List.from(memberList);
+                                                        listPush.removeAt(0);
+                                                        // teamData.members =
+                                                        //     memberList;
+                                                        teamData.members = listPush;
                                                         // load to firebase
                                                         memberList
                                                             .forEach((element) {
@@ -720,7 +776,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              color: royalblue,
+                              color: deepPastelblue,
                               child: Container(
                                 width: double.infinity,
                                 // height: MediaQuery.of(context).size.width * 0.2,

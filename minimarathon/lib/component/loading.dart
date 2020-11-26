@@ -15,15 +15,16 @@ class LoadingPage extends StatefulWidget {
 class _LoadingPageState extends State<LoadingPage> {
   @override
   Widget build(BuildContext context) {
-
     // widget.onFinish(widget.res);
 
-    return Container(
-        child: LoadingBouncingGrid.circle(
-        borderColor: orange,
-        size: 50.0,
-        backgroundColor: Colors.transparent,
-        duration: Duration(milliseconds: 5000),
-      ));
-  } 
+    return Center(
+        child: Container(
+            color: pastelblue,
+            child: LoadingBouncingGrid.circle(
+              borderColor: orange,
+              size: 50.0,
+              backgroundColor: Colors.transparent,
+              duration: Duration(milliseconds: 5000),
+            )));
+  }
 }
