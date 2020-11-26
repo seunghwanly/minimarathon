@@ -236,29 +236,33 @@ class _MyHomePageState extends State<MyHomePage> {
     user = FirebaseAuth.instance.currentUser;
     print("uid 머임 ? " + user.uid);
     // check Single User isPaid
-    await readDatabaseReference
+    var isSingle = await readDatabaseReference
         .child('Single')
         .child(user.uid)
         .once()
         .then((DataSnapshot dataSnapshot) {
+      //isSingle boolean
+      bool isSingle = false;
       Map<dynamic, dynamic> values = dataSnapshot.value;
-      print(values.toString());
+
       if (dataSnapshot.value != null) {
         username = values['name'];
         isPaidUser = true;
-        return isPaidUser;
+
+        isSingle = true;
       }
+      // ignore: unnecessary_statements
+      return isSingle;
     });
-    //.whenComplete(() => print("Single read complete!"));
-    // check Team User isPaid
-    await readDatabaseReference
+
+    var isTeamorMember = await readDatabaseReference
         .child('Teams')
         .once()
         .then((DataSnapshot dataSnapshot) {
       Map<dynamic, dynamic> values = dataSnapshot.value;
-      values.forEach((key, value) {
+      values.forEach((key, value) async {
         // check Leader
-        readDatabaseReference
+        await readDatabaseReference
             .child('Teams')
             .child(key)
             .child('leader')
@@ -278,14 +282,14 @@ class _MyHomePageState extends State<MyHomePage> {
               isPaidUser = true;
               teamname = key.toString();
               username = dataSnapshot.value.toString();
-              return isPaidUser;
+              return true;
             });
           }
         });
         //.whenComplete(() => print("Teams read complete!"));
 
         // check Member
-        readDatabaseReference
+        await readDatabaseReference
             .child('Teams')
             .child(key)
             .child('members')
@@ -302,15 +306,29 @@ class _MyHomePageState extends State<MyHomePage> {
               teamname = key.toString();
               isPaidUser = true;
 
-              return isPaidUser;
+              return true;
             }
           }
         });
       });
+      return false;
     });
-    //.whenComplete(() => print("Member read complete!"));
 
-    print("isPaidCheck end" + isPaidUser.toString());
+
+    print("isPaidCheck end > " +
+        isSingle.toString() +
+        "\t" +
+        isTeamorMember.toString());
+
+    if (isSingle && isTeamorMember == false)
+      return isSingle;
+    else if (isTeamorMember && isSingle == false)
+      return isTeamorMember;
+    else {
+      print('not paid user not member');
+      return false;
+    }
+
     //return isPaidUser;
   }
 
@@ -336,11 +354,11 @@ class _MyHomePageState extends State<MyHomePage> {
         phoneNumber: this.phoneInternationalNumber,
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         verificationCompleted: (PhoneAuthCredential authCredential) {
-          _auth.signInWithCredential(authCredential).then((value) {
+          _auth.signInWithCredential(authCredential).then((value) async {
             if (value.user != null) {
               print('value user not null');
               // LOGIN FINISHED
-              isPaidCheck();
+              await isPaidCheck();
 
               sleep(const Duration(seconds: 2));
               if (isPaidUser == true) {
@@ -511,15 +529,19 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     print('before : ' +
                                                         isPaidUser.toString());
 
-                                                    await isPaidCheck();
+                                                    var paidCheckResult =
+                                                        await isPaidCheck();
 
-                                                    print('after : ' +
-                                                        isPaidUser.toString());
+                                                    print(
+                                                        '==============================after : ' +
+                                                            paidCheckResult
+                                                                .toString());
                                                     // sleep(const Duration(
                                                     //     seconds: 2));
                                                     print('after sleep !');
                                                     // sleep(const Duration(seconds: 8));
-                                                    if (isPaidUser == true) {
+                                                    if (paidCheckResult ==
+                                                        true) {
                                                       Navigator.push(
                                                           context,
                                                           MaterialPageRoute(
