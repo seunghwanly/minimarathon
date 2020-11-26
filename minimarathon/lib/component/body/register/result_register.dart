@@ -8,8 +8,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../../util/text_style.dart';
 
-
-final databaseReference = FirebaseDatabase.instance.reference();
+final databaseReference =
+    FirebaseDatabase.instance.reference().child('2020HopeRelay');
 
 class Register extends StatefulWidget {
   @override
@@ -59,7 +59,6 @@ class RegisterState extends State<Register> {
                     makeText(
                         'Thank you for your sharing !', Colors.black54, 21),
                     makeText(username + '.', Colors.black54, 24),
-                    
                   ],
                 ),
               ),

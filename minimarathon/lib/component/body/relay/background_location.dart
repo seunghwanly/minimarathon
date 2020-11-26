@@ -18,7 +18,8 @@ class MyBackgroundLocation extends StatefulWidget {
 }
 
 class MyBackgroundLocationState extends State<MyBackgroundLocation> {
-  final databaseReference = FirebaseDatabase.instance.reference();
+  final databaseReference =
+      FirebaseDatabase.instance.reference().child('2020HopeRelay');
   double beforeLat = 0;
   double beforeLong = 0;
   double currentLat = 1;

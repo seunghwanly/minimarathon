@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // user authentication
   DateTime serviceStateDate = new DateTime.utc(2020, 12, 10);
   DatabaseReference readDatabaseReference =
-      FirebaseDatabase.instance.reference();
+      FirebaseDatabase.instance.reference().child('2020HopeRelay');
   // user State
   User user = FirebaseAuth.instance.currentUser;
   bool isPaidUser = false;
@@ -495,7 +495,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         MaterialPageRoute(
                                                             builder: (context) =>
                                                                 RoutePage()));
-
                                                   } else {
                                                     showMyDialog(modalContext,
                                                         "SignIn Failed !");

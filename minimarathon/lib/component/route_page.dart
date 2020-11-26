@@ -64,7 +64,8 @@ class _RoutePageState extends State<RoutePage> {
 
   Future<PaidUser> checkUserisPaid() async {
     // database
-    DatabaseReference dbRef = FirebaseDatabase.instance.reference();
+    DatabaseReference dbRef =
+        FirebaseDatabase.instance.reference().child('2020HopeRelay');
     // user
     User currentUser = FirebaseAuth.instance.currentUser;
     //return value
