@@ -16,6 +16,7 @@ class Ranking extends StatefulWidget {
 }
 
 List<Member> memberList = new List<Member>();
+
 //List<_Row> _rows= new List<_Row>(10);
 class RankingState extends State<Ranking> {
   final String username = 'Jong Ha Park';
@@ -35,7 +36,7 @@ class RankingState extends State<Ranking> {
     });
   }
 
-  String makeTimeString(int timer){
+  String makeTimeString(int timer) {
     int ihour = timer ~/ 3600;
     int imin = (timer - (ihour * 3600)) ~/ 60;
     int isec = timer - (ihour * 3600) - (imin * 60);
@@ -45,7 +46,6 @@ class RankingState extends State<Ranking> {
     String time = hour + ":" + min + ":" + sec;
     return time;
   }
-
 
   void readList() async {
     String name;
@@ -68,7 +68,7 @@ class RankingState extends State<Ranking> {
 
     // Team
     var tquery = referenceDatabase.child('Teams');
-    await tquery.once().then((DataSnapshot dataSnapshot){
+    await tquery.once().then((DataSnapshot dataSnapshot) {
       if (dataSnapshot.value != null) {
         dynamic values = dataSnapshot.value;
         values.forEach((key, value) {
@@ -91,13 +91,12 @@ class RankingState extends State<Ranking> {
       }
     });
 
-
-
     bool isSort = false;
     List<_Row> sortedList = new List<_Row>();
 
     setState(() {
-      tmpList.sort((a, b) => isSort ? (a.time).compareTo(b.time) : (b.time).compareTo(a.time));
+      tmpList.sort((a, b) =>
+          isSort ? (a.time).compareTo(b.time) : (b.time).compareTo(a.time));
       isSort = !isSort;
       tmpList.forEach((i) {
         String name = i.name;
@@ -122,7 +121,6 @@ class RankingState extends State<Ranking> {
       body: ListView(
         padding: const EdgeInsets.all(5),
         children: [
-
           Container(
             decoration: BoxDecoration(
                 // color: lightwhite,
@@ -140,12 +138,12 @@ class RankingState extends State<Ranking> {
               source: _DataSource.withrows(currentRowList),
             ),
           )
-
         ],
       ),
     );
   }
 }
+
 class _Mem {
   _Mem(this.name, this.time);
   final String name;
@@ -172,43 +170,7 @@ class _DataSource extends DataTableSource {
   }
   _DataSource.withrows(var _rows) {
     this._rows = _rows;
-    //_selectedCount = 0;
-    // query.onChildAdded.forEach((event) {
-    //   name = event.snapshot.value['Name'];
-    //   timer = event.snapshot.value['Timer'];
-    //   int ihour = timer ~/ 3600;
-    //   int imin = (timer - (ihour * 3600)) ~/ 60;
-    //   int isec = timer - (ihour * 3600) - (imin * 60);
-    //   String hour = (ihour < 10 ? "0" : "") + ihour.toString();
-    //   String min = (imin < 10 ? "0" : "") + imin.toString();
-    //   String sec = (isec < 10 ? "0" : "") + isec.toString();
-    //   String time = hour + ":" + min + ":" + sec;
-    //   this._rows.add(new _Row(name, time));
-    // });
-
-    //_rows.add(new _Row("fd", "fdfdfdf"));
-    //_rows.add(new _Row(1,, "fd"));
-    // _rows = <_Row>[
-    //   // _Row(1, 'Mados', '00:52:33'),
-    //   // _Row(2, 'kook', '00:53:53'),
-    //   // _Row(3, 'tata', '00:56:43'),
-    //   // _Row(4, 'puni', '00:58:17'),
-    //   // _Row(1, 'Mados', '00:52:33'),
-    //   // _Row(2, 'kook', '00:53:53'),
-    //   // _Row(3, 'tata', '00:56:43'),
-    //   // _Row(4, 'puni', '00:58:17'),
-    //   // _Row(1, 'Mados', '00:52:33'),
-    //   // _Row(2, 'kook', '00:53:53'),
-    //   // _Row(3, 'tata', '00:56:43'),
-    //   // _Row(4, 'puni', '00:58:17'),
-    //   // _Row(1, 'Mados', '00:52:33'),
-    //   // _Row(2, 'kook', '00:53:53'),
-    //   // _Row(3, 'tata', '00:56:43'),
-    //   // _Row(4, 'puni', '00:58:17'),
-    // ];
   }
-
-  //final BuildContext context;
 
   @override
   DataRow getRow(int index) {
@@ -217,7 +179,7 @@ class _DataSource extends DataTableSource {
     final row = _rows[index];
     return DataRow(
       cells: [
-        DataCell(Text(index.toString())),
+        DataCell(Text((index + 1).toString())),
         DataCell(Text(row.name)),
         DataCell(Text(row.time.toString())),
       ],
