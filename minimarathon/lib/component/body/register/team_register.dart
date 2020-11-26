@@ -501,7 +501,6 @@ class _TeamRegisterState extends State<TeamRegister> {
                                               // labelText: 'Member ' +
                                               //     (index + 1).toString() +
                                               //     ' Name',
-                                              prefixText: '+1', // US
                                               labelText:
                                                   '${memberList[index].name}',
                                               hintText:
@@ -563,6 +562,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                               // labelText: 'Member ' +
                                               //     (index + 1).toString() +
                                               //     ' Phone Number',
+                                              prefixText: '+1', // US
                                               hintText:
                                                   '  Please type phonenumber ...',
                                               hintStyle: TextStyle(
