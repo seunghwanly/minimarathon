@@ -202,10 +202,11 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     }
   }
-@override
-void didUpdateWidget(Widget oldWidget) {
-  print('update !');
-}
+
+  @override
+  void didUpdateWidget(Widget oldWidget) {
+    print('update !');
+  }
 
   //phone number
   @override
@@ -230,28 +231,27 @@ void didUpdateWidget(Widget oldWidget) {
     }
   }
 
-  void isPaidCheck() {
+  Future<bool> isPaidCheck() async {
     print('실행');
     user = FirebaseAuth.instance.currentUser;
     print("uid 머임 ? " + user.uid);
     // check Single User isPaid
-     readDatabaseReference
+    await readDatabaseReference
         .child('Single')
         .child(user.uid)
         .once()
         .then((DataSnapshot dataSnapshot) {
       Map<dynamic, dynamic> values = dataSnapshot.value;
-      if(dataSnapshot.value != null){
-      setState(() {
+      print(values.toString());
+      if (dataSnapshot.value != null) {
         username = values['name'];
         isPaidUser = true;
-      });
-      return;
+        return isPaidUser;
       }
     });
     //.whenComplete(() => print("Single read complete!"));
     // check Team User isPaid
-     readDatabaseReference
+    await readDatabaseReference
         .child('Teams')
         .once()
         .then((DataSnapshot dataSnapshot) {
@@ -273,19 +273,16 @@ void didUpdateWidget(Widget oldWidget) {
                 .child('name')
                 .once()
                 .then((DataSnapshot dataSnapshot) {
-              setState(() {
-                isTeam = true;
-                isLeader = true;
-                isPaidUser = true;
-                teamname = key.toString();
-                username = dataSnapshot.value.toString();
-              });
-              return;
+              isTeam = true;
+              isLeader = true;
+              isPaidUser = true;
+              teamname = key.toString();
+              username = dataSnapshot.value.toString();
+              return isPaidUser;
             });
           }
         });
         //.whenComplete(() => print("Teams read complete!"));
-        
 
         // check Member
         readDatabaseReference
@@ -298,22 +295,21 @@ void didUpdateWidget(Widget oldWidget) {
           for (var i = 0; i < values.length; i++) {
             if (values[i]['phoneNumber'] == user.phoneNumber) {
               print('팀명 : ' + key.toString());
-              setState(() {
-                username = values[i]['name'];
-                isTeam = true;
-                ismember = true;
-                teamname = key.toString();
-                isPaidUser = true;
-              });
-              return;
+
+              username = values[i]['name'];
+              isTeam = true;
+              ismember = true;
+              teamname = key.toString();
+              isPaidUser = true;
+
+              return isPaidUser;
             }
           }
         });
       });
     });
     //.whenComplete(() => print("Member read complete!"));
-    
-    sleep(const Duration(seconds: 4));
+
     print("isPaidCheck end" + isPaidUser.toString());
     //return isPaidUser;
   }
@@ -505,7 +501,7 @@ void didUpdateWidget(Widget oldWidget) {
                                                 _auth
                                                     .signInWithCredential(
                                                         phoneAuthCredential)
-                                                    .then((value) {
+                                                    .then((value) async {
                                                   if (value.user != null) {
                                                     print('in modal');
                                                     print(value
@@ -514,12 +510,15 @@ void didUpdateWidget(Widget oldWidget) {
                                                         .toString());
                                                     print('before : ' +
                                                         isPaidUser.toString());
-                                                    isPaidCheck();
+
+                                                    await isPaidCheck();
+
                                                     print('after : ' +
                                                         isPaidUser.toString());
                                                     // sleep(const Duration(
                                                     //     seconds: 2));
                                                     print('after sleep !');
+                                                    // sleep(const Duration(seconds: 8));
                                                     if (isPaidUser == true) {
                                                       Navigator.push(
                                                           context,
