@@ -194,11 +194,11 @@ class _TeamRegisterState extends State<TeamRegister> {
     for (int i = 0; i < memberLength; ++i) {
       Member newMember = new Member();
       if (i == 0) {
-        newMember.name = "";
+        newMember.name = "  Leader name";
         newMember.phoneNumber = _user.phoneNumber;
       } else {
-        newMember.name = "";
-        newMember.phoneNumber = "";
+        newMember.name = "  Memeber name";
+        newMember.phoneNumber = "  Member phone number";
       }
 
       newMember.moreVolunteer = false;
@@ -354,7 +354,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                               horizontal: 20.0, vertical: 5.0),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "name duplication check will be done after payment !",
+                            "name duplication check will be done before payment !",
                             style: TextStyle(
                                 color: lightwhite,
                                 fontWeight: FontWeight.bold,
@@ -562,6 +562,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                               // labelText: 'Member ' +
                                               //     (index + 1).toString() +
                                               //     ' Phone Number',
+                                              prefixText: '+1', // US
                                               hintText:
                                                   '  Please type phonenumber ...',
                                               hintStyle: TextStyle(
