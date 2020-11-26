@@ -233,11 +233,12 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void isPaidCheck() {
+  Future<bool> isPaidCheck() async {
     print('실행');
     user = FirebaseAuth.instance.currentUser;
     print("uid 머임 ? " + user.uid);
     // check Single User isPaid
+
     readDatabaseReference
         .child('Single')
         .child(user.uid)
@@ -254,6 +255,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
     //.whenComplete(() => print("Single read complete!"));
     // check Team User isPaid
+
     readDatabaseReference
         .child('Teams')
         .once()
@@ -276,14 +278,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 .child('name')
                 .once()
                 .then((DataSnapshot dataSnapshot) {
-              setState(() {
-                isTeam = true;
-                isLeader = true;
-                isPaidUser = true;
-                teamname = key.toString();
-                username = dataSnapshot.value.toString();
-              });
-              return;
+              isTeam = true;
+              isLeader = true;
+              isPaidUser = true;
+              teamname = key.toString();
+              username = dataSnapshot.value.toString();
+              return isPaidUser;
             });
           }
         });
@@ -300,14 +300,14 @@ class _MyHomePageState extends State<MyHomePage> {
           for (var i = 0; i < values.length; i++) {
             if (values[i]['phoneNumber'] == user.phoneNumber) {
               print('팀명 : ' + key.toString());
-              setState(() {
-                username = values[i]['name'];
-                isTeam = true;
-                ismember = true;
-                teamname = key.toString();
-                isPaidUser = true;
-              });
-              return;
+
+              username = values[i]['name'];
+              isTeam = true;
+              ismember = true;
+              teamname = key.toString();
+              isPaidUser = true;
+
+              return isPaidUser;
             }
           }
         });
@@ -315,7 +315,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
     //.whenComplete(() => print("Member read complete!"));
 
-    sleep(const Duration(seconds: 4));
     print("isPaidCheck end" + isPaidUser.toString());
     //return isPaidUser;
   }
@@ -487,13 +486,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 _auth
                                                     .signInWithCredential(
                                                         phoneAuthCredential)
-                                                    .then((value) {
+                                                    .then((value) async {
                                                   if (value.user != null) {
                                                     print('in modal');
+
                                                     Navigator.of(context).push(
                                                         MaterialPageRoute(
                                                             builder: (context) =>
                                                                 RoutePage()));
+
                                                   } else {
                                                     showMyDialog(modalContext,
                                                         "SignIn Failed !");
