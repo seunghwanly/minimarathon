@@ -94,15 +94,12 @@ class _RoutePageState extends State<RoutePage> {
 
       await dbRef.child("Teams").once().then((DataSnapshot teamSnapshot) {
         var fetchedData = Map<String, dynamic>.from(teamSnapshot.value);
-        print("Team");
         fetchedData.forEach((key, value) {
           String checkTeamname = key.toString();
           // key -> teamname
-          print('> ' + key);
           var eachTeamData = Map<dynamic, dynamic>.from(value);
           // for each
           eachTeamData.forEach((key, value) {
-            print('> > ' + key.toString());
             bool checkTeamLeader = false;
             bool checkMember = false;
             String checkUsername = "";
@@ -111,7 +108,6 @@ class _RoutePageState extends State<RoutePage> {
             if (key == "leader") {
               if (value['phoneNumber'] == currentUser.phoneNumber) {
                 // is Team Leader !
-                print('Team Leader');
                 checkTeamLeader = true;
               }
             }
@@ -119,11 +115,9 @@ class _RoutePageState extends State<RoutePage> {
             else if (key == "members") {
               var memberListData = List<Map<dynamic, dynamic>>.from(value);
               memberListData.forEach((element) {
-                print('> > > ' + element.toString());
                 var eachMemberData = Map<dynamic, dynamic>.from(element);
                 //check number
                 if (currentUser.phoneNumber == eachMemberData['phoneNumber']) {
-                  print("Team Member");
                   checkMember = true;
                   checkUsername = eachMemberData['name'];
                 }

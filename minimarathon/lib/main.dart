@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return MaterialApp(
+                debugShowCheckedModeBanner: false,
                 theme: ThemeData(
                     // primaryColor: Colors.white,
                     ),

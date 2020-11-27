@@ -11,6 +11,7 @@ final databaseReference =
     FirebaseDatabase.instance.reference().child('2020HopeRelay');
 final FirebaseAuth auth = FirebaseAuth.instance;
 
+
 class RelayFinish extends StatefulWidget {
   final int recordTime;
   final double totalDistance;
@@ -27,8 +28,7 @@ class RelayFinishState extends State<RelayFinish> {
   String username = 'Jong Ha Park';
   User _user = FirebaseAuth.instance.currentUser;
   String userPhoneNumber = '';
-  // TODO: 이거 start할 때 정보 받아와서 저장
-  String teamName = 'myTeam1';
+  String teamName;
   bool isTeam = true;
 
   void getUserNumber() async {
@@ -38,50 +38,40 @@ class RelayFinishState extends State<RelayFinish> {
   }
 
   void _updateInfo() async {
-    //getUserNumber();
-    if (isTeam) {
-      await databaseReference
-          .child("Teams")
-          .child(teamName)
-          .child("Team Leader")
-          .once()
-          .then((DataSnapshot snapshot) {
-        Map<dynamic, dynamic> values = snapshot.value;
-        values.forEach((k, v) {
-          if (v["Phone Number"] == userPhoneNumber) {
-            databaseReference
-                .child("Teams")
-                .child(teamName)
-                .child("Team Leader")
-                .child(k)
-                .update({'More': true});
+    await databaseReference.child("Single").once().then((DataSnapshot singleSnapshot) {
+        var uidInfo = Map<String, dynamic>.from(singleSnapshot.value);
+        uidInfo.forEach((k, v) {
+          if (auth.currentUser.uid == k) {
+            databaseReference.child("Single").child(k)
+                .update({'moreVolunteer': true});
           }
         });
-      });
-      await databaseReference
-          .child("Teams")
-          .child(teamName)
-          .child("Team Member")
-          .once()
-          .then((DataSnapshot snapshot) {
-        Map<dynamic, dynamic> values = snapshot.value;
-        values.forEach((k, v) {
-          if (v["Phone Number"] == userPhoneNumber) {
-            databaseReference
-                .child("Teams")
-                .child(teamName)
-                .child("Team Member")
-                .child(k)
-                .update({'More': true});
-          }
+    });
+    await databaseReference.child("Teams").once().then((DataSnapshot dataSnapshot) {
+        dataSnapshot.value.forEach((k, v) {
+          String teamInfo = k.toString();
+          Map<dynamic, dynamic> eachTeamData = v;
+          eachTeamData.forEach((k, v) {
+            if (k == "leader") {
+              if (v['phoneNumber'] == auth.currentUser.phoneNumber) {
+                databaseReference.child("Teams").child(teamInfo).child(k)
+                .update({'moreVolunteer': true});
+              }
+            }
+            else if (k == "members") {
+              var memberList = List<Map<dynamic, dynamic>>.from(v);
+              memberList.forEach((values) {
+                var eachMemberData = Map<dynamic, dynamic>.from(values);
+                if (auth.currentUser.phoneNumber == eachMemberData['phoneNumber']) {
+                  var index = memberList.indexOf(values).toString();
+                  databaseReference.child("Teams").child(teamInfo).child(k).child(index)
+                  .update({'moreVolunteer': true});
+                }
+              });
+            }
+          });
         });
       });
-    } else {
-      databaseReference
-          .child("Single")
-          .child(auth.currentUser.uid)
-          .update({'More': true});
-    }
   }
 
   String _printDuration(Duration duration) {
@@ -232,3 +222,4 @@ class RelayFinishState extends State<RelayFinish> {
         ));
   }
 }
+
