@@ -54,9 +54,41 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
     return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
   }
 
-  void writeData() {
-    databaseReference.child('1-260-123-4567/relay').set(
-        <String, Object>{'Timer': _start, 'Running Distance': totalDistance});
+  void writeData() async {
+        await databaseReference.child("Single").once().then((DataSnapshot singleSnapshot) {
+        var uidInfo = Map<String, dynamic>.from(singleSnapshot.value);
+        uidInfo.forEach((k, v) {
+          if (auth.currentUser.uid == k) {
+            databaseReference.child("Single").child(k).child("relay")
+                .update({'timer': _start, 'runningDistance': totalDistance});
+          }
+        });
+    });
+    await databaseReference.child("Teams").once().then((DataSnapshot dataSnapshot) {
+        dataSnapshot.value.forEach((k, v) {
+          String teamInfo = k.toString();
+          Map<dynamic, dynamic> eachTeamData = v;
+          eachTeamData.forEach((k, v) {
+            if (k == "leader") {
+              if (v['phoneNumber'] == auth.currentUser.phoneNumber) {
+                databaseReference.child("Teams").child(teamInfo).child(k).child("relay")
+                .update({'timer': _start, 'runningDistance': totalDistance});
+              }
+            }
+            else if (k == "members") {
+              var memberList = List<Map<dynamic, dynamic>>.from(v);
+              memberList.forEach((values) {
+                var eachMemberData = Map<dynamic, dynamic>.from(values);
+                if (auth.currentUser.phoneNumber == eachMemberData['phoneNumber']) {
+                  var index = memberList.indexOf(values).toString();
+                  databaseReference.child("Teams").child(teamInfo).child(k).child(index).child("relay")
+                  .update({'timer': _start, 'runningDistance': totalDistance});
+                }
+              });
+            }
+          });
+        });
+      });
   }
 
   void startTimer() {
