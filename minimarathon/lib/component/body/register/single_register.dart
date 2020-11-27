@@ -62,6 +62,8 @@ class _SingleRegisterState extends State<SingleRegister> {
     // get user phonenumber
     singleRegisterData.donationFee = 10;
     singleRegisterData.phoneNumber = user.phoneNumber;
+    singleRegisterData.moreVolunteer = false;
+    singleRegisterData.relay = Relay(runningDistance: 0, timer: 0);
   }
 
   Widget registerBody() {
@@ -82,7 +84,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                 children: [
                   Expanded(
                     // ---------------------------------------------------------------------------NAME
-                    flex: 2,
+                    flex: 4,
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: Column(
@@ -134,7 +136,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                   ),
                   Expanded(
                     // ---------------------------------------------------------------------------Phone Number
-                    flex: 2,
+                    flex: 4,
                     child: Container(
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: Column(
@@ -169,7 +171,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                   ),
                   Expanded(
                     // ---------------------------------------------------------------------------Donation Fee
-                    flex: 2,
+                    flex: 5,
                     child: Container(
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: Column(
@@ -232,14 +234,14 @@ class _SingleRegisterState extends State<SingleRegister> {
                                 style: TextStyle(
                                     color: white,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 18.0),
+                                    fontSize: 16.0),
                               ),
                             ),
                           ],
                         )),
                   ),
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: SizedBox(
                         // child: Text(singleRegisterData.toString() +  // for debugging
                         //     ' ' +
@@ -247,7 +249,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                         ),
                   ),
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: FlatButton(
@@ -322,12 +324,12 @@ class _SingleRegisterState extends State<SingleRegister> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => RelayStart(
-                                        isLeader: false,
-                                        isTeam: false,
-                                        ismember: false,
-                                        username: singleRegisterData.name,
-                                        teamname: "",
-                                      )));
+                                            isLeader: false,
+                                            isTeam: false,
+                                            ismember: false,
+                                            username: singleRegisterData.name,
+                                            teamname: "",
+                                          )));
                             }
                           }
                         },
@@ -353,7 +355,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                     ),
                   ),
                   Expanded(
-                    flex: 2,
+                    flex: 1,
                     child: SizedBox(),
                   ),
                 ],
