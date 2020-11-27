@@ -20,7 +20,6 @@ List<Member> memberList = new List<Member>();
 
 //List<_Row> _rows= new List<_Row>(10);
 class RankingState extends State<Ranking> {
-  final String username = 'Jong Ha Park';
   // List<_Row> _rows = new List<_Row>();
   var currentRowList = List<_Row>();
   final datasource = new _DataSource();
@@ -57,12 +56,14 @@ class RankingState extends State<Ranking> {
     var squery = referenceDatabase.child('Single');
     await squery.once().then((DataSnapshot dataSnapshot) {
       if (dataSnapshot.value != null) {
+        int time = 0;
+
         dynamic values = dataSnapshot.value;
         values.forEach((key, value) {
           name = value['name'];
           dynamic relay = value['relay'];
-          timer = relay['timer'];
-          tmpList.add(new _Mem(name, timer));
+          time = int.parse(relay['timer'].toString());
+          tmpList.add(new _Mem(name, time));
         });
       }
     });
@@ -71,22 +72,23 @@ class RankingState extends State<Ranking> {
     var tquery = referenceDatabase.child('Teams');
     await tquery.once().then((DataSnapshot dataSnapshot) {
       if (dataSnapshot.value != null) {
+        int time = 0;
         dynamic values = dataSnapshot.value;
         values.forEach((key, value) {
           // get leaders information
           dynamic leader = value['leader'];
           name = leader['name'];
           dynamic relay = leader['relay'];
-          timer = relay['timer'];
-          tmpList.add(new _Mem(name, timer));
+          time = int.parse(relay['timer'].toString());
+          tmpList.add(new _Mem(name, time));
 
           // get members information
           List<dynamic> members = value['members'];
           members.forEach((i) {
             name = i['name'];
             dynamic relay = i['relay'];
-            timer = relay['timer'];
-            tmpList.add(new _Mem(name, timer));
+            time = int.parse(relay['timer'].toString());
+            tmpList.add(new _Mem(name, time));
           });
         });
       }
@@ -97,7 +99,7 @@ class RankingState extends State<Ranking> {
 
     setState(() {
       tmpList.sort((a, b) =>
-          isSort ? (a.time).compareTo(b.time) : (b.time).compareTo(a.time));
+          isSort ? (b.time).compareTo(a.time) : (a.time).compareTo(b.time));
       isSort = !isSort;
       tmpList.forEach((i) {
         String name = i.name;
@@ -105,6 +107,7 @@ class RankingState extends State<Ranking> {
         _Row r = new _Row(name, time);
         sortedList.add(r);
       });
+
       currentRowList = sortedList;
     });
 
