@@ -42,6 +42,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
   var date = new DateTime(1996, 5, 23, 0, 0, 0);
   Timer _timer;
   int _start = 0;
+  int lastTimer = 0;
   bool isStart = false;
 
   String _printDuration(Duration duration) {
@@ -55,40 +56,63 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
   }
 
   void writeData() async {
-        await databaseReference.child("Single").once().then((DataSnapshot singleSnapshot) {
-        var uidInfo = Map<String, dynamic>.from(singleSnapshot.value);
-        uidInfo.forEach((k, v) {
-          if (auth.currentUser.uid == k) {
-            databaseReference.child("Single").child(k).child("relay")
-                .update({'timer': _start, 'runningDistance': totalDistance});
+    await databaseReference
+        .child("Single")
+        .once()
+        .then((DataSnapshot singleSnapshot) {
+      var uidInfo = Map<String, dynamic>.from(singleSnapshot.value);
+      uidInfo.forEach((k, v) {
+        if (auth.currentUser.uid == k) {
+          lastTimer = _start;
+          databaseReference
+              .child("Single")
+              .child(k)
+              .child("relay")
+              .update({'timer': lastTimer, 'runningDistance': totalDistance});
+        }
+      });
+    });
+    await databaseReference
+        .child("Teams")
+        .once()
+        .then((DataSnapshot dataSnapshot) {
+      dataSnapshot.value.forEach((k, v) {
+        String teamInfo = k.toString();
+        Map<dynamic, dynamic> eachTeamData = v;
+        eachTeamData.forEach((k, v) {
+          if (k == "leader") {
+            if (v['phoneNumber'] == auth.currentUser.phoneNumber) {
+              lastTimer = _start;
+              databaseReference
+                  .child("Teams")
+                  .child(teamInfo)
+                  .child(k)
+                  .child("relay")
+                  .update(
+                      {'timer': lastTimer, 'runningDistance': totalDistance});
+            }
+          } else if (k == "members") {
+            var memberList = List<Map<dynamic, dynamic>>.from(v);
+            memberList.forEach((values) {
+              var eachMemberData = Map<dynamic, dynamic>.from(values);
+              if (auth.currentUser.phoneNumber ==
+                  eachMemberData['phoneNumber']) {
+                lastTimer = _start;
+                var index = memberList.indexOf(values).toString();
+                databaseReference
+                    .child("Teams")
+                    .child(teamInfo)
+                    .child(k)
+                    .child(index)
+                    .child("relay")
+                    .update(
+                        {'timer': lastTimer, 'runningDistance': totalDistance});
+              }
+            });
           }
         });
-    });
-    await databaseReference.child("Teams").once().then((DataSnapshot dataSnapshot) {
-        dataSnapshot.value.forEach((k, v) {
-          String teamInfo = k.toString();
-          Map<dynamic, dynamic> eachTeamData = v;
-          eachTeamData.forEach((k, v) {
-            if (k == "leader") {
-              if (v['phoneNumber'] == auth.currentUser.phoneNumber) {
-                databaseReference.child("Teams").child(teamInfo).child(k).child("relay")
-                .update({'timer': _start, 'runningDistance': totalDistance});
-              }
-            }
-            else if (k == "members") {
-              var memberList = List<Map<dynamic, dynamic>>.from(v);
-              memberList.forEach((values) {
-                var eachMemberData = Map<dynamic, dynamic>.from(values);
-                if (auth.currentUser.phoneNumber == eachMemberData['phoneNumber']) {
-                  var index = memberList.indexOf(values).toString();
-                  databaseReference.child("Teams").child(teamInfo).child(k).child(index).child("relay")
-                  .update({'timer': _start, 'runningDistance': totalDistance});
-                }
-              });
-            }
-          });
-        });
       });
+    });
   }
 
   void startTimer() {
@@ -341,7 +365,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                             Route route = MaterialPageRoute(
                                                 builder: (context) =>
                                                     RelayFinish(
-                                                      recordTime: _start,
+                                                      recordTime: lastTimer,
                                                       totalDistance:
                                                           totalDistance,
                                                       teamName: widget.teamName,

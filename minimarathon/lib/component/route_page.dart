@@ -108,6 +108,7 @@ class _RoutePageState extends State<RoutePage> {
             if (key == "leader") {
               if (value['phoneNumber'] == currentUser.phoneNumber) {
                 // is Team Leader !
+                checkUsername = value['name'];
                 checkTeamLeader = true;
               }
             }
