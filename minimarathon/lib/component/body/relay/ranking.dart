@@ -62,8 +62,16 @@ class RankingState extends State<Ranking> {
         values.forEach((key, value) {
           name = value['name'];
           dynamic relay = value['relay'];
+
+          double distance = double.parse(relay['runningDistance'].toString());
           time = int.parse(relay['timer'].toString());
-          tmpList.add(new _Mem(name, time));
+          if (distance > 5000) {
+            tmpList.add(new _Mem(
+                name: name,
+                time: time,
+                distance: distance,
+                speed: distance / time));
+          }
         });
       }
     });
@@ -78,17 +86,32 @@ class RankingState extends State<Ranking> {
           // get leaders information
           dynamic leader = value['leader'];
           name = leader['name'];
-          dynamic relay = leader['relay'];
-          time = int.parse(relay['timer'].toString());
-          tmpList.add(new _Mem(name, time));
+          double distance =
+              double.parse(leader['relay']['runningDistance'].toString());
+          time = int.parse(leader['relay']['timer'].toString());
+          if (distance > 5000) {
+            tmpList.add(new _Mem(
+                name: name,
+                time: time,
+                distance: distance,
+                speed: distance / time));
+          }
 
           // get members information
           List<dynamic> members = value['members'];
           members.forEach((i) {
             name = i['name'];
             dynamic relay = i['relay'];
+
+            double distance = double.parse(relay['runningDistance'].toString());
             time = int.parse(relay['timer'].toString());
-            tmpList.add(new _Mem(name, time));
+            if (distance > 5000) {
+              tmpList.add(new _Mem(
+                  name: name,
+                  time: time,
+                  distance: distance,
+                  speed: distance / time));
+            }
           });
         });
       }
@@ -99,12 +122,13 @@ class RankingState extends State<Ranking> {
 
     setState(() {
       tmpList.sort((a, b) =>
-          isSort ? (b.time).compareTo(a.time) : (a.time).compareTo(b.time));
+          isSort ? (a.speed).compareTo(b.speed) : (b.speed).compareTo(a.speed));
       isSort = !isSort;
       tmpList.forEach((i) {
         String name = i.name;
+        double speed = i.speed;
         String time = makeTimeString(i.time);
-        _Row r = new _Row(name, time);
+        _Row r = new _Row(name, speed);
         sortedList.add(r);
       });
 
@@ -131,13 +155,14 @@ class RankingState extends State<Ranking> {
                 // border: Border.all(color: lightwhite, width: 3),
                 borderRadius: BorderRadius.all(Radius.circular(20))),
             child: PaginatedDataTable(
-              header: makeText('Who walked fast?', Colors.black87, 20),
+              header:
+                  makeText('Who walked fast? (5.0km ↑)', Colors.black87, 20),
               rowsPerPage: 10,
               horizontalMargin: 30,
               columns: [
                 DataColumn(label: Text('Rank')),
                 DataColumn(label: Text('Name')),
-                DataColumn(label: Text('Time')),
+                DataColumn(label: Text('Speed (m/s)')),
               ],
               source: _DataSource.withrows(currentRowList),
             ),
@@ -149,19 +174,21 @@ class RankingState extends State<Ranking> {
 }
 
 class _Mem {
-  _Mem(this.name, this.time);
+  _Mem({this.name, this.time, this.distance, this.speed});
   final String name;
   final int time;
+  final double distance;
+  final double speed;
 }
 
 class _Row {
   _Row(
     this.name,
-    this.time,
+    this.speed,
   );
 
   final String name;
-  final String time;
+  final double speed;
 
   bool selected = false;
 }
@@ -185,7 +212,7 @@ class _DataSource extends DataTableSource {
       cells: [
         DataCell(Text((index + 1).toString())),
         DataCell(Text(row.name)),
-        DataCell(Text(row.time.toString())),
+        DataCell(Text(row.speed.toStringAsFixed(1))),
       ],
     );
   }

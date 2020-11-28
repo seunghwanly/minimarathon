@@ -174,14 +174,14 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            'Goal is 5.0 km !',
+                                            'Run more than 5.0km !\n Challenge the ranking',
                                             style: TextStyle(
                                                 color: lightwhite,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    14),
+                                                    20),
                                             textAlign: TextAlign.center,
                                           ),
                                         ]),
@@ -357,24 +357,6 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                   currentLong,
                                                   location.speed);
 
-                                          //이 거리만큼 이동시에 Finish_Relay 으로 이동.
-                                          //테스팅용
-                                          //실제에서는 if(totalDistance > 3500)
-                                          //if (totalDistance > 3500) {
-                                          if (_start > 5) {
-                                            Route route = MaterialPageRoute(
-                                                builder: (context) =>
-                                                    RelayFinish(
-                                                      recordTime: lastTimer,
-                                                      totalDistance:
-                                                          totalDistance,
-                                                      teamName: widget.teamName,
-                                                      userName: widget.userName,
-                                                    ));
-
-                                            Navigator.pushReplacement(
-                                                context, route);
-                                          }
                                           // totalDistance2 += distance(beforeLat, beforeLong,
                                           //     currentLat, currentLong, 'm', location.speed);
                                         }
@@ -429,6 +411,23 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                   onPressed: () {
                                     isStart = false;
                                     _timer.cancel();
+                                    writeData();
+
+                                    //이 거리만큼 이동시에 Finish_Relay 으로 이동.
+                                    //테스팅용
+                                    //실제에서는 if(totalDistance > 3500)
+                                    //if (totalDistance > 3500) {
+                                    //if (_start > 5) {
+                                    Route route = MaterialPageRoute(
+                                        builder: (context) => RelayFinish(
+                                              recordTime: lastTimer,
+                                              totalDistance: totalDistance,
+                                              teamName: widget.teamName,
+                                              userName: widget.userName,
+                                            ));
+
+                                    Navigator.pushReplacement(context, route);
+                                    // }
 
                                     BackgroundLocation.stopLocationService();
                                   },
@@ -450,7 +449,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            'Stop',
+                                            'End',
                                             style: TextStyle(
                                                 color: lightwhite,
                                                 fontWeight: FontWeight.bold,
