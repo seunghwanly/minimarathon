@@ -137,7 +137,7 @@ class RelayFinishState extends State<RelayFinish> {
                                 BorderRadius.all(Radius.circular(10))),
                         child: Column(children: [
                           makeTextThin("Congratulations,", Colors.white, 20),
-                          makeTextThin("Jong ha Park" + '!', Colors.white, 20),
+                          makeTextThin("${widget.userName}!", Colors.white, 20),
                           makeTwoColor("You walked ", "3.5km !", Colors.white,
                               Colors.white, 20),
                           makeTextSemiThin(

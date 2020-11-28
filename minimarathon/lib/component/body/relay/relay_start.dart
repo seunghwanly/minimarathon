@@ -5,6 +5,7 @@ import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/palette.dart';
 import '../../../util/text_style.dart';
 import '../relay/ranking.dart';
+import '../register/edit_member_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'relay_finish.dart';
@@ -32,6 +33,7 @@ class RelayStart extends StatefulWidget {
 class RelayStartState extends State<RelayStart> {
   String username = 'Jong Ha Park';
   String teamname = '';
+  bool isTeamLeader = false;
   void _navigation() {
     Navigator.push(
       context,
@@ -39,6 +41,48 @@ class RelayStartState extends State<RelayStart> {
         builder: (BuildContext context) => Ranking(),
       ),
     );
+  }
+
+  _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('ALERT'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('ONLY for Team Leader'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  
+  void _navigationToEdit() {
+    if (widget.isLeader) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => 
+          EditMemberInfo(teamname)
+        )
+        );
+    } else{
+      _showMyDialog();
+    }
+
   }
 
   void _showDialogbefore() {
@@ -237,6 +281,23 @@ class RelayStartState extends State<RelayStart> {
                       color: Colors.green[400],
                       child: Container(
                         child: makeText('Ranking', lightwhite, 28),
+                      ),
+                    ),
+                  )),
+                  Expanded(flex: 1, child: Container(child: Text(''))),
+              Expanded(
+                  flex: 2,
+                  child: Container(
+                    // height:  MediaQuery.of(context).size.height * 0.8,
+                    //margin: EdgeInsets.symmetric(vertical: 10),
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: RaisedButton(
+                      onPressed: _navigationToEdit,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30))),
+                      color: mandarin,
+                      child: Container(
+                        child: makeText('Edit Member Info.', lightwhite, 28),
                       ),
                     ),
                   )),
