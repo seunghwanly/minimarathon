@@ -69,14 +69,14 @@ class RelayStartState extends State<RelayStart> {
       },
     );
   }
-  
+
   void _navigationToEdit() {
     if (widget.isLeader) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (BuildContext context) => 
-          EditMemberInfo(teamname)
+          EditMemberInfo(teamName: teamname, userName: username)
         )
         );
     } else{
