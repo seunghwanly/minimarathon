@@ -32,6 +32,8 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
   final List<TextEditingController> _editingNumberController = new List<TextEditingController>();
 
   int memberLength;
+  bool nameFlag = true;
+  bool numFlag = true;
 
   final _formKey = GlobalKey<FormState>(); //form
 
@@ -65,28 +67,29 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
   }
 
   void _navigation(memberList) async {
-    await teamReference
-        .child(widget.teamName)
-        .once()
-        .then((DataSnapshot dataSnapshot) {
-      dataSnapshot.value.forEach((k, v) {
-        if (k == "members") {
-          var members = List<Map<dynamic, dynamic>>.from(v);
-          members.forEach((values) {
-            int index = members.indexOf(values);
-            teamReference
-                .child(widget.teamName)
-                .child("members")
-                .child(index.toString())
-                .update({
-              'name': _editingNameController[index].text.trim(),
-              'phoneNumber': _editingNumberController[index].text.trim(),
+    if(nameFlag && numFlag) {
+      await teamReference
+          .child(widget.teamName)
+          .once()
+          .then((DataSnapshot dataSnapshot) {
+        dataSnapshot.value.forEach((k, v) {
+          if (k == "members") {
+            var members = List<Map<dynamic, dynamic>>.from(v);
+            members.forEach((values) {
+              int index = members.indexOf(values);
+              teamReference
+                  .child(widget.teamName)
+                  .child("members")
+                  .child(index.toString())
+                  .update({
+                'name': _editingNameController[index].text.trim(),
+                'phoneNumber': _editingNumberController[index].text.trim(),
+              });
             });
-          });
-        }
+          }
+        });
       });
-    });
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => RelayStart(
               isLeader: true,
               isTeam: true,
@@ -94,7 +97,11 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
               username: widget.userName,
               teamname: widget.teamName,
             )));
-    showMyDialog(context, "Save successfully");
+      showMyDialog(context, "Save successfully");
+    }
+    else {
+      showMyDialog(context, "Please fill the form.");
+    }
   }
 
   @override
@@ -220,9 +227,12 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                                   controller: _editingNameController[index],
                                                   validator: (value) {
                                                     if (value.isEmpty) {
+                                                      nameFlag = false;
                                                       return "Please enter name";
-                                                    } else
+                                                    } else {
+                                                      nameFlag = true;
                                                       return null;
+                                                    }
                                                   },
                                                   decoration: InputDecoration(
                                                       focusedErrorBorder:
@@ -277,9 +287,12 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                                   controller: _editingNumberController[index],
                                                   validator: (value) {
                                                     if (value.isEmpty) {
+                                                      numFlag = false;
                                                       return "Please enter Phone Number";
-                                                    } else
+                                                    } else {
+                                                      numFlag = true;
                                                       return null;
+                                                    }
                                                   },
                                                   decoration: InputDecoration(
                                                       focusedErrorBorder:
