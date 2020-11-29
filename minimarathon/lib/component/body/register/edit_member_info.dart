@@ -213,6 +213,7 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                                 margin: EdgeInsets.symmetric(
                                                     vertical: 5.0),
                                                 child: TextFormField(
+                                                  style: TextStyle(color: lightwhite, fontSize: 18, fontWeight: FontWeight.w500),
                                                   autovalidateMode: AutovalidateMode.always,
                                                   enableInteractiveSelection:
                                                       false,
@@ -254,6 +255,7 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                                       hintStyle: TextStyle(color: Colors.white54, fontSize: 14.0, fontWeight: FontWeight.w600),
                                                       labelText: snapshot.data[index].name,
                                                       labelStyle: TextStyle(color: Colors.white54, fontSize: 18, fontWeight: FontWeight.w500)),
+                                                      
                                                   textInputAction:
                                                       TextInputAction.next,
                                                   keyboardType: TextInputType
@@ -268,6 +270,7 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                                 margin: EdgeInsets.symmetric(
                                                     vertical: 5.0),
                                                 child: TextFormField(
+                                                  style: TextStyle(color: lightwhite, fontSize: 18, fontWeight: FontWeight.w500),
                                                   autovalidateMode: AutovalidateMode.always,
                                                   enableInteractiveSelection:
                                                       false,
