@@ -65,7 +65,7 @@ class RankingState extends State<Ranking> {
 
           double distance = double.parse(relay['runningDistance'].toString());
           time = int.parse(relay['timer'].toString());
-          if (distance > 5000) {
+          if (distance > 4951) {
             tmpList.add(new _Mem(
                 name: name,
                 time: time,
@@ -89,7 +89,7 @@ class RankingState extends State<Ranking> {
           double distance =
               double.parse(leader['relay']['runningDistance'].toString());
           time = int.parse(leader['relay']['timer'].toString());
-          if (distance > 5000) {
+          if (distance > 4951) {
             tmpList.add(new _Mem(
                 name: name,
                 time: time,
@@ -105,7 +105,7 @@ class RankingState extends State<Ranking> {
 
             double distance = double.parse(relay['runningDistance'].toString());
             time = int.parse(relay['timer'].toString());
-            if (distance > 5000) {
+            if (distance > 4951) {
               tmpList.add(new _Mem(
                   name: name,
                   time: time,

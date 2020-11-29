@@ -237,8 +237,9 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                             textAlign: TextAlign.center,
                                           ),
                                           Text(
-                                            totalDistance.toStringAsFixed(1) +
-                                                ' m',
+                                            (totalDistance / 1000)
+                                                    .toStringAsPrecision(2) +
+                                                ' km',
                                             style: TextStyle(
                                                 color: lightwhite,
                                                 fontWeight: FontWeight.w600,
@@ -409,27 +410,68 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                               flex: 10,
                               child: FlatButton(
                                   onPressed: () {
-                                    isStart = false;
-                                    _timer.cancel();
-                                    writeData();
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text('End Relay'),
+                                          content: Text(
+                                              "Are You Sure Want To Finish ?"),
+                                          actions: <Widget>[
+                                            FlatButton(
+                                              child: Text("YES"),
+                                              onPressed: () {
+                                                //Put your code here which you want to execute on Yes button click.
+                                                Navigator.of(context).pop();
+                                                if (_start != 0) {
+                                                  isStart = false;
+                                                  _timer.cancel();
+                                                  writeData();
+                                                }
 
-                                    //이 거리만큼 이동시에 Finish_Relay 으로 이동.
-                                    //테스팅용
-                                    //실제에서는 if(totalDistance > 3500)
-                                    //if (totalDistance > 3500) {
-                                    //if (_start > 5) {
-                                    Route route = MaterialPageRoute(
-                                        builder: (context) => RelayFinish(
-                                              recordTime: lastTimer,
-                                              totalDistance: totalDistance,
-                                              teamName: widget.teamName,
-                                              userName: widget.userName,
-                                            ));
+                                                //이 거리만큼 이동시에 Finish_Relay 으로 이동.
+                                                //테스팅용
+                                                //실제에서는 if(totalDistance > 3500)
+                                                //if (totalDistance > 3500) {
+                                                //if (_start > 5) {
+                                                Route route = MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        RelayFinish(
+                                                          recordTime: _start,
+                                                          totalDistance:
+                                                              totalDistance,
+                                                          teamName:
+                                                              widget.teamName,
+                                                          userName:
+                                                              widget.userName,
+                                                        ));
 
-                                    Navigator.pushReplacement(context, route);
-                                    // }
+                                                Navigator.pushReplacement(
+                                                    context, route);
+                                                // }
 
-                                    BackgroundLocation.stopLocationService();
+                                                BackgroundLocation
+                                                    .stopLocationService();
+                                              },
+                                            ),
+                                            FlatButton(
+                                              child: Text("NO"),
+                                              onPressed: () {
+                                                //Put your code here which you want to execute on No button click.
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                            // FlatButton(
+                                            //   child: Text("CANCEL"),
+                                            //   onPressed: () {
+                                            //     //Put your code here which you want to execute on Cancel button click.
+                                            //     Navigator.of(context).pop();
+                                            //   },
+                                            // ),
+                                          ],
+                                        );
+                                      },
+                                    );
                                   },
                                   shape: RoundedRectangleBorder(
                                     side:
