@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/body/relay/relay_start.dart';
+import 'package:minimarathon/util/text_style.dart';
 import '../../header/header.dart';
 import 'package:minimarathon/util/FirebaseMethod.dart';
 import 'package:minimarathon/util/custom_dialog.dart';
@@ -116,6 +117,7 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
         }
       });
     });
+    
     Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => RelayStart(
               isLeader: true,
@@ -206,7 +208,7 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                         )),
                     Expanded(
                         // ---------------------------------------------------------------------------MEMBERS
-                        flex: 6,
+                        flex: 1,
                         child: Container(
                             margin: EdgeInsets.symmetric(vertical: 10.0),
                             padding: EdgeInsets.symmetric(vertical: 5.0),
@@ -359,7 +361,7 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                             onChanged: (number) {
                                               setState(() {
                                                 memberList[index].phoneNumber =
-                                                    '+1' + number;
+                                                    number;
                                               });
                                             },
                                             textInputAction:
@@ -388,14 +390,22 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                 );
                               },
                             ))),
-                    Expanded(
-                        flex: 2,
-                        child: Container(
-                            margin: EdgeInsets.symmetric(vertical: 10.0),
-                            width: MediaQuery.of(context).size.width * 0.7,
-                            child: RaisedButton(onPressed: () {
-                              _navigation();
-                            }))),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    // height:  MediaQuery.of(context).size.height * 0.8,
+                    //margin: EdgeInsets.symmetric(vertical: 10),
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: RaisedButton(
+                      onPressed: _navigation,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30))),
+                      color: mandarin,
+                      child: Container(
+                        child: makeText('Save', lightwhite, 28),
+                      ),
+                    ),
+                  )),
                   ],
                 ),
               ),
