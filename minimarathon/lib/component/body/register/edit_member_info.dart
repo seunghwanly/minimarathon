@@ -4,17 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:minimarathon/component/body/relay/relay_start.dart';
 import 'package:minimarathon/util/text_style.dart';
 import '../../header/header.dart';
-import 'package:minimarathon/util/FirebaseMethod.dart';
-import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/palette.dart';
-import 'package:minimarathon/util/paypal/paypal_payment.dart';
 //firebase
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-//phone number
-import 'package:libphonenumber/libphonenumber.dart';
-
-import '../../loading.dart';
 // model
 import '../../../model/model_register.dart';
 
@@ -35,40 +28,17 @@ class EditMemberInfo extends StatefulWidget {
 class _EditMemberInfoState extends State<EditMemberInfo> {
   //focusnode
   FocusNode focusDonationFee = new FocusNode();
-  FocusNode focusTeamDuplicate = new FocusNode();
   List<FocusNode> focusNameList = new List<FocusNode>();
   List<FocusNode> focusPhoneNumberList = new List<FocusNode>();
-
-  //text controller
-  TextEditingController teamnameControlller = new TextEditingController();
-  final List<TextEditingController> _editingController =
-      new List<TextEditingController>();
-  final List<TextEditingController> _memberNumTextController =
-      new List<TextEditingController>();
 
   //firebase auth
   DatabaseReference teamReference = FirebaseDatabase.instance
       .reference()
       .child('2020HopeRelay')
       .child("Teams");
-  User _user = FirebaseAuth.instance.currentUser;
 
   final _formKey = GlobalKey<FormState>(); //form
-
-  //data for push
-  Team teamData;
   List<Member> memberList = new List<Member>();
-  int memberLength;
-  // data from Team Database
-  List<String> teamNameList = new List<String>();
-
-  //result state
-  bool isPaymentAvailable = false;
-  bool isRegisterAvailable = false;
-  bool isPaymentFinished = false;
-  bool isMemberCheckedAvailable = false;
-  bool isTeamnameChecked = false;
-  int isTeamnameDuplicate = 0;
 
   void _checkMemberList() async {
     await databaseReference
@@ -117,7 +87,6 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
         }
       });
     });
-    
     Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => RelayStart(
               isLeader: true,
@@ -127,40 +96,14 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
               teamname: widget.teamName,
             )));
   }
-
   @override
   void initState() {
     super.initState();
     _checkMemberList();
-    //init state
-    teamData = new Team();
-    memberLength = 2; // team >= 2
-    teamData.teamName = "ex) han's Family";
-    teamData.donationFee = memberLength * 10;
-
-    teamData.members = memberList;
-    //focusNode
-    for (int i = 0; i < memberLength; ++i) {
-      focusNameList.add(new FocusNode());
-      focusPhoneNumberList.add(new FocusNode());
-      _editingController.add(new TextEditingController(text: ""));
-    }
-    // fetch data from team database
-    teamReference.once().then((DataSnapshot snapshot) {
-      var fetchedData = new Map<String, dynamic>.from(snapshot.value);
-      fetchedData.forEach((key, value) {
-        setState(() {
-          teamNameList.add(key.toString());
-        });
-      });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!isPaymentFinished && isPaymentAvailable) {
-      return LoadingPage();
-    } else {
       return CustomHeader(
         title: "Edit Member Info",
         body: Form(
@@ -207,7 +150,6 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                           ),
                         )),
                     Expanded(
-                        // ---------------------------------------------------------------------------MEMBERS
                         flex: 1,
                         child: Container(
                             margin: EdgeInsets.symmetric(vertical: 10.0),
@@ -216,8 +158,6 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                 borderRadius: BorderRadius.circular(30.0),
                                 color: deepPastelblue),
                             child: ListView.builder(
-                              //TODO:scrollcontroller height
-                              // physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: memberList.length,
                               itemBuilder: (context, index) {
@@ -372,7 +312,7 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                             focusNode:
                                                 focusPhoneNumberList[index],
                                             onEditingComplete: () {
-                                              if (index == memberLength - 1) {
+                                              if (index == memberList.length - 1) {
                                                 //last member
                                                 FocusScope.of(context)
                                                     .requestFocus(
@@ -412,5 +352,5 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
             ))),
       );
     }
-  }
+  
 }
