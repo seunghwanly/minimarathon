@@ -50,6 +50,8 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
             newMember.name = eachMemberData['name'];
             newMember.phoneNumber = eachMemberData['phoneNumber'];
             memberList.add(newMember);
+            _editingNameController.add(new TextEditingController(text:newMember.name));
+            _editingNumberController.add(new TextEditingController(text: newMember.phoneNumber));
           });
         }
       });
@@ -58,9 +60,6 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
     for (int i = 0; i < memberList.length; ++i) {
       focusNameList.add(new FocusNode());
       focusPhoneNumberList.add(new FocusNode());
-      _editingNameController.add(new TextEditingController(text: ""));
-      _editingNumberController.add(new TextEditingController(text: ""));
-
     }
     return memberList;
   }
@@ -214,6 +213,7 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                                 margin: EdgeInsets.symmetric(
                                                     vertical: 5.0),
                                                 child: TextFormField(
+                                                  autovalidateMode: AutovalidateMode.always,
                                                   enableInteractiveSelection:
                                                       false,
                                                   controller: _editingNameController[index],
@@ -268,6 +268,7 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                                 margin: EdgeInsets.symmetric(
                                                     vertical: 5.0),
                                                 child: TextFormField(
+                                                  autovalidateMode: AutovalidateMode.always,
                                                   enableInteractiveSelection:
                                                       false,
                                                   controller: _editingNumberController[index],
