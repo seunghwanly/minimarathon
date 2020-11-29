@@ -2,11 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/body/relay/relay_start.dart';
+import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/text_style.dart';
 import '../../header/header.dart';
 import 'package:minimarathon/util/palette.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../../../model/model_register.dart';
+import '../../loading.dart';
 
 DatabaseReference teamReference = FirebaseDatabase.instance.reference().child('2020HopeRelay').child("Teams");
 
@@ -22,21 +24,15 @@ class EditMemberInfo extends StatefulWidget {
 
 class _EditMemberInfoState extends State<EditMemberInfo> {
   //focusnode
-  FocusNode focusDonationFee = new FocusNode();
-  FocusNode focusTeamDuplicate = new FocusNode();
   List<FocusNode> focusNameList = new List<FocusNode>();
   List<FocusNode> focusPhoneNumberList = new List<FocusNode>();
+  List<Member> members = new List<Member>();
+  int memberLength;
 
   final _formKey = GlobalKey<FormState>(); //form
 
-  //data for push
-  Team teamData;
-  List<Member> memberList = new List<Member>();
-  int memberLength;
-  // data from Team Database
-  List<String> teamNameList = new List<String>();
-
-  void _checkMemberList() async {
+  Future<List<Member>> _checkMemberList() async {
+    List<Member> memberList = new List<Member>();
     await teamReference
         .child(widget.teamName)
         .once()
@@ -44,7 +40,6 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
       dataSnapshot.value.forEach((k, v) {
         if (k == "members") {
           var members = List<Map<dynamic, dynamic>>.from(v);
-
           members.forEach((values) {
             var eachMemberData = Map<dynamic, dynamic>.from(values);
             Member newMember = new Member();
@@ -55,10 +50,18 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
         }
       });
     });
+    //focusNode
+    for (int i = 0; i < memberList.length; ++i) {
+      focusNameList.add(new FocusNode());
+      focusPhoneNumberList.add(new FocusNode());
+    }
+    return memberList;
   }
 
-  void _navigation() async {
+  void _navigation(memberList) async {
+    print(memberList);
     //수정되었습니다. 알림 주기
+    print(memberList[0].name);
     await teamReference
         .child(widget.teamName)
         .once()
@@ -80,7 +83,6 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
         }
       });
     });
-
     Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => RelayStart(
               isLeader: true,
@@ -89,52 +91,47 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
               username: widget.userName,
               teamname: widget.teamName,
             )));
+    showMyDialog(context, "Save successfully");
+
   }
 
   @override
   void initState() {
     super.initState();
-    _checkMemberList();
-    //init state
-    teamData = new Team();
-    memberLength = 2; // team >= 2
-    teamData.teamName = "ex) han's Family";
-    teamData.donationFee = memberLength * 10;
 
-    teamData.members = memberList;
-    //focusNode
+    //memberList
+    memberLength = 2;
     for (int i = 0; i < memberLength; ++i) {
-      focusNameList.add(new FocusNode());
-      focusPhoneNumberList.add(new FocusNode());
+      Member newMember = new Member();
+      newMember.name = "";
+      newMember.phoneNumber = "";
+      members.add(newMember);
     }
-    // fetch data from team database
-    teamReference.once().then((DataSnapshot snapshot) {
-      var fetchedData = new Map<String, dynamic>.from(snapshot.value);
-      fetchedData.forEach((key, value) {
-        setState(() {
-          teamNameList.add(key.toString());
-        });
-      });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return CustomHeader(
       title: "Edit Member Info",
-      body: Form(
+      body: FutureBuilder(
+        future: _checkMemberList(),
+        builder:  (BuildContext context, AsyncSnapshot snapshot) {
+          if (!snapshot.hasData) {
+            return new Center(child: LoadingPage());
+          } else {
+          return Form(
           key: _formKey,
           child: SingleChildScrollView(
-              child: SizedBox(
-            height: MediaQuery.of(context).size.height * 1.8,
-            width: MediaQuery.of(context).size.width,
+            child: SizedBox(
             child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.all(20.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                      flex: 1,
+                      flex: 0,
                       child: Container(
                         padding: EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 10.0),
@@ -166,7 +163,7 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                         ),
                       )),
                   Expanded(
-                      flex: 1,
+                      flex: 0,
                       child: Container(
                           margin: EdgeInsets.symmetric(vertical: 10.0),
                           padding: EdgeInsets.symmetric(vertical: 5.0),
@@ -175,7 +172,7 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                               color: deepPastelblue),
                           child: ListView.builder(
                             shrinkWrap: true,
-                            itemCount: memberList.length,
+                            itemCount: snapshot.data.length,
                             itemBuilder: (context, index) {
                               return Container(
                                 // ------------------------ index
@@ -228,11 +225,11 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                                     color: lightwhite,
                                                     width: 3)),
                                             hintText:
-                                                '${memberList[index].name}',
+                                                '${snapshot.data[index].name}',
                                             hintStyle: TextStyle(
                                                 color: Colors.white54),
                                             labelText:
-                                                '${memberList[index].name}',
+                                                '${snapshot.data[index].name}',
                                             labelStyle: TextStyle(
                                                 color: Colors.white54,
                                                 fontSize: 18,
@@ -242,7 +239,7 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                           style: TextStyle(color: lightwhite),
                                           onChanged: (name) {
                                             setState(() {
-                                              memberList[index].name = name;
+                                              members[index].name = name;
                                             });
                                           },
                                           textInputAction: TextInputAction.next,
@@ -286,11 +283,11 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                                     color: lightwhite,
                                                     width: 3)),
                                             hintText:
-                                                '${memberList[index].phoneNumber}',
+                                                '${snapshot.data[index].phoneNumber}',
                                             hintStyle: TextStyle(
                                                 color: Colors.white54),
                                             labelText:
-                                                '${memberList[index].phoneNumber}',
+                                                '${snapshot.data[index].phoneNumber}',
                                             labelStyle: TextStyle(
                                                 color: Colors.white54,
                                                 fontSize: 18,
@@ -300,8 +297,7 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                           style: TextStyle(color: lightwhite),
                                           onChanged: (number) {
                                             setState(() {
-                                              memberList[index].phoneNumber =
-                                                  number;
+                                              members[index].phoneNumber = number;
                                             });
                                           },
                                           textInputAction: TextInputAction.next,
@@ -310,18 +306,6 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                                   signed: true),
                                           focusNode:
                                               focusPhoneNumberList[index],
-                                          onEditingComplete: () {
-                                            if (index == memberLength - 1) {
-                                              //last member
-                                              FocusScope.of(context)
-                                                  .requestFocus(
-                                                      focusDonationFee);
-                                            } else {
-                                              FocusScope.of(context)
-                                                  .requestFocus(
-                                                      focusNameList[index + 1]);
-                                            }
-                                          },
                                           cursorWidth: 4.0,
                                         ))
                                   ],
@@ -330,13 +314,11 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                             },
                           ))),
                   Expanded(
-                      flex: 1,
+                      flex: 0,
                       child: Container(
-                        // height:  MediaQuery.of(context).size.height * 0.8,
-                        //margin: EdgeInsets.symmetric(vertical: 10),
-                        width: MediaQuery.of(context).size.width * 0.8,
+                        width: MediaQuery.of(context).size.width * 0.9,
                         child: RaisedButton(
-                          onPressed: _navigation,
+                          onPressed: () => _navigation(members),
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(30))),
@@ -349,7 +331,9 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                 ],
               ),
             ),
-          ))),
+          )));
+          }}),
+          
     );
   }
 }
