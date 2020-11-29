@@ -151,6 +151,7 @@ class RelayFinishState extends State<RelayFinish> {
                                 BorderRadius.all(Radius.circular(10))),
                         child: Column(children: [
                           makeTextThin("Congratulations,", Colors.white, 20),
+
                           makeTextThin(widget.userName, Colors.white, 20),
                           makeTwoColor(
                               "You walked ",
