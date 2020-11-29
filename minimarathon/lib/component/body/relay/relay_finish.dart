@@ -11,7 +11,6 @@ final databaseReference =
     FirebaseDatabase.instance.reference().child('2020HopeRelay');
 final FirebaseAuth auth = FirebaseAuth.instance;
 
-
 class RelayFinish extends StatefulWidget {
   final int recordTime;
   final double totalDistance;
@@ -38,40 +37,55 @@ class RelayFinishState extends State<RelayFinish> {
   }
 
   void _updateInfo() async {
-    await databaseReference.child("Single").once().then((DataSnapshot singleSnapshot) {
-        var uidInfo = Map<String, dynamic>.from(singleSnapshot.value);
-        uidInfo.forEach((k, v) {
-          if (auth.currentUser.uid == k) {
-            databaseReference.child("Single").child(k)
-                .update({'moreVolunteer': true});
+    await databaseReference
+        .child("Single")
+        .once()
+        .then((DataSnapshot singleSnapshot) {
+      var uidInfo = Map<String, dynamic>.from(singleSnapshot.value);
+      uidInfo.forEach((k, v) {
+        if (auth.currentUser.uid == k) {
+          databaseReference
+              .child("Single")
+              .child(k)
+              .update({'moreVolunteer': true});
+        }
+      });
+    });
+    await databaseReference
+        .child("Teams")
+        .once()
+        .then((DataSnapshot dataSnapshot) {
+      dataSnapshot.value.forEach((k, v) {
+        String teamInfo = k.toString();
+        Map<dynamic, dynamic> eachTeamData = v;
+        eachTeamData.forEach((k, v) {
+          if (k == "leader") {
+            if (v['phoneNumber'] == auth.currentUser.phoneNumber) {
+              databaseReference
+                  .child("Teams")
+                  .child(teamInfo)
+                  .child(k)
+                  .update({'moreVolunteer': true});
+            }
+          } else if (k == "members") {
+            var memberList = List<Map<dynamic, dynamic>>.from(v);
+            memberList.forEach((values) {
+              var eachMemberData = Map<dynamic, dynamic>.from(values);
+              if (auth.currentUser.phoneNumber ==
+                  eachMemberData['phoneNumber']) {
+                var index = memberList.indexOf(values).toString();
+                databaseReference
+                    .child("Teams")
+                    .child(teamInfo)
+                    .child(k)
+                    .child(index)
+                    .update({'moreVolunteer': true});
+              }
+            });
           }
         });
-    });
-    await databaseReference.child("Teams").once().then((DataSnapshot dataSnapshot) {
-        dataSnapshot.value.forEach((k, v) {
-          String teamInfo = k.toString();
-          Map<dynamic, dynamic> eachTeamData = v;
-          eachTeamData.forEach((k, v) {
-            if (k == "leader") {
-              if (v['phoneNumber'] == auth.currentUser.phoneNumber) {
-                databaseReference.child("Teams").child(teamInfo).child(k)
-                .update({'moreVolunteer': true});
-              }
-            }
-            else if (k == "members") {
-              var memberList = List<Map<dynamic, dynamic>>.from(v);
-              memberList.forEach((values) {
-                var eachMemberData = Map<dynamic, dynamic>.from(values);
-                if (auth.currentUser.phoneNumber == eachMemberData['phoneNumber']) {
-                  var index = memberList.indexOf(values).toString();
-                  databaseReference.child("Teams").child(teamInfo).child(k).child(index)
-                  .update({'moreVolunteer': true});
-                }
-              });
-            }
-          });
-        });
       });
+    });
   }
 
   String _printDuration(Duration duration) {
@@ -137,12 +151,22 @@ class RelayFinishState extends State<RelayFinish> {
                                 BorderRadius.all(Radius.circular(10))),
                         child: Column(children: [
                           makeTextThin("Congratulations,", Colors.white, 20),
-                          makeTextThin("${widget.userName}!", Colors.white, 20),
-                          makeTwoColor("You walked ", "3.5km !", Colors.white,
-                              Colors.white, 20),
+
+                          makeTextThin(widget.userName, Colors.white, 20),
+                          makeTwoColor(
+                              "You walked ",
+                              (widget.totalDistance / 1000).toStringAsFixed(1) +
+                                  "km !",
+                              Colors.white,
+                              Colors.white,
+                              20),
                           makeTextSemiThin(
                               _printDuration(
-                                  Duration(seconds: widget.recordTime)),
+                                      Duration(seconds: widget.recordTime)) +
+                                  ' (' +
+                                  (widget.totalDistance / widget.recordTime)
+                                      .toStringAsFixed(1) +
+                                  ' m/s)',
                               Colors.white,
                               20),
                         ]))
@@ -222,4 +246,3 @@ class RelayFinishState extends State<RelayFinish> {
         ));
   }
 }
-
