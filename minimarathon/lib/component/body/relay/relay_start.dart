@@ -158,15 +158,14 @@ class RelayStartState extends State<RelayStart> {
                     TextSpan(
                         text: "Thanks for joining\n",
                         style: TextStyle(
-                          color: white,
+                          color: superlight,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
-                          letterSpacing: 2.0,
                         )),
                     TextSpan(
                         text: "2020 Hope Sharing Relay !",
                         style: TextStyle(
-                          color: white,
+                          color: superlight,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                           letterSpacing: 2.0,
