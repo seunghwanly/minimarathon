@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/header/header.dart';
 import 'package:minimarathon/util/custom_container.dart';
+import 'package:minimarathon/util/custom_dialog.dart';
 import '../../../util/palette.dart';
 import '../../../util/text_style.dart';
 import 'ranking.dart';
@@ -140,69 +141,74 @@ class RelayFinishState extends State<RelayFinish> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    (widget.totalDistance / 1000) >= 5.0 ? 
-                    Container(
-                        // height:  MediaQuery.of(context).size.height * 0.8,
-                        //margin: EdgeInsets.symmetric(vertical: 10),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 10.0),
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        decoration: BoxDecoration(
-                            color: mandarin,
-                            // border: Border.all(color: lightwhite, width: 3),
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            boxShadow: [customeBoxShadow()]),
-                        child: Column(children: [
-                          makeTextThin("Congratulations,", Colors.white, 20),
-                          makeTextThin(widget.userName, Colors.white, 20),
-                          makeTwoColor(
-                              "You've run ",
-                              (widget.totalDistance / 1000).toStringAsFixed(1) +
-                                  "km !",
-                              Colors.white,
-                              Colors.white,
-                              20),
-                          makeTextSemiThin(
-                              _printDuration(
-                                      Duration(seconds: widget.recordTime)) +
-                                  ' (' +
-                                  (widget.totalDistance / widget.recordTime)
-                                      .toStringAsFixed(1) +
-                                  ' m/s)',
-                              Colors.white,
-                              20),
-                        ]))
-                        :
-                        Container(
-                        // height:  MediaQuery.of(context).size.height * 0.8,
-                        //margin: EdgeInsets.symmetric(vertical: 10),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 10.0),
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        decoration: BoxDecoration(
-                            color: deepPastelblue,
-                            // border: Border.all(color: lightwhite, width: 3),
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            boxShadow: [customeBoxShadow()]),
-                        child: Column(children: [
-                          makeTextThin(widget.userName, Colors.white, 20),
-                          makeTwoColor(
-                              "You've run ",
-                              (widget.totalDistance / 1000).toStringAsFixed(1) +
-                                  "km !",
-                              Colors.white,
-                              Colors.white,
-                              20),
-                          makeTextSemiThin(
-                              _printDuration(
-                                      Duration(seconds: widget.recordTime)) +
-                                  ' (' +
-                                  (widget.totalDistance / widget.recordTime.toDouble())
-                                      .toStringAsFixed(1) +
-                                  ' m/s)',
-                              Colors.white,
-                              20),
-                        ]))
+                    (widget.totalDistance / 1000) >= 5.0
+                        ? Container(
+                            // height:  MediaQuery.of(context).size.height * 0.8,
+                            //margin: EdgeInsets.symmetric(vertical: 10),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 10.0),
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            decoration: BoxDecoration(
+                                color: mandarin,
+                                // border: Border.all(color: lightwhite, width: 3),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30)),
+                                boxShadow: [customeBoxShadow()]),
+                            child: Column(children: [
+                              makeTextThin(
+                                  "Congratulations,", Colors.white, 20),
+                              makeTextThin(widget.userName, Colors.white, 20),
+                              makeTwoColor(
+                                  "You've run ",
+                                  (widget.totalDistance / 1000)
+                                          .toStringAsFixed(1) +
+                                      "km !",
+                                  Colors.white,
+                                  Colors.white,
+                                  20),
+                              makeTextSemiThin(
+                                  _printDuration(Duration(
+                                          seconds: widget.recordTime)) +
+                                      ' (' +
+                                      (widget.totalDistance / widget.recordTime)
+                                          .toStringAsFixed(1) +
+                                      ' m/s)',
+                                  Colors.white,
+                                  20),
+                            ]))
+                        : Container(
+                            // height:  MediaQuery.of(context).size.height * 0.8,
+                            //margin: EdgeInsets.symmetric(vertical: 10),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 10.0),
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            decoration: BoxDecoration(
+                                color: deepPastelblue,
+                                // border: Border.all(color: lightwhite, width: 3),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30)),
+                                boxShadow: [customeBoxShadow()]),
+                            child: Column(children: [
+                              makeTextThin(widget.userName, Colors.white, 20),
+                              makeTwoColor(
+                                  "You've run ",
+                                  (widget.totalDistance / 1000)
+                                          .toStringAsFixed(1) +
+                                      "km !",
+                                  Colors.white,
+                                  Colors.white,
+                                  20),
+                              makeTextSemiThin(
+                                  _printDuration(Duration(
+                                          seconds: widget.recordTime)) +
+                                      ' (' +
+                                      (widget.totalDistance /
+                                              widget.recordTime.toDouble())
+                                          .toStringAsFixed(1) +
+                                      ' m/s)',
+                                  Colors.white,
+                                  20),
+                            ]))
                   ],
                 ),
               ),
@@ -263,9 +269,14 @@ class RelayFinishState extends State<RelayFinish> {
                   child: Container(
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: RaisedButton(
-                        onPressed: _updateInfo,
-                        // height:  MediaQuery.of(context).size.height * 0.8,
-                        //margin: EdgeInsets.symmetric(vertical: 10),
+                        onPressed: () => customAlert(
+                            context: context,
+                            str: "Subscribe Hope Sharing Relay?",
+                            function: () {
+                              _updateInfo();
+                              Navigator.of(context).pop();
+                            }),
+                        // _updateInfo,
                         color: mandarin,
                         shape: RoundedRectangleBorder(
                             // border: Border.all(color: lightwhite, width: 3),
@@ -278,7 +289,8 @@ class RelayFinishState extends State<RelayFinish> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               makeTextSemiThin('More Volunteer', white, 24),
-                              makeTextSemiThin('Opportunities', white, 24),
+                              makeTextSemiThin(
+                                  'Subscribe Hope Sharing Relay', white, 12),
                             ],
                           ),
                         ),
