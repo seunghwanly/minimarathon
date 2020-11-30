@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/body/relay/relay_start.dart';
 import '../../header/header.dart';
-import 'package:minimarathon/util/FirebaseMethod.dart';
 import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/palette.dart';
 import 'package:minimarathon/util/paypal/paypal_payment.dart';
@@ -11,8 +8,6 @@ import 'package:minimarathon/util/paypal/paypal_payment.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 //phone number
-import 'package:libphonenumber/libphonenumber.dart';
-
 import '../../loading.dart';
 // model
 import '../../../model/model_register.dart';

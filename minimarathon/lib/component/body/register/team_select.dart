@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/header/header.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:minimarathon/util/FirebaseMethod.dart';
+import 'package:minimarathon/util/firebase_method.dart';
 import '../../../util/text_style.dart';
 import '../relay/relay_start.dart';
 import '../register/team_register.dart';

@@ -6,11 +6,6 @@ import 'package:minimarathon/util/palette.dart';
 import '../../../util/text_style.dart';
 import '../relay/ranking.dart';
 import '../register/edit_member_info.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
-import 'relay_finish.dart';
-import 'package:background_location/background_location.dart';
-import 'package:intl/intl.dart';
 
 class RelayStart extends StatefulWidget {
   final bool isTeam;
@@ -295,9 +290,9 @@ class RelayStartState extends State<RelayStart> {
                       onPressed: _navigationToEdit,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(30))),
-                      color: mandarin,
+                      color: royalblue,
                       child: Container(
-                        child: makeText('Edit Member Info.', lightwhite, 28),
+                        child: makeText('Edit Member Info', lightwhite, 28),
                       ),
                     ),
                   )),
