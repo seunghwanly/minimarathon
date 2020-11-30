@@ -42,18 +42,6 @@ showMyDialog(BuildContext context, String str) {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       FlatButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0)),
-                        color: superlight,
-                        child: Text("Cancel",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14),
-                            textAlign: TextAlign.center),
-                      ),
-                      FlatButton(
                         onPressed: () {
                           Navigator.pop(context);
                         },
