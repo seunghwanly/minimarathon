@@ -73,7 +73,6 @@ class RelayStartState extends State<RelayStart> {
       //after
       showMyDialog(context, "Sorry, " + username + '\n\n' + "Relay is Finished.");
     }
-
     //마라톤 시작 !
     else {
       Navigator.push(
@@ -85,6 +84,8 @@ class RelayStartState extends State<RelayStart> {
           ),
         ),
       );
+            showMyDialog(context, "If you have existing record, \n it will be overwritten!!");
+
     }
   }
 
