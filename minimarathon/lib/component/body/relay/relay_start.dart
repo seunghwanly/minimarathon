@@ -162,7 +162,7 @@ class RelayStartState extends State<RelayStart> {
   @override
   Widget build(BuildContext context) {
     return CustomHeader(
-        title: "2020 Hope Sharing Relay",
+        title: "Hope Sharing Relay",
         body: new Container(
           alignment: Alignment.center,
           padding: EdgeInsets.all(10.0),

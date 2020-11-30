@@ -1,11 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/palette.dart';
 
 class CustomHeader extends StatelessWidget {
   final title, body;
 
   CustomHeader({this.title, this.body});
+
+  _signOut(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('/main', (Route<dynamic> route) => false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +43,9 @@ class CustomHeader extends StatelessWidget {
               headline6: TextStyle(
                   color: white, fontWeight: FontWeight.bold, fontSize: 20.0)),
           actions: [
-            FlatButton.icon(
-                onPressed: () async{
-                  await FirebaseAuth.instance.signOut();
-                  Navigator.of(context).pushNamedAndRemoveUntil('/main', (Route<dynamic> route) => false);
-                },
-                icon: Icon(Icons.logout, color: white),
-                label: Text(""))
+            IconButton(icon: Icon(Icons.logout, color: white), onPressed: () {
+              customAlertAsync(context: context, function: () {_signOut(context);});
+            })
           ],
         ),
         body: GestureDetector(
