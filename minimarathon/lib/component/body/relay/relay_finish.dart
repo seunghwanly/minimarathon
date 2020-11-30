@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/header/header.dart';
 import 'package:minimarathon/util/custom_container.dart';
-import 'relay_start.dart';
 import '../../../util/palette.dart';
 import '../../../util/text_style.dart';
 import 'ranking.dart';

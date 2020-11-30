@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/body/register/single_register.dart';
-import 'package:minimarathon/component/body/register/team_select.dart';
-import 'package:minimarathon/component/body/relay/relay_start.dart';
 import 'package:minimarathon/component/header/header.dart';
 import 'package:minimarathon/util/palette.dart';
-import '../relay/relay_start.dart';
 import 'package:minimarathon/component/body/register/team_register.dart';
-import 'package:intl/intl.dart';
 //firebase database
 import 'package:firebase_database/firebase_database.dart';
 
@@ -194,56 +190,7 @@ class _NeedPaymentRegisterState extends State<NeedPaymentRegister> {
                   ),
                   Expanded(
                     flex: 3,
-                    child: SizedBox(),
-                    // child: Column(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //   children: [
-                    //     makeDescription("Member", Colors.green[400]),
-                    //     RaisedButton(
-                    //         onPressed: () {
-                    //           Navigator.push(
-                    //               context,
-                    //               MaterialPageRoute(
-                    //                   builder: (context) => TeamSelect()));
-                    //         },
-                    //         shape: RoundedRectangleBorder(
-                    //           borderRadius: BorderRadius.circular(30),
-                    //         ),
-                    //         color: Colors.green[400],
-                    //         child: Container(
-                    //             width: double.infinity,
-                    //             height:
-                    //                 MediaQuery.of(context).size.width * 0.3,
-                    //             alignment: Alignment.center,
-                    //             child: Column(
-                    //               mainAxisAlignment: MainAxisAlignment.center,
-                    //               children: [
-                    //                 Text(
-                    //                   'Member',
-                    //                   style: TextStyle(
-                    //                       color: lightwhite,
-                    //                       fontWeight: FontWeight.bold,
-                    //                       fontSize: MediaQuery.of(context)
-                    //                               .size
-                    //                               .width /
-                    //                           12),
-                    //                   textAlign: TextAlign.center,
-                    //                 ),
-                    //                 Text(
-                    //                   'REGISTER',
-                    //                   style: TextStyle(
-                    //                       color: lightwhite,
-                    //                       fontWeight: FontWeight.bold,
-                    //                       fontSize: MediaQuery.of(context)
-                    //                               .size
-                    //                               .width /
-                    //                           24),
-                    //                   textAlign: TextAlign.center,
-                    //                 ),
-                    //               ],
-                    //             ))),
-                    //   ],
-                    // )
+                    child: SizedBox()
                   ),
                   Expanded(
                     flex: 1,

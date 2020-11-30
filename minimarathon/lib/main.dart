@@ -8,17 +8,11 @@ import 'package:flutter/services.dart';
 import 'package:international_phone_input/international_phone_input.dart';
 import 'package:loading_animations/loading_animations.dart';
 //route
-import 'package:minimarathon/component/body/register/need_payment_register.dart';
-import 'package:minimarathon/component/body/register/single_register.dart';
-import 'package:minimarathon/component/body/register/team_register.dart';
-import 'package:minimarathon/component/body/relay/relay_start.dart';
 import 'package:minimarathon/component/loading.dart';
 import 'package:minimarathon/component/route_page.dart';
-import 'package:minimarathon/util/custom_container.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 //header
-import './component/header/header.dart';
 import './util/custom_dialog.dart';
 //util
 import './util/palette.dart';

@@ -4,6 +4,7 @@ import '../../header/header.dart';
 import 'package:minimarathon/component/body/relay/relay_start.dart';
 import '../../../model/model_register.dart';
 import '../../loading.dart';
+import '../../../util/custom_dialog.dart';
 //util
 import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/text_style.dart';
@@ -71,8 +72,8 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
     return memberList;
   }
 
-  void _navigation(memberList) async {
-    if (nameFlag && numFlag) {
+   _navigation(memberList) async {
+    if(nameFlag && numFlag) {
       await teamReference
           .child(widget.teamName)
           .once()
