@@ -38,42 +38,17 @@ class RelayStartState extends State<RelayStart> {
     );
   }
 
-  _showMyDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('ALERT'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('ONLY for Team Leader'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   void _navigationToEdit() {
     if (widget.isLeader) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (BuildContext context) =>
-                  EditMemberInfo(teamName: teamname, userName: username)));
-    } else {
-      _showMyDialog();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) =>
+          EditMemberInfo(teamName: teamname, userName: username)
+        )
+        );
+    } else{
+      showMyDialog(context, 'ONLY for Team Leader');
     }
   }
 
@@ -159,7 +134,7 @@ class RelayStartState extends State<RelayStart> {
   @override
   Widget build(BuildContext context) {
     return CustomHeader(
-        title: "2020 Hope Sharing Relay",
+        title: "Hope Sharing Relay",
         body: new Container(
           alignment: Alignment.center,
           padding: EdgeInsets.all(10.0),
