@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/header/header.dart';
+import 'package:minimarathon/util/custom_container.dart';
 import 'relay_start.dart';
 import '../../../util/palette.dart';
 import '../../../util/text_style.dart';
@@ -143,15 +144,16 @@ class RelayFinishState extends State<RelayFinish> {
                     Container(
                         // height:  MediaQuery.of(context).size.height * 0.8,
                         //margin: EdgeInsets.symmetric(vertical: 10),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 10.0),
                         width: MediaQuery.of(context).size.width * 0.8,
                         decoration: BoxDecoration(
                             color: mandarin,
-                            border: Border.all(color: lightwhite, width: 3),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                            // border: Border.all(color: lightwhite, width: 3),
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            boxShadow: [customeBoxShadow()]),
                         child: Column(children: [
                           makeTextThin("Congratulations,", Colors.white, 20),
-
                           makeTextThin(widget.userName, Colors.white, 20),
                           makeTwoColor(
                               "You walked ",
@@ -203,39 +205,42 @@ class RelayFinishState extends State<RelayFinish> {
               Expanded(
                   flex: 4,
                   child: Container(
-                    // height:  MediaQuery.of(context).size.height * 0.8,
-                    //margin: EdgeInsets.symmetric(vertical: 10),
-                    width: MediaQuery.of(context).size.width * 0.8,
-
-                    decoration: BoxDecoration(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: RaisedButton(
+                        onPressed: _updateInfo,
+                        // height:  MediaQuery.of(context).size.height * 0.8,
+                        //margin: EdgeInsets.symmetric(vertical: 10),
                         color: mandarin,
-                        border: Border.all(color: lightwhite, width: 3),
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: FlatButton(
-                      onPressed: _updateInfo,
-                      child: Container(
+                        shape: RoundedRectangleBorder(
+                            // border: Border.all(color: lightwhite, width: 3),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30))),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
                           child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          makeTextSemiThin('More Volunteer', white, 24),
-                          makeTextSemiThin('Opportunities', white, 24),
-                        ],
-                      )),
-                    ),
-                  )),
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              makeTextSemiThin('More Volunteer', white, 24),
+                              makeTextSemiThin('Opportunities', white, 24),
+                            ],
+                          ),
+                        ),
+                      ))),
               Expanded(flex: 1, child: Container(child: Text(''))),
               Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: Container(
                     // height:  MediaQuery.of(context).size.height * 0.8,
                     width: MediaQuery.of(context).size.width * 0.8,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: lightwhite, width: 3),
-                        color: mandarin,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: FlatButton(
+                    child: RaisedButton(
                       onPressed: _navigationRanking,
+                      color: Colors.green[400],
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30))),
                       child: Container(
+                        padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
                         child: makeTextSemiThin('Show Ranking', lightwhite, 24),
                       ),
                     ),

@@ -1,14 +1,15 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:minimarathon/component/body/relay/relay_start.dart';
-import 'package:minimarathon/util/custom_dialog.dart';
-import 'package:minimarathon/util/text_style.dart';
+// component
 import '../../header/header.dart';
-import 'package:minimarathon/util/palette.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:minimarathon/component/body/relay/relay_start.dart';
 import '../../../model/model_register.dart';
 import '../../loading.dart';
+//util
+import 'package:minimarathon/util/custom_dialog.dart';
+import 'package:minimarathon/util/text_style.dart';
+import 'package:minimarathon/util/palette.dart';
+//package
+import 'package:firebase_database/firebase_database.dart';
 
 DatabaseReference teamReference =
     FirebaseDatabase.instance.reference().child('2020HopeRelay').child("Teams");

@@ -147,13 +147,14 @@ class RankingState extends State<Ranking> {
     return CustomHeader(
       title: "Ranking",
       body: ListView(
+        physics: NeverScrollableScrollPhysics(),
         padding: const EdgeInsets.all(5),
         children: [
           Container(
             decoration: BoxDecoration(
                 // color: lightwhite,
                 // border: Border.all(color: lightwhite, width: 3),
-                borderRadius: BorderRadius.all(Radius.circular(20))),
+                borderRadius: BorderRadius.all(Radius.circular(30))),
             child: PaginatedDataTable(
               header:
                   makeText('Who walked fast? (5.0km ↑)', Colors.black87, 20),
