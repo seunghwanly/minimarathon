@@ -61,7 +61,7 @@ class _TeamRegisterState extends State<TeamRegister> {
   bool checkTeamname(BuildContext context) {
     String name = teamnameControlller.text.trim();
     if (!teamNameList.contains(name)) {
-      showMyDialog(context, "You can use that Team name !");
+      showMyDialog(context, "You can use your Team name !");
       setState(() {
         isTeamnameDuplicate = 1;
         isTeamnameChecked = true;
