@@ -72,17 +72,14 @@ class RelayStartState extends State<RelayStart> {
 
   void _navigationToEdit() {
     if (widget.isLeader) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (BuildContext context) => 
-          EditMemberInfo(teamName: teamname, userName: username)
-        )
-        );
-    } else{
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) =>
+                  EditMemberInfo(teamName: teamname, userName: username)));
+    } else {
       _showMyDialog();
     }
-
   }
 
   void _showDialogbefore() {
@@ -105,7 +102,7 @@ class RelayStartState extends State<RelayStart> {
     // DateTime d_day = DateTime(2020, 12, 18, 20, 00, 00);
     // DateTime finish_day = DateTime(2020, 12, 20, 20, 00, 00);
 
-    DateTime d_day = DateTime(2020, 11, 18, 20, 00, 00);
+    DateTime d_day = DateTime(2020, 12, 18, 20, 00, 00);
     DateTime finish_day = DateTime(2020, 12, 20, 20, 00, 00);
     if (currentTime.isBefore(d_day) == true) {
       //마라톤날짜 이전
@@ -284,7 +281,7 @@ class RelayStartState extends State<RelayStart> {
                       ),
                     ),
                   )),
-                  Expanded(flex: 1, child: Container(child: Text(''))),
+              Expanded(flex: 1, child: Container(child: Text(''))),
               Expanded(
                   flex: 2,
                   child: Container(
