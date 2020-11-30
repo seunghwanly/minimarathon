@@ -76,6 +76,7 @@ class RelayStartState extends State<RelayStart> {
     //마라톤 시작 !
     else {
       Navigator.push(
+
         context,
         MaterialPageRoute(
           builder: (BuildContext context) => MyBackgroundLocation(
@@ -84,9 +85,10 @@ class RelayStartState extends State<RelayStart> {
           ),
         ),
       );
-            showMyDialog(context, "If you have existing record, \n it will be overwritten!!");
+      showMyDialog(context, "If you have existing record, \n it will be overwritten!!");
 
     }
+
   }
 
   @override

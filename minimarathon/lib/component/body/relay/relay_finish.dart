@@ -119,7 +119,7 @@ class RelayFinishState extends State<RelayFinish> {
   @override
   Widget build(BuildContext context) {
     return CustomHeader(
-        title: "Finish Marathon",
+        title: "Relay Finish",
         body: new Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

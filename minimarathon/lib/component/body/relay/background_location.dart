@@ -1,5 +1,6 @@
 import 'package:background_location/background_location.dart';
 import 'package:flutter/material.dart';
+import 'package:minimarathon/util/custom_dialog.dart';
 import 'dart:math';
 import 'dart:async';
 import '../relay/relay_finish.dart';
@@ -172,8 +173,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                       flex: 3,
                                       child: RichText(
                                         textAlign: TextAlign.center,
-                                        text: TextSpan(
-                                          children: <TextSpan>[
+                                        text: TextSpan(children: <TextSpan>[
                                           TextSpan(
                                               text: "5K RUN\n",
                                               style: TextStyle(
@@ -182,24 +182,26 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                 fontSize: 20,
                                                 letterSpacing: 2.0,
                                               )),
-                                              TextSpan(
+                                          TextSpan(
                                               text: "\nTips\n",
                                               style: TextStyle(
                                                 color: superlight,
-                                                decoration: TextDecoration.underline,
-                                                decorationStyle: TextDecorationStyle.solid,
+                                                decoration:
+                                                    TextDecoration.underline,
+                                                decorationStyle:
+                                                    TextDecorationStyle.solid,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 18,
                                                 letterSpacing: 2.0,
                                               )),
-                                              TextSpan(
+                                          TextSpan(
                                               text: "\nUnder ",
                                               style: TextStyle(
                                                 color: white,
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 16,
                                               )),
-                                              TextSpan(
+                                          TextSpan(
                                               text: "5km",
                                               style: TextStyle(
                                                 color: white,
@@ -207,25 +209,27 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16,
                                               )),
-                                              TextSpan(
-                                              text: " will not be recorded !",
+                                          TextSpan(
+                                              text: ", the volunteer hours will not be given !",
                                               style: TextStyle(
                                                 color: white,
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 16,
                                               )),
-                                              TextSpan(
-                                              text: "\nSo be aware of pressing ",
+                                          TextSpan(
+                                              text:
+                                                  "\nSo be aware of pressing ",
                                               style: TextStyle(
                                                 color: white,
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 16,
                                               )),
-                                              TextSpan(
+                                          TextSpan(
                                               text: "End Button",
                                               style: TextStyle(
                                                 color: white,
-                                                backgroundColor: Colors.green[400],
+                                                backgroundColor:
+                                                    Colors.green[400],
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 16,
                                               )),
@@ -362,10 +366,10 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                           ),
                                         ],
                                       )),
-                                  Expanded(
-                                    flex: 1,
-                                    child: SizedBox(),
-                                  ),
+                                  // Expanded(
+                                  //   flex: 1,
+                                  //   child: SizedBox(),
+                                  // ),
                                 ]),
                           ))),
                   Expanded(
@@ -483,68 +487,11 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                               flex: 4,
                               child: RaisedButton(
                                   onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: Text('End Relay'),
-                                          content: Text(
-                                              "Are You Sure Want To Finish ?"),
-                                          actions: <Widget>[
-                                            FlatButton(
-                                              child: Text("YES"),
-                                              onPressed: () {
-                                                //Put your code here which you want to execute on Yes button click.
-                                                Navigator.of(context).pop();
-                                                if (_start != 0) {
-                                                  isStart = false;
-                                                  _timer.cancel();
-                                                  writeData();
-                                                }
-
-                                                //이 거리만큼 이동시에 Finish_Relay 으로 이동.
-                                                //테스팅용
-                                                //실제에서는 if(totalDistance > 3500)
-                                                //if (totalDistance > 3500) {
-                                                //if (_start > 5) {
-                                                Route route = MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        RelayFinish(
-                                                          recordTime: _start,
-                                                          totalDistance:
-                                                              totalDistance,
-                                                          teamName:
-                                                              widget.teamName,
-                                                          userName:
-                                                              widget.userName,
-                                                        ));
-
-                                                Navigator.pushReplacement(
-                                                    context, route);
-                                                // }
-
-                                                BackgroundLocation
-                                                    .stopLocationService();
-                                              },
-                                            ),
-                                            FlatButton(
-                                              child: Text("NO"),
-                                              onPressed: () {
-                                                //Put your code here which you want to execute on No button click.
-                                                Navigator.of(context).pop();
-                                              },
-                                            ),
-                                            // FlatButton(
-                                            //   child: Text("CANCEL"),
-                                            //   onPressed: () {
-                                            //     //Put your code here which you want to execute on Cancel button click.
-                                            //     Navigator.of(context).pop();
-                                            //   },
-                                            // ),
-                                          ],
-                                        );
-                                      },
-                                    );
+                                    customAlert(
+                                        context: context,
+                                        str:
+                                            "Are you sure you want to exit the relay?",
+                                        function: () => handleDialogYes());
                                   },
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30),
@@ -581,6 +528,32 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                     child: SizedBox(),
                   ),
                 ]))));
+  }
+
+  void handleDialogYes() {
+    Navigator.of(context).pop();
+    if (_start != 0) {
+      isStart = false;
+      _timer.cancel();
+      writeData();
+    }
+    //이 거리만큼 이동시에 Finish_Relay 으로 이동.
+    //테스팅용
+    //실제에서는 if(totalDistance > 3500)
+    //if (totalDistance > 3500) {
+    //if (_start > 5) {
+    Route route = MaterialPageRoute(
+        builder: (context) => RelayFinish(
+              recordTime: _start,
+              totalDistance: totalDistance,
+              teamName: widget.teamName,
+              userName: widget.userName,
+            ));
+
+    Navigator.pushReplacement(context, route);
+    // }
+
+    BackgroundLocation.stopLocationService();
   }
 
   Widget locationData(String data) {
