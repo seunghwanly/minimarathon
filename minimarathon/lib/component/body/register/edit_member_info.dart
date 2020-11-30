@@ -30,8 +30,10 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
   List<FocusNode> focusNameList = new List<FocusNode>();
   List<FocusNode> focusPhoneNumberList = new List<FocusNode>();
   List<Member> members = new List<Member>();
-  final List<TextEditingController> _editingNameController = new List<TextEditingController>();
-  final List<TextEditingController> _editingNumberController = new List<TextEditingController>();
+  final List<TextEditingController> _editingNameController =
+      new List<TextEditingController>();
+  final List<TextEditingController> _editingNumberController =
+      new List<TextEditingController>();
 
   int memberLength;
   bool nameFlag = true;
@@ -54,8 +56,10 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
             newMember.name = eachMemberData['name'];
             newMember.phoneNumber = eachMemberData['phoneNumber'];
             memberList.add(newMember);
-            _editingNameController.add(new TextEditingController(text:newMember.name));
-            _editingNumberController.add(new TextEditingController(text: newMember.phoneNumber));
+            _editingNameController
+                .add(new TextEditingController(text: newMember.name));
+            _editingNumberController
+                .add(new TextEditingController(text: newMember.phoneNumber));
           });
         }
       });
@@ -92,16 +96,15 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
         });
       });
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => RelayStart(
-              isLeader: true,
-              isTeam: true,
-              ismember: false,
-              username: widget.userName,
-              teamname: widget.teamName,
-            )));
+          builder: (context) => RelayStart(
+                isLeader: true,
+                isTeam: true,
+                ismember: false,
+                username: widget.userName,
+                teamname: widget.teamName,
+              )));
       showMyDialog(context, "Save successfully");
-    }
-    else {
+    } else {
       showMyDialog(context, "Please fill the form.");
     }
   }
@@ -142,7 +145,7 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Expanded(
-                              flex: 0,
+                              flex: 1,
                               child: Container(
                                 padding: EdgeInsets.symmetric(
                                     vertical: 10.0, horizontal: 10.0),
@@ -175,7 +178,7 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                 ),
                               )),
                           Expanded(
-                              flex: 0,
+                              flex: 4,
                               child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 10.0),
                                   padding: EdgeInsets.symmetric(vertical: 5.0),
@@ -183,162 +186,212 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                       borderRadius: BorderRadius.circular(30.0),
                                       color: deepPastelblue),
                                   child: ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: snapshot.data.length,
-                                    itemBuilder: (context, index) {
-                                      return Container(
-                                        // ------------------------ index
-                                        width:
-                                            MediaQuery.of(context).size.width *
+                                      shrinkWrap: true,
+                                      itemCount: snapshot.data.length,
+                                      itemBuilder: (context, index) {
+                                        return Container(
+                                            // ------------------------ index
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
                                                 0.7,
-                                        margin: EdgeInsets.symmetric(
-                                            vertical: 10.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.7,
-                                              margin: EdgeInsets.symmetric(
-                                                  vertical: 5.0),
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                "Member " +
-                                                    (index + 1).toString(),
-                                                style: TextStyle(
-                                                    color: lightwhite,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 20.0),
-                                              ),
-                                            ),
-                                            // ------------------------ name
-                                            Container(
-                                                width: MediaQuery.of(context).size.width * 0.7,
-                                                margin: EdgeInsets.symmetric(
-                                                    vertical: 5.0),
-                                                child: TextFormField(
-                                                  style: TextStyle(color: lightwhite, fontSize: 18, fontWeight: FontWeight.w500),
-                                                  autovalidateMode: AutovalidateMode.always,
-                                                  enableInteractiveSelection:
-                                                      false,
-                                                  controller: _editingNameController[index],
-                                                  validator: (value) {
-                                                    if (value.isEmpty) {
-                                                      nameFlag = false;
-                                                      return "Please enter name";
-                                                    } else {
-                                                      nameFlag = true;
-                                                      return null;
-                                                    }
-                                                  },
-                                                  decoration: InputDecoration(
-                                                      focusedErrorBorder:
-                                                          OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius.circular(30),
-                                                              borderSide: BorderSide(
-                                                                  color: mandarin,
-                                                                  width: 3)),
-                                                      errorBorder: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  30),
-                                                          borderSide: BorderSide(
-                                                              color: mandarin,
-                                                              width: 3)),
-                                                      enabledBorder: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(30),
-                                                          borderSide: BorderSide(
-                                                              color: lightwhite,
-                                                              width: 3)),
-                                                      focusedBorder: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius.circular(30),
-                                                          borderSide: BorderSide(color: mandarin, width: 3)),
-                                                      errorStyle: TextStyle(color: mandarin, fontSize: 10.0, fontWeight: FontWeight.w600),
-                                                      hintText: snapshot.data[index].name,
-                                                      hintStyle: TextStyle(color: Colors.white54, fontSize: 14.0, fontWeight: FontWeight.w600),
-                                                      labelText: snapshot.data[index].name,
-                                                      labelStyle: TextStyle(color: Colors.white54, fontSize: 18, fontWeight: FontWeight.w500)),
-                                                      
-                                                  textInputAction:
-                                                      TextInputAction.next,
-                                                  keyboardType: TextInputType
-                                                      .numberWithOptions(
-                                                          decimal: true),
-                                                  focusNode:
-                                                      focusNameList[index],
-                                                )),
-                                            // ------------------------ phone
-                                            Container(
-                                                width: MediaQuery.of(context).size.width * 0.7,
-                                                margin: EdgeInsets.symmetric(
-                                                    vertical: 5.0),
-                                                child: TextFormField(
-                                                  style: TextStyle(color: lightwhite, fontSize: 18, fontWeight: FontWeight.w500),
-                                                  autovalidateMode: AutovalidateMode.always,
-                                                  enableInteractiveSelection:
-                                                      false,
-                                                  controller: _editingNumberController[index],
-                                                  validator: (value) {
-                                                    if (value.isEmpty) {
-                                                      numFlag = false;
-                                                      return "Please enter Phone Number";
-                                                    } else {
-                                                      numFlag = true;
-                                                      return null;
-                                                    }
-                                                  },
-                                                  decoration: InputDecoration(
-                                                      focusedErrorBorder:
-                                                          OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius.circular(30),
-                                                              borderSide: BorderSide(
-                                                                  color: mandarin,
-                                                                  width: 3)),
-                                                      errorBorder: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  30),
-                                                          borderSide: BorderSide(
-                                                              color: mandarin,
-                                                              width: 3)),
-                                                      enabledBorder: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(30),
-                                                          borderSide: BorderSide(
-                                                              color: lightwhite,
-                                                              width: 3)),
-                                                      focusedBorder: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius.circular(30),
-                                                          borderSide: BorderSide(color: mandarin, width: 3)),
-                                                      errorStyle: TextStyle(color: mandarin, fontSize: 10.0, fontWeight: FontWeight.w600),
-                                                      hintText: snapshot.data[index].phoneNumber,
-                                                      hintStyle: TextStyle(color: Colors.white54, fontSize: 14.0, fontWeight: FontWeight.w600),
-                                                      labelText: snapshot.data[index].phoneNumber,
-                                                      labelStyle: TextStyle(color: Colors.white54, fontSize: 18, fontWeight: FontWeight.w500)),
-                                                  textInputAction:
-                                                      TextInputAction.next,
-                                                  keyboardType: TextInputType
-                                                      .numberWithOptions(
-                                                          decimal: true),
-                                                  focusNode:
-                                                      focusPhoneNumberList[index],
-                                                )),
-                                          ]));
-                                    }))),
+                                            margin: EdgeInsets.symmetric(
+                                                vertical: 10.0),
+                                            child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.7,
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 5.0),
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Text(
+                                                      "Member " +
+                                                          (index + 1)
+                                                              .toString(),
+                                                      style: TextStyle(
+                                                          color: lightwhite,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 20.0),
+                                                    ),
+                                                  ),
+                                                  // ------------------------ name
+                                                  Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.7,
+                                                      margin:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 5.0),
+                                                      child: TextFormField(
+                                                        style: TextStyle(
+                                                            color: lightwhite,
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
+                                                        autovalidateMode:
+                                                            AutovalidateMode
+                                                                .always,
+                                                        enableInteractiveSelection:
+                                                            false,
+                                                        controller:
+                                                            _editingNameController[
+                                                                index],
+                                                        validator: (value) {
+                                                          if (value.isEmpty) {
+                                                            nameFlag = false;
+                                                            return "Please enter name";
+                                                          } else {
+                                                            nameFlag = true;
+                                                            return null;
+                                                          }
+                                                        },
+                                                        decoration: InputDecoration(
+                                                            focusedErrorBorder: OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                        30),
+                                                                borderSide: BorderSide(
+                                                                    color:
+                                                                        mandarin,
+                                                                    width: 3)),
+                                                            errorBorder: OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                        30),
+                                                                borderSide: BorderSide(
+                                                                    color:
+                                                                        mandarin,
+                                                                    width: 3)),
+                                                            enabledBorder: OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                        30),
+                                                                borderSide: BorderSide(
+                                                                    color:
+                                                                        lightwhite,
+                                                                    width: 3)),
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(30),
+                                                                    borderSide: BorderSide(color: mandarin, width: 3)),
+                                                            errorStyle: TextStyle(color: mandarin, fontSize: 10.0, fontWeight: FontWeight.w600),
+                                                            hintText: snapshot.data[index].name,
+                                                            hintStyle: TextStyle(color: Colors.white54, fontSize: 14.0, fontWeight: FontWeight.w600),
+                                                            labelText: snapshot.data[index].name,
+                                                            labelStyle: TextStyle(color: Colors.white54, fontSize: 18, fontWeight: FontWeight.w500)),
+                                                        textInputAction:
+                                                            TextInputAction
+                                                                .next,
+                                                        keyboardType: TextInputType
+                                                            .numberWithOptions(
+                                                                decimal: true),
+                                                        focusNode:
+                                                            focusNameList[
+                                                                index],
+                                                      )),
+                                                  // ------------------------ phone
+                                                  Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.7,
+                                                      margin:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 5.0),
+                                                      child: TextFormField(
+                                                        style: TextStyle(
+                                                            color: lightwhite,
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
+                                                        autovalidateMode:
+                                                            AutovalidateMode
+                                                                .always,
+                                                        enableInteractiveSelection:
+                                                            false,
+                                                        controller:
+                                                            _editingNumberController[
+                                                                index],
+                                                        validator: (value) {
+                                                          if (value.isEmpty) {
+                                                            numFlag = false;
+                                                            return "Please enter Phone Number";
+                                                          } else {
+                                                            numFlag = true;
+                                                            return null;
+                                                          }
+                                                        },
+                                                        decoration: InputDecoration(
+                                                            focusedErrorBorder: OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                        30),
+                                                                borderSide: BorderSide(
+                                                                    color:
+                                                                        mandarin,
+                                                                    width: 3)),
+                                                            errorBorder: OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                        30),
+                                                                borderSide: BorderSide(
+                                                                    color:
+                                                                        mandarin,
+                                                                    width: 3)),
+                                                            enabledBorder: OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                        30),
+                                                                borderSide: BorderSide(
+                                                                    color:
+                                                                        lightwhite,
+                                                                    width: 3)),
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(30),
+                                                                    borderSide: BorderSide(color: mandarin, width: 3)),
+                                                            errorStyle: TextStyle(color: mandarin, fontSize: 10.0, fontWeight: FontWeight.w600),
+                                                            hintText: snapshot.data[index].phoneNumber,
+                                                            hintStyle: TextStyle(color: Colors.white54, fontSize: 14.0, fontWeight: FontWeight.w600),
+                                                            labelText: snapshot.data[index].phoneNumber,
+                                                            labelStyle: TextStyle(color: Colors.white54, fontSize: 18, fontWeight: FontWeight.w500)),
+                                                        textInputAction:
+                                                            TextInputAction
+                                                                .next,
+                                                        keyboardType: TextInputType
+                                                            .numberWithOptions(
+                                                                decimal: true),
+                                                        focusNode:
+                                                            focusPhoneNumberList[
+                                                                index],
+                                                      )),
+                                                ]));
+                                      }))),
                           Expanded(
-                              flex: 0,
+                            flex: 1,
+                            child: SizedBox(),
+                          ),
+                          Expanded(
+                              flex: 1,
                               child: Container(
                                 width: MediaQuery.of(context).size.width * 0.9,
                                 child: RaisedButton(
@@ -352,6 +405,10 @@ class _EditMemberInfoState extends State<EditMemberInfo> {
                                   ),
                                 ),
                               )),
+                          Expanded(
+                            flex: 1,
+                            child: SizedBox(),
+                          ),
                         ],
                       ),
                     ),
