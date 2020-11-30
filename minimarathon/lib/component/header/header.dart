@@ -44,7 +44,7 @@ class CustomHeader extends StatelessWidget {
                   color: white, fontWeight: FontWeight.bold, fontSize: 20.0)),
           actions: [
             IconButton(icon: Icon(Icons.logout, color: white), onPressed: () {
-              customAlert(context: context, function: () {_signOut(context);});
+              customAlert(context: context, function: () {_signOut(context);}, str: "Would you like to sign out?");
             })
           ],
         ),

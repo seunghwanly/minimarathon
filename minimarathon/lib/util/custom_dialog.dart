@@ -89,10 +89,10 @@ customAlert({BuildContext context, final function, String str}) {
             height: MediaQuery.of(context).size.height / 4,
             padding: EdgeInsets.all(10.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
-                  flex: 4,
+                  flex: 3,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
