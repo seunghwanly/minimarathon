@@ -140,6 +140,7 @@ class RelayFinishState extends State<RelayFinish> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    (widget.totalDistance / 1000) >= 5.0 ? 
                     Container(
                         // height:  MediaQuery.of(context).size.height * 0.8,
                         //margin: EdgeInsets.symmetric(vertical: 10),
@@ -155,7 +156,7 @@ class RelayFinishState extends State<RelayFinish> {
                           makeTextThin("Congratulations,", Colors.white, 20),
                           makeTextThin(widget.userName, Colors.white, 20),
                           makeTwoColor(
-                              "You walked ",
+                              "You've run ",
                               (widget.totalDistance / 1000).toStringAsFixed(1) +
                                   "km !",
                               Colors.white,
@@ -171,24 +172,80 @@ class RelayFinishState extends State<RelayFinish> {
                               Colors.white,
                               20),
                         ]))
+                        :
+                        Container(
+                        // height:  MediaQuery.of(context).size.height * 0.8,
+                        //margin: EdgeInsets.symmetric(vertical: 10),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 10.0),
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        decoration: BoxDecoration(
+                            color: deepPastelblue,
+                            // border: Border.all(color: lightwhite, width: 3),
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            boxShadow: [customeBoxShadow()]),
+                        child: Column(children: [
+                          makeTextThin(widget.userName, Colors.white, 20),
+                          makeTwoColor(
+                              "You've run ",
+                              (widget.totalDistance / 1000).toStringAsFixed(1) +
+                                  "km !",
+                              Colors.white,
+                              Colors.white,
+                              20),
+                          makeTextSemiThin(
+                              _printDuration(
+                                      Duration(seconds: widget.recordTime)) +
+                                  ' (' +
+                                  (widget.totalDistance / widget.recordTime.toDouble())
+                                      .toStringAsFixed(1) +
+                                  ' m/s)',
+                              Colors.white,
+                              20),
+                        ]))
                   ],
                 ),
               ),
               Expanded(flex: 1, child: Container(child: Text(''))),
               Expanded(
-                flex: 4,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    makeTwoColor(
-                        "We certified ", "4 hours", Colors.white70, white, 20),
-                    // makeTextSemiThin(
-                    //     "We certified 4 hours", Colors.white70, 20),
-                    makeTextSemiThin("volunteer work for", Colors.white70, 20),
-                    makeTextSemiThin("Hope Sharing Relay", Colors.white70, 20),
-                  ],
-                ),
-              ),
+                  flex: 4,
+                  child: (widget.totalDistance / 1000) >= 5.0
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            makeTwoColor("We certified ", "4 hours",
+                                Colors.white70, white, 20),
+                            // makeTextSemiThin(
+                            //     "We certified 4 hours", Colors.white70, 20),
+                            makeTextSemiThin(
+                                "of volunteer work for", Colors.white70, 20),
+                            makeTextSemiThin(
+                                "Hope Sharing Relay", Colors.white70, 20),
+                          ],
+                        )
+                      : RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(children: <TextSpan>[
+                            TextSpan(
+                                text: "5km are needed to receive\n",
+                                style: TextStyle(
+                                    color: superlight,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18)),
+                            TextSpan(
+                                text: "4hours",
+                                style: TextStyle(
+                                    color: white,
+                                    backgroundColor: deepPastelblue,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20)),
+                            TextSpan(
+                                text: " of volunteer work !",
+                                style: TextStyle(
+                                    color: superlight,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18)),
+                          ]))),
               Expanded(flex: 1, child: Container(child: Text(''))),
               Expanded(
                 flex: 1,
@@ -238,8 +295,8 @@ class RelayFinishState extends State<RelayFinish> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(30))),
                       child: Container(
-                        padding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                         child: makeTextSemiThin('Show Ranking', lightwhite, 24),
                       ),
                     ),
