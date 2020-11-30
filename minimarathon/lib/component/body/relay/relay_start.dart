@@ -43,33 +43,6 @@ class RelayStartState extends State<RelayStart> {
     );
   }
 
-  _showMyDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('ALERT'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('ONLY for Team Leader'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   void _navigationToEdit() {
     if (widget.isLeader) {
     Navigator.push(
@@ -80,7 +53,7 @@ class RelayStartState extends State<RelayStart> {
         )
         );
     } else{
-      _showMyDialog();
+      showMyDialog(context, 'ONLY for Team Leader');
     }
 
   }
