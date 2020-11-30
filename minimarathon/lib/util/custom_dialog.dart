@@ -53,7 +53,7 @@ showMyDialog(BuildContext context, String title) {
   );
 }
 
-customAlertAsync({BuildContext context, final function}) {
+customAlert({BuildContext context, final function}) {
   return showDialog(
                       context: context,
                       child: new Dialog(

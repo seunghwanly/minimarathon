@@ -2,8 +2,6 @@ import 'package:background_location/background_location.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:async';
-import 'package:intl/intl.dart';
-import 'package:minimarathon/component/body/relay/ranking.dart';
 import '../relay/relay_finish.dart';
 import 'package:minimarathon/component/header/header.dart';
 
@@ -146,35 +144,34 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
         body: Center(
             child: Container(
                 padding:
-                    EdgeInsets.only(top: 20, bottom: 5, left: 20, right: 20),
+                    EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
                 // color: Colors.white,
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 child: Column(children: [
                   Expanded(
-                      flex: 40,
-                      child: FlatButton(
-                          onPressed: () {},
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(color: lightwhite, width: 3),
+                      flex: 7,
+                      child: Container(
+                          decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
+                            color: deepPastelblue,
                           ),
-                          color: royalblue,
                           child: Container(
                             width: double.infinity,
                             // height: MediaQuery.of(context).size.width * 0.2,
                             alignment: Alignment.center,
+                            padding: EdgeInsets.symmetric(horizontal: 20.0),
                             child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Expanded(
-                                    flex: 5,
+                                    flex: 4,
                                     child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            'Run more than 5.0km !\n Challenge the ranking',
+                                            'Run more than 5.0km !\n the fastest runner will be ranked !',
                                             style: TextStyle(
                                                 color: lightwhite,
                                                 fontWeight: FontWeight.bold,
@@ -192,31 +189,40 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Text(
-                                              'Current Speed',
-                                              style: TextStyle(
-                                                  color: lightwhite,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width /
-                                                          16),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            Text(
-                                              double.parse(speed)
-                                                      .toStringAsFixed(1) +
-                                                  ' m/s',
-                                              style: TextStyle(
-                                                  color: lightwhite,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width /
-                                                          16),
-                                              textAlign: TextAlign.center,
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  '"Speed',
+                                                  style: TextStyle(
+                                                      color: lightwhite,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              16),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                Text(
+                                                  double.parse(speed)
+                                                          .toStringAsFixed(1) +
+                                                      ' m/s',
+                                                  style: TextStyle(
+                                                      color: lightwhite,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              16),
+                                                  textAlign: TextAlign.center,
+                                                )
+                                              ],
                                             )
                                           ])),
                                   Expanded(
@@ -225,30 +231,39 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            'Current Distance',
-                                            style: TextStyle(
-                                                color: lightwhite,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    16),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          Text(
-                                            (totalDistance / 1000)
-                                                    .toStringAsPrecision(2) +
-                                                ' km',
-                                            style: TextStyle(
-                                                color: lightwhite,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    16),
-                                            textAlign: TextAlign.center,
-                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                '"Distance',
+                                                style: TextStyle(
+                                                    color: lightwhite,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            16),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              Text(
+                                                (totalDistance / 1000)
+                                                        .toStringAsPrecision(
+                                                            2) +
+                                                    ' km',
+                                                style: TextStyle(
+                                                    color: lightwhite,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            16),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ],
+                                          )
                                         ],
                                       )),
                                   Expanded(
@@ -257,49 +272,51 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            'Time Recode',
-                                            style: TextStyle(
-                                                color: lightwhite,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    16),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          // Text(
-                                          //   '$_start',
-                                          //   style: TextStyle(
-                                          //       color: lightwhite,
-                                          //       fontWeight: FontWeight.bold,
-                                          //       fontSize:
-                                          //           MediaQuery.of(context).size.width /
-                                          //               16),
-                                          //   textAlign: TextAlign.center,
-                                          // ),
-                                          Text(
-                                            _printDuration(
-                                                Duration(seconds: _start)),
-                                            style: TextStyle(
-                                                color: lightwhite,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    16),
-                                            textAlign: TextAlign.center,
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                '"Timer',
+                                                style: TextStyle(
+                                                    color: lightwhite,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            16),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              Text(
+                                                _printDuration(
+                                                    Duration(seconds: _start)),
+                                                style: TextStyle(
+                                                    color: lightwhite,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            16),
+                                                textAlign: TextAlign.center,
+                                              )
+                                            ],
                                           ),
                                         ],
-                                      ))
+                                      )),
+                                  Expanded(
+                                    flex: 1,
+                                    child: SizedBox(),
+                                  ),
                                 ]),
                           ))),
                   Expanded(
                     flex: 1,
-                    child: Text(''),
+                    child: SizedBox(),
                   ),
                   Expanded(
-                      flex: 8,
+                      flex: 1,
                       child: Row(
                         children: [
                           Expanded(
@@ -504,7 +521,11 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                         ],
                                       )))),
                         ],
-                      ))
+                      )),
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(),
+                  ),
                 ]))));
   }
 
