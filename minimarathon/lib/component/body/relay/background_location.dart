@@ -165,24 +165,81 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Expanded(
-                                    flex: 4,
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'Run more than 5.0km !\n the fastest runner will be ranked !',
-                                            style: TextStyle(
-                                                color: lightwhite,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    20),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ]),
+                                    flex: 1,
+                                    child: SizedBox(),
                                   ),
+                                  Expanded(
+                                      flex: 3,
+                                      child: RichText(
+                                        textAlign: TextAlign.center,
+                                        text: TextSpan(
+                                          children: <TextSpan>[
+                                          TextSpan(
+                                              text: "5K RUN\n",
+                                              style: TextStyle(
+                                                color: white,
+                                                fontWeight: FontWeight.w800,
+                                                fontSize: 20,
+                                                letterSpacing: 2.0,
+                                              )),
+                                              TextSpan(
+                                              text: "\nTips\n",
+                                              style: TextStyle(
+                                                color: superlight,
+                                                decoration: TextDecoration.underline,
+                                                decorationStyle: TextDecorationStyle.solid,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18,
+                                                letterSpacing: 2.0,
+                                              )),
+                                              TextSpan(
+                                              text: "\nUnder ",
+                                              style: TextStyle(
+                                                color: white,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                              )),
+                                              TextSpan(
+                                              text: "5km",
+                                              style: TextStyle(
+                                                color: white,
+                                                backgroundColor: mandarin,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                              )),
+                                              TextSpan(
+                                              text: " will not be recorded !",
+                                              style: TextStyle(
+                                                color: white,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                              )),
+                                              TextSpan(
+                                              text: "\nSo be aware of pressing ",
+                                              style: TextStyle(
+                                                color: white,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                              )),
+                                              TextSpan(
+                                              text: "End Button",
+                                              style: TextStyle(
+                                                color: white,
+                                                backgroundColor: Colors.green[400],
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                              )),
+                                        ]),
+                                      )
+
+                                      // style: TextStyle(
+                                      //         color: lightwhite,
+                                      //         fontWeight: FontWeight.bold,
+                                      //         fontSize: MediaQuery.of(context)
+                                      //                 .size
+                                      //                 .width /
+                                      //             20
+                                      ),
                                   Expanded(
                                       flex: 2,
                                       child: Column(
@@ -318,10 +375,11 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                   Expanded(
                       flex: 1,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Expanded(
-                              flex: 10,
-                              child: FlatButton(
+                              flex: 4,
+                              child: RaisedButton(
                                   onPressed: () async {
                                     startTimer();
                                     BackgroundLocation.setNotificationTitle(
@@ -391,8 +449,6 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                     });
                                   },
                                   shape: RoundedRectangleBorder(
-                                    side:
-                                        BorderSide(color: lightwhite, width: 3),
                                     borderRadius: BorderRadius.circular(30),
                                   ),
                                   color: mandarin,
@@ -414,18 +470,18 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                 fontSize: MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    16),
+                                                    14),
                                             textAlign: TextAlign.center,
                                           ),
                                         ],
                                       )))),
                           Expanded(
                             flex: 1,
-                            child: Text(''),
+                            child: SizedBox(),
                           ),
                           Expanded(
-                              flex: 10,
-                              child: FlatButton(
+                              flex: 4,
+                              child: RaisedButton(
                                   onPressed: () {
                                     showDialog(
                                       context: context,
@@ -491,11 +547,9 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                     );
                                   },
                                   shape: RoundedRectangleBorder(
-                                    side:
-                                        BorderSide(color: lightwhite, width: 3),
                                     borderRadius: BorderRadius.circular(30),
                                   ),
-                                  color: royalblue,
+                                  color: Colors.green[400],
                                   child: Container(
                                       //margin: EdgeInsets.only(left: 10),
                                       width: double.infinity,
@@ -515,7 +569,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                 fontSize: MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    16),
+                                                    14),
                                             textAlign: TextAlign.center,
                                           ),
                                         ],
