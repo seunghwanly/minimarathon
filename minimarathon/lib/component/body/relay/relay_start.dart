@@ -52,15 +52,6 @@ class RelayStartState extends State<RelayStart> {
     }
   }
 
-  void _showDialogbefore() {
-    showMyDialog(context,
-        "Sorry, " + username + '\n\n' + "Relay is Available on December 10th.");
-  }
-
-  void _showDialogAfter() {
-    showMyDialog(context, "Sorry, " + username + '\n\n' + "Relay is Finished.");
-  }
-
   void _navigationToLocation() {
     DateTime currentTime = DateTime.now();
 
@@ -75,13 +66,12 @@ class RelayStartState extends State<RelayStart> {
     DateTime d_day = DateTime(2020, 12, 18, 20, 00, 00);
     DateTime finish_day = DateTime(2020, 12, 20, 20, 00, 00);
     if (currentTime.isBefore(d_day) == true) {
-      //마라톤날짜 이전
-      print(widget.teamname);
-      _showDialogbefore();
-    }
-    //마라톤날짜 종료시점
-    else if (currentTime.isAfter(d_day) && currentTime.isAfter(finish_day)) {
-      _showDialogAfter();
+      //before
+      showMyDialog(context,
+        "Sorry, " + username + '\n\n' + "Relay is Available on December 10th.");
+    } else if (currentTime.isAfter(d_day) && currentTime.isAfter(finish_day)) {
+      //after
+      showMyDialog(context, "Sorry, " + username + '\n\n' + "Relay is Finished.");
     }
 
     //마라톤 시작 !
