@@ -76,9 +76,9 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:949723521719:android:d2bcb01215ba6c7cfea332",
+        "mobilesdk_app_id": "1:949723521719:android:52e7ff12bdd7b38bfea332",
         "android_client_info": {
-          "package_name": "com.hopeSharingRealy"
+          "package_name": "com.hopeSharingRelay"
         }
       },
       "oauth_client": [

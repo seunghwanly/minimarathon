@@ -93,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // for login
   String phoneNumber;
-  String phoneIsoCode = "+82";
+  String phoneIsoCode = "+1";
   String phoneInternationalNumber;
 
   @override

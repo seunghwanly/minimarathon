@@ -25,7 +25,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.949723521719-1jgoi622qs6l8goeanvfsa027vk4vbcv</string>
+				<string>com.googleusercontent.apps.949723521719-poj67md3qjs5cfan9s9ns0o1q8mo97q5</string>
 			</array>
 		</dict>
 	</array>
@@ -43,6 +43,7 @@
 	<array>
 		<string>fetch</string>
 		<string>location</string>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
