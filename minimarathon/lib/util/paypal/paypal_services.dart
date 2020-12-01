@@ -11,14 +11,14 @@ class PaypalServices {
   // ! ALERT !
   // TODO :  SELECT YOUR MODE !!
   //PAYPAL SANDBOX MODE !
-  String domain = "https://api.sandbox.paypal.com"; // for sandbox mode
-  String clientId = 'ARahzR1w-18UQHwWNJwHNGjPLAJqqqsYj2jVTXvO76qj1aRZyBl-lW_kaAX4McKqlK3UgkzNw99wOUQ-';
-  String secret = 'EA_dz86eXTo229RBItz0hR30QO2SicYFBUZ1yq3yAejaGvhX5PNT8UkC0RIEVE3hQumP4-tZlhNIBtxC';
+  // String domain = "https://api.sandbox.paypal.com"; // for sandbox mode
+  // String clientId = 'ARahzR1w-18UQHwWNJwHNGjPLAJqqqsYj2jVTXvO76qj1aRZyBl-lW_kaAX4McKqlK3UgkzNw99wOUQ-';
+  // String secret = 'EA_dz86eXTo229RBItz0hR30QO2SicYFBUZ1yq3yAejaGvhX5PNT8UkC0RIEVE3hQumP4-tZlhNIBtxC';
 
   //PAYPAL LIVE MODE !
-  //  String domain = "https://api.paypal.com"; // for production mode
-  // String clientId = 'AcJIOyUMTQJypdrxI40RcOvHxsGGBquYVEBnZlozp3Ia5FmTpxrXSqKc3uuhh3Yri4jq9cU_4SwVhcMj';
-  // String secret = 'EELx1Yn5oNgU7MO-T6yc3xju7h9E1hvVv5jXzevar0tdkmGeWPsJCg1fVvJXbmO01r11wtZQiAfmHSKW';
+   String domain = "https://api.paypal.com"; // for production mode
+  String clientId = 'AcJIOyUMTQJypdrxI40RcOvHxsGGBquYVEBnZlozp3Ia5FmTpxrXSqKc3uuhh3Yri4jq9cU_4SwVhcMj';
+  String secret = 'EELx1Yn5oNgU7MO-T6yc3xju7h9E1hvVv5jXzevar0tdkmGeWPsJCg1fVvJXbmO01r11wtZQiAfmHSKW';
 
 
   // for getting the access token from Paypal
