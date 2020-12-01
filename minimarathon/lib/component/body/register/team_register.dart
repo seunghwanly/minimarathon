@@ -41,6 +41,8 @@ class _TeamRegisterState extends State<TeamRegister> {
 
   final _formKey = GlobalKey<FormState>(); //form
 
+  ScrollController _scrollController = new ScrollController();
+
   //data for push
   Team teamData;
   List<Member> memberList = new List<Member>();
@@ -75,6 +77,7 @@ class _TeamRegisterState extends State<TeamRegister> {
         isTeamnameDuplicate = 2;
         isTeamnameChecked = false;
       });
+      _scrollController.jumpTo(0);
       return false;
     }
   }
@@ -153,14 +156,15 @@ class _TeamRegisterState extends State<TeamRegister> {
   @override
   Widget build(BuildContext context) {
     print("build > " + teamNameList.toString());
-    if (!isPaymentFinished && isPaymentAvailable) {
-      return LoadingPage();
-    } else {
+    // if (!isPaymentFinished && !isRegisterAvailable && isPaymentAvailable) {
+    //   return LoadingPage();
+    // } else {
       return CustomHeader(
         title: "Team Register",
         body: Form(
             key: _formKey,
             child: SingleChildScrollView(
+              controller: _scrollController,
                 child: SizedBox(
               height: MediaQuery.of(context).size.height * 1.8,
               width: MediaQuery.of(context).size.width,
@@ -631,12 +635,12 @@ class _TeamRegisterState extends State<TeamRegister> {
                                 : Colors.green[400]),
                         child: Text(
                           !isRegisterAvailable
-                              ? "You can donate from \$${memberLength}0."
+                              ? "You can donate from \$${memberLength}0.\nPlease wait few seconds after payment"
                               : "You have successfully completed your donation!",
                           style: TextStyle(
                               color: white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16.0),
+                              fontSize: 16.0), textAlign: TextAlign.center,
                         ),
                       ),
                     ),
@@ -691,7 +695,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                           isPaymentAvailable =
                                                               false;
                                                           isPaymentFinished =
-                                                              !isPaymentFinished;
+                                                              true;
                                                         });
                                                         print('> R : ' +
                                                             isRegisterAvailable
@@ -747,9 +751,15 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                             context,
                                                             "Payment was succefully done !\n You are now avaiable to register !");
                                                       } else {
+                                                        print("return back : "+res.toString());
+
                                                         setState(() {
+                                                          isRegisterAvailable =
+                                                              false;
+                                                          isPaymentAvailable =
+                                                              true;
                                                           isPaymentFinished =
-                                                              !isPaymentFinished;
+                                                              true;
                                                         });
                                                         await showMyDialog(
                                                             context,
@@ -803,6 +813,6 @@ class _TeamRegisterState extends State<TeamRegister> {
               ),
             ))),
       );
-    }
+    //}
   }
 }

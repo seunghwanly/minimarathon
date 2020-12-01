@@ -147,7 +147,7 @@ class RankingState extends State<Ranking> {
     return CustomHeader(
       title: "Ranking",
       body: ListView(
-        physics: NeverScrollableScrollPhysics(),
+        // physics: NeverScrollableScrollPhysics(),
         padding: const EdgeInsets.all(5),
         children: [
           Container(

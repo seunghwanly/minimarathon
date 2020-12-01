@@ -60,6 +60,7 @@ class _SingleRegisterState extends State<SingleRegister> {
   void initState() {
     super.initState();
     // get user phonenumber
+    singleRegisterData.name = "name";
     singleRegisterData.donationFee = 10;
     singleRegisterData.phoneNumber = user.phoneNumber;
     singleRegisterData.moreVolunteer = false;
@@ -112,6 +113,11 @@ class _SingleRegisterState extends State<SingleRegister> {
                                       borderRadius: BorderRadius.circular(30),
                                       borderSide: new BorderSide(
                                           color: lightwhite, width: 3)),
+                                  hintText: "Enter name",
+                                  hintStyle: TextStyle(
+                                      color: Colors.white54,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500),
                                   labelText: '  ${singleRegisterData.name}',
                                   labelStyle: TextStyle(
                                       color: Colors.white54,
@@ -158,14 +164,14 @@ class _SingleRegisterState extends State<SingleRegister> {
                                     vertical: 15.0, horizontal: 20.0),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(30),
-                                  border:
-                                      Border.all(color: lightwhite, width: 3),
+                                  color: mandarin,
+                                  border: Border.all(color: mandarin, width: 3),
                                 ),
                                 child: Text(singleRegisterData.phoneNumber,
                                     style: TextStyle(
-                                        color: Colors.white54,
+                                        color: white,
                                         fontSize: 18,
-                                        fontWeight: FontWeight.w500)))
+                                        fontWeight: FontWeight.w600)))
                           ],
                         )),
                   ),
@@ -199,6 +205,12 @@ class _SingleRegisterState extends State<SingleRegister> {
                                         borderRadius: BorderRadius.circular(30),
                                         borderSide: new BorderSide(
                                             color: lightwhite, width: 3)),
+                                    hintText: "10",
+                                    hintStyle: TextStyle(
+                                        color: Colors.white54,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500),
+                                    prefixText: "\$",
                                     labelText:
                                         '  \$${singleRegisterData.donationFee}',
                                     labelStyle: TextStyle(
