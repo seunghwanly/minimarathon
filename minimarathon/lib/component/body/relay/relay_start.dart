@@ -65,29 +65,17 @@ class RelayStartState extends State<RelayStart> {
 
     DateTime d_day = DateTime(2020, 12, 18, 20, 00, 00);
     DateTime finish_day = DateTime(2020, 12, 20, 20, 00, 00);
-    // if (currentTime.isBefore(d_day) == true) {
-    //   //before
-    //   showMyDialog(context,
-    //     "Sorry, " + username + '\n\n' + "Relay is Available on December 10th.");
-    // } else if (currentTime.isAfter(d_day) && currentTime.isAfter(finish_day)) {
-    //   //after
-    //   showMyDialog(context, "Sorry, " + username + '\n\n' + "Relay is Finished.");
-    // }
-    // //마라톤 시작 !
-    // else {
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //       builder: (BuildContext context) => MyBackgroundLocation(
-    //         teamName: teamname,
-    //         userName: username,
-    //       ),
-    //     ),
-    //   );
-    //   showMyDialog(context, "If you have existing record, \n it will be overwritten!!");
-
-    // }
-    Navigator.push(
+    if (currentTime.isBefore(d_day) == true) {
+      //before
+      showMyDialog(context,
+        "Sorry, " + username + '\n\n' + "Relay is Available on December 10th.");
+    } else if (currentTime.isAfter(d_day) && currentTime.isAfter(finish_day)) {
+      //after
+      showMyDialog(context, "Sorry, " + username + '\n\n' + "Relay is Finished.");
+    }
+    //마라톤 시작 !
+    else {
+      Navigator.push(
         context,
         MaterialPageRoute(
           builder: (BuildContext context) => MyBackgroundLocation(
@@ -96,6 +84,9 @@ class RelayStartState extends State<RelayStart> {
           ),
         ),
       );
+      showMyDialog(context, "If you have existing record, \n it will be overwritten!!");
+
+    }
 
   }
 
