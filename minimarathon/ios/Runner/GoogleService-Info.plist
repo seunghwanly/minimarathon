@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>949723521719-1jgoi622qs6l8goeanvfsa027vk4vbcv.apps.googleusercontent.com</string>
+	<string>949723521719-poj67md3qjs5cfan9s9ns0o1q8mo97q5.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.949723521719-1jgoi622qs6l8goeanvfsa027vk4vbcv</string>
+	<string>com.googleusercontent.apps.949723521719-poj67md3qjs5cfan9s9ns0o1q8mo97q5</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>949723521719-sh7od2vlr1atfkgrl1cefvl9sgj4aqa4.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyArT6EbCUFxmF7A0bmXa_pN2SGelvWxaok</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.minimarathon</string>
+	<string>com.hopeSharingRelay</string>
 	<key>PROJECT_ID</key>
 	<string>hopesharingrelay-ae215</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:949723521719:ios:1bab607ab1ad737ffea332</string>
+	<string>1:949723521719:ios:df4f5ab8dabbc6c7fea332</string>
 	<key>DATABASE_URL</key>
 	<string>https://hopesharingrelay-ae215.firebaseio.com</string>
 </dict>

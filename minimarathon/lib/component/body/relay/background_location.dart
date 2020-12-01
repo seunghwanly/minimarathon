@@ -161,16 +161,16 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                             width: double.infinity,
                             // height: MediaQuery.of(context).size.width * 0.2,
                             alignment: Alignment.center,
-                            padding: EdgeInsets.symmetric(horizontal: 20.0),
+                            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
                             child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
+                                  // Expanded(
+                                  //   flex: 1,
+                                  //   child: SizedBox(),
+                                  // ),
                                   Expanded(
-                                    flex: 1,
-                                    child: SizedBox(),
-                                  ),
-                                  Expanded(
-                                      flex: 3,
+                                      flex: 4,
                                       child: RichText(
                                         textAlign: TextAlign.center,
                                         text: TextSpan(children: <TextSpan>[
@@ -210,7 +210,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                 fontSize: 16,
                                               )),
                                           TextSpan(
-                                              text: ", the volunteer hours will not be given !",
+                                              text: ", the volunteer hours will not be given ! Also, will not be ranked !",
                                               style: TextStyle(
                                                 color: white,
                                                 fontWeight: FontWeight.w600,

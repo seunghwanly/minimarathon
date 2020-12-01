@@ -61,7 +61,7 @@ class _TeamRegisterState extends State<TeamRegister> {
   bool checkTeamname(BuildContext context) {
     String name = teamnameControlller.text.trim();
     if (!teamNameList.contains(name)) {
-      showMyDialog(context, "You can use that Team name !");
+      showMyDialog(context, "You can use your Team name !");
       setState(() {
         isTeamnameDuplicate = 1;
         isTeamnameChecked = true;
@@ -88,7 +88,7 @@ class _TeamRegisterState extends State<TeamRegister> {
     memberLength = 2; // team >= 2
     teamData.teamName = "ex) han's Family";
     teamData.donationFee = memberLength * 10;
-    
+
     //memberList
     for (int i = 0; i < memberLength; ++i) {
       Member newMember = new Member();
@@ -124,11 +124,35 @@ class _TeamRegisterState extends State<TeamRegister> {
         });
       });
     });
+
+    // check for real time !
+    teamReference.onChildChanged.listen((event) {
+      print("bucket updated ! changed");
+      if (!teamNameList.contains(event.snapshot.key)) {
+        setState(() {
+          teamNameList.add(event.snapshot.key);
+        });
+      }
+    });
+    teamReference.onChildAdded.listen((event) {
+      print("bucket updated ! added" + event.snapshot.key);
+      if (!teamNameList.contains(event.snapshot.key)) {
+        setState(() {
+          teamNameList.add(event.snapshot.key);
+        });
+      }
+    });
+  }
+
+@override
+  void dispose() {
+    super.dispose();
+    teamReference.onDisconnect();
   }
 
   @override
   Widget build(BuildContext context) {
-    
+    print("build > " + teamNameList.toString());
     if (!isPaymentFinished && isPaymentAvailable) {
       return LoadingPage();
     } else {
@@ -168,91 +192,41 @@ class _TeamRegisterState extends State<TeamRegister> {
                                   ),
                                 )),
                             Expanded(
-                                flex: 5,
-                                child: Container(
-                                    child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      flex: 7,
-                                      child: Container(
-                                          child: TextField(
-                                        decoration: InputDecoration(
-                                          focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                              borderSide: BorderSide(
-                                                  color: white, width: 3)),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                              borderSide: new BorderSide(
-                                                  color: lightwhite, width: 3)),
-                                          hintStyle:
-                                              TextStyle(color: Colors.white54),
-                                          labelText: '  ${teamData.teamName}',
-                                          labelStyle: TextStyle(
-                                              color: isTeamnameDuplicate == 0
-                                                  ? Colors.white54
-                                                  : isTeamnameDuplicate == 1
-                                                      ? Colors.green[400]
-                                                      : Colors.red[400],
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        style: TextStyle(color: lightwhite),
-                                        textInputAction: TextInputAction.done,
-                                        onChanged: (name) {
-                                          setState(() {
-                                            teamData.teamName = name;
-                                          });
-                                        },
-                                        onEditingComplete: () =>
-                                            FocusScope.of(context)
-                                                .requestFocus(focusNameList[0]),
-                                        cursorWidth: 4.0,
-                                        controller: teamnameControlller,
-                                      )),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: SizedBox(),
-                                    ),
-                                    Expanded(
-                                      flex: 2,
-                                      child: Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              15,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20.0),
-                                            color: lightwhite,
-                                          ),
-                                          child: FlatButton(
-                                            onPressed: () => print(memberList.length),
-                                              // alignment: Alignment.center,
-                                              child: isTeamnameDuplicate == 0
-                                                  ? Icon(
-                                                      Icons.search,
-                                                      color: darkblue,
-                                                      size: 30,
-                                                    )
-                                                  : isTeamnameDuplicate == 1
-                                                      ? Icon(Icons.check,
-                                                          color:
-                                                              Colors.green[400],
-                                                          size: 30)
-                                                      : Icon(Icons.close,
-                                                          color:
-                                                              Colors.red[400],
-                                                          size: 30))),
-                                    )
-                                  ],
-                                ))),
+                                flex: 4,
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                        borderSide:
+                                            BorderSide(color: white, width: 3)),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                        borderSide: new BorderSide(
+                                            color: lightwhite, width: 3)),
+                                    hintStyle: TextStyle(color: Colors.white54),
+                                    labelText: '  ${teamData.teamName}',
+                                    labelStyle: TextStyle(
+                                        color: isTeamnameDuplicate == 0
+                                            ? Colors.white54
+                                            : isTeamnameDuplicate == 1
+                                                ? Colors.green[400]
+                                                : Colors.red[400],
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  style: TextStyle(color: lightwhite),
+                                  textInputAction: TextInputAction.done,
+                                  onChanged: (name) {
+                                    setState(() {
+                                      teamData.teamName = name;
+                                    });
+                                  },
+                                  onEditingComplete: () =>
+                                      FocusScope.of(context)
+                                          .requestFocus(focusNameList[0]),
+                                  cursorWidth: 4.0,
+                                  controller: teamnameControlller,
+                                )),
                             Expanded(
                               flex: 2,
                               child: Text(
@@ -727,15 +701,31 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                                 .toString());
 
                                                         // copy List
-                                                        List<Member> listForPushDatabase;
-                                                        listForPushDatabase = List.from(memberList);
-                                                        print(listForPushDatabase.length.toString());
+                                                        List<Member>
+                                                            listForPushDatabase;
+                                                        listForPushDatabase =
+                                                            List.from(
+                                                                memberList);
+                                                        print(
+                                                            listForPushDatabase
+                                                                .length
+                                                                .toString());
 
-                                                        teamData.leader = listForPushDatabase.elementAt(0);
-                                                        listForPushDatabase.removeAt(0);
-                                                        teamData.members = List.from(listForPushDatabase);
-                                                        print(listForPushDatabase.toString());
-                                                        print(listForPushDatabase.length.toString());
+                                                        teamData.leader =
+                                                            listForPushDatabase
+                                                                .elementAt(0);
+                                                        listForPushDatabase
+                                                            .removeAt(0);
+                                                        teamData.members =
+                                                            List.from(
+                                                                listForPushDatabase);
+                                                        print(
+                                                            listForPushDatabase
+                                                                .toString());
+                                                        print(
+                                                            listForPushDatabase
+                                                                .length
+                                                                .toString());
 
                                                         print(teamData
                                                             .toJson()

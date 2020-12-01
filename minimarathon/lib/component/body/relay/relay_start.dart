@@ -76,7 +76,6 @@ class RelayStartState extends State<RelayStart> {
     //마라톤 시작 !
     else {
       Navigator.push(
-
         context,
         MaterialPageRoute(
           builder: (BuildContext context) => MyBackgroundLocation(
@@ -194,7 +193,7 @@ class RelayStartState extends State<RelayStart> {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18)),
                         TextSpan(
-                            text: "GPS",
+                            text: "GPS & Network",
                             style: TextStyle(
                                 color: lightwhite,
                                 backgroundColor: mandarin,
