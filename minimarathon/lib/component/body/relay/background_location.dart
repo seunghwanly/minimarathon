@@ -179,7 +179,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                               style: TextStyle(
                                                 color: white,
                                                 fontWeight: FontWeight.w800,
-                                                fontSize: 20,
+                                                fontSize: MediaQuery.of(context).size.width / 20,
                                                 letterSpacing: 2.0,
                                               )),
                                           TextSpan(
@@ -191,7 +191,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                 decorationStyle:
                                                     TextDecorationStyle.solid,
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 18,
+                                                fontSize: MediaQuery.of(context).size.width / 22,
                                                 letterSpacing: 2.0,
                                               )),
                                           TextSpan(
@@ -199,7 +199,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                               style: TextStyle(
                                                 color: white,
                                                 fontWeight: FontWeight.w600,
-                                                fontSize: 16,
+                                                fontSize: MediaQuery.of(context).size.width / 26,
                                               )),
                                           TextSpan(
                                               text: "5km",
@@ -207,22 +207,22 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                 color: white,
                                                 backgroundColor: mandarin,
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 16,
+                                                fontSize: MediaQuery.of(context).size.width / 24,
                                               )),
                                           TextSpan(
                                               text: ", the volunteer hours will not be given ! Also, will not be ranked !",
                                               style: TextStyle(
                                                 color: white,
                                                 fontWeight: FontWeight.w600,
-                                                fontSize: 16,
+                                                fontSize: MediaQuery.of(context).size.width / 26,
                                               )),
                                           TextSpan(
                                               text:
-                                                  "\nSo be aware of pressing ",
+                                                  " So be aware of pressing ",
                                               style: TextStyle(
                                                 color: white,
                                                 fontWeight: FontWeight.w600,
-                                                fontSize: 16,
+                                                fontSize: MediaQuery.of(context).size.width / 26,
                                               )),
                                           TextSpan(
                                               text: "End Button",
@@ -231,7 +231,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                 backgroundColor:
                                                     Colors.green[400],
                                                 fontWeight: FontWeight.w600,
-                                                fontSize: 16,
+                                                fontSize: MediaQuery.of(context).size.width / 24,
                                               )),
                                         ]),
                                       )
@@ -265,7 +265,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .width /
-                                                              16),
+                                                              18),
                                                   textAlign: TextAlign.center,
                                                 ),
                                                 Text(
@@ -280,7 +280,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .width /
-                                                              16),
+                                                              18),
                                                   textAlign: TextAlign.center,
                                                 )
                                               ],
@@ -305,7 +305,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width /
-                                                            16),
+                                                            18),
                                                 textAlign: TextAlign.center,
                                               ),
                                               Text(
@@ -320,7 +320,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width /
-                                                            16),
+                                                            18),
                                                 textAlign: TextAlign.center,
                                               ),
                                             ],
@@ -346,7 +346,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width /
-                                                            16),
+                                                            18),
                                                 textAlign: TextAlign.center,
                                               ),
                                               Text(
@@ -359,7 +359,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width /
-                                                            16),
+                                                            18),
                                                 textAlign: TextAlign.center,
                                               )
                                             ],

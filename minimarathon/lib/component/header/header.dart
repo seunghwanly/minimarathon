@@ -9,9 +9,8 @@ class CustomHeader extends StatelessWidget {
   CustomHeader({this.title, this.body});
 
   _signOut(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil('/main', (Route<dynamic> route) => false);
+    await FirebaseAuth.instance.signOut().then((value) => Navigator.of(context)
+        .pushNamedAndRemoveUntil('/main', (Route<dynamic> route) => false));
   }
 
   @override
@@ -43,9 +42,16 @@ class CustomHeader extends StatelessWidget {
               headline6: TextStyle(
                   color: white, fontWeight: FontWeight.bold, fontSize: 20.0)),
           actions: [
-            IconButton(icon: Icon(Icons.logout, color: white), onPressed: () {
-              customAlert(context: context, function: () {_signOut(context);}, str: "Would you like to sign out?");
-            })
+            IconButton(
+                icon: Icon(Icons.logout, color: white),
+                onPressed: () {
+                  customAlert(
+                      context: context,
+                      function: () {
+                        _signOut(context);
+                      },
+                      str: "Would you like to sign out?");
+                })
           ],
         ),
         body: GestureDetector(
