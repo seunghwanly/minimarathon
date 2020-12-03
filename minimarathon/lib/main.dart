@@ -141,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             onPhoneNumberChange: onPhoneNumberChange,
                             initialPhoneNumber: phoneNumber,
                             initialSelection: phoneIsoCode,
-                            enabledCountries: ['+82', '+1'],
+                            enabledCountries: ['+1'],
                             showCountryCodes: false,
                           )),
                       SizedBox(
