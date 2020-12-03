@@ -31,6 +31,10 @@ class _SingleRegisterState extends State<SingleRegister> {
   FocusNode focusName = FocusNode();
   FocusNode focusPhoneNumber = FocusNode();
   FocusNode focusFee = FocusNode();
+
+  // Scroll controller
+  ScrollController _scrollController = new ScrollController();
+
   // Firebase Auth
   User user = FirebaseAuth.instance.currentUser;
 
@@ -81,7 +85,7 @@ class _SingleRegisterState extends State<SingleRegister> {
     super.initState();
     // get user phonenumber
     singleRegisterData.name = "name";
-    singleRegisterData.donationFee = 10;
+    singleRegisterData.donationFee = 0;
     singleRegisterData.phoneNumber = user.phoneNumber;
     singleRegisterData.moreVolunteer = false;
     singleRegisterData.relay = Relay(runningDistance: 0, timer: 0);
@@ -94,6 +98,7 @@ class _SingleRegisterState extends State<SingleRegister> {
     return Form(
         key: _formKey,
         child: SingleChildScrollView(
+          controller: _scrollController,
             child: SizedBox(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
@@ -105,7 +110,7 @@ class _SingleRegisterState extends State<SingleRegister> {
               children: [
                 Expanded(
                   // ---------------------------------------------------------------------------NAME
-                  flex: 4,
+                  flex: 2,
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: Column(
@@ -162,7 +167,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                 ),
                 Expanded(
                   // ---------------------------------------------------------------------------Phone Number
-                  flex: 4,
+                  flex: 2,
                   child: Container(
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: Column(
@@ -281,7 +286,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                 //       ),
                 // ),
                 Expanded(
-                  flex: 2,
+                  flex: 1,
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: FlatButton(
@@ -289,7 +294,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                         if (!isRegisterAvailable) {
                           if (singleRegisterData.name != '' &&
                               singleRegisterData.name !=
-                                  "  Please type your name . . .") {
+                                  "name") {
                             setState(() {
                               isRegisterAvailable = true;
                             });
@@ -373,7 +378,7 @@ class _SingleRegisterState extends State<SingleRegister> {
                   ),
                 ),
                 Expanded(
-                  flex: 1,
+                  flex: 5,
                   child: SizedBox(),
                 ),
               ],

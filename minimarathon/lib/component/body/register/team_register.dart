@@ -199,7 +199,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                     children: [
                       Expanded(
                         // ---------------------------------------------------------------------------TEAM NAME
-                        flex: 3,
+                        flex: 1,
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.8,
                           margin: EdgeInsets.only(bottom: 10.0),
@@ -258,22 +258,22 @@ class _TeamRegisterState extends State<TeamRegister> {
                                     cursorWidth: 4.0,
                                     controller: teamnameControlller,
                                   )),
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  "Team name duplication check will be done before payment !",
-                                  style: TextStyle(
-                                      color: lightwhite,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14.0),
-                                ),
-                              )
+                              // Expanded(
+                              //   flex: 2,
+                              //   child: Text(
+                              //     "Team name duplication check will be done before payment !",
+                              //     style: TextStyle(
+                              //         color: lightwhite,
+                              //         fontWeight: FontWeight.bold,
+                              //         fontSize: 14.0),
+                              //   ),
+                              // )
                             ],
                           ),
                         ),
                       ),
                       Expanded(
-                          flex: 3,
+                          flex: 2,
                           child: Container(
                             padding: EdgeInsets.symmetric(
                                 vertical: 10.0, horizontal: 10.0),
@@ -400,7 +400,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                       ),
                       Expanded(
                           // ---------------------------------------------------------------------------MEMBERS
-                          flex: 6,
+                          flex: 4,
                           child: Container(
                               margin: EdgeInsets.symmetric(vertical: 10.0),
                               padding: EdgeInsets.symmetric(vertical: 5.0),
@@ -702,7 +702,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                       //   child: SizedBox(),
                       // ),
                       Expanded(
-                        flex: 2,
+                        flex: 1,
                         child: Container(
                             margin: EdgeInsets.symmetric(vertical: 10.0),
                             width: MediaQuery.of(context).size.width * 0.7,
@@ -727,7 +727,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),
-                                color: deepPastelblue,
+                                color: !isTeamnameChecked ? deepPastelblue : Colors.green[400],
                                 child: Container(
                                   width: double.infinity,
                                   // height: MediaQuery.of(context).size.width * 0.2,
@@ -744,6 +744,10 @@ class _TeamRegisterState extends State<TeamRegister> {
                                   ),
                                 ))),
                       ),
+                      Expanded(
+                        flex:1,
+                        child: SizedBox(),
+                      )
                     ],
                   ),
                 ),
