@@ -135,7 +135,7 @@ class RelayFinishState extends State<RelayFinish> {
     speed = !(widget.totalDistance / widget.recordTime).isNaN
         ? (widget.totalDistance / widget.recordTime)
         : 0.0;
-    if (widget.recordTime == null || widget.totalDistance == null) speed = 0.0;
+    if (widget.recordTime == 0 || widget.totalDistance == null) speed = 0.0;
   }
 
   @override
@@ -223,9 +223,7 @@ class RelayFinishState extends State<RelayFinish> {
                                   _printDuration(Duration(
                                           seconds: widget.recordTime)) +
                                       ' (' +
-                                      (widget.totalDistance /
-                                              widget.recordTime.toDouble())
-                                          .toStringAsFixed(1) +
+                                      speed.toStringAsFixed(1)+
                                       ' m/s)',
                                   Colors.white,
                                   20),

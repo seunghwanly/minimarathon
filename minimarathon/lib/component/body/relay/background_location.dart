@@ -544,7 +544,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
     //if (_start > 5) {
     Route route = MaterialPageRoute(
         builder: (context) => RelayFinish(
-              recordTime: _start,
+              recordTime: _start != null ? _start : 0,
               totalDistance: totalDistance,
               teamName: widget.teamName,
               userName: widget.userName,
