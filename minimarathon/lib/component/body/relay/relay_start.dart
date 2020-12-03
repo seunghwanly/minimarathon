@@ -78,16 +78,7 @@ class RelayStartState extends State<RelayStart> {
     }
     //마라톤 시작 !
     else {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (BuildContext context) => MyBackgroundLocation(
-      //       teamName: teamname,
-      //       userName: username,
-      //     ),
-      //   ),
-      // );
-      // showMyDialog(context, "If you have existing record, \n it will be overwritten!!");
+      
       customAlertRichText(
           context: context,
           function: () {
