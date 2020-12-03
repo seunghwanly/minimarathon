@@ -197,7 +197,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                           TextSpan(
                                               text: "\nUnder ",
                                               style: TextStyle(
-                                                color: white,
+                                                color: superlight,
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: MediaQuery.of(context).size.width / 26,
                                               )),
@@ -210,9 +210,9 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                 fontSize: MediaQuery.of(context).size.width / 24,
                                               )),
                                           TextSpan(
-                                              text: ", the volunteer hours will not be given ! Also, will not be ranked !",
+                                              text: ",the record will not be ranked !",
                                               style: TextStyle(
-                                                color: white,
+                                                color: superlight,
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: MediaQuery.of(context).size.width / 26,
                                               )),
@@ -225,7 +225,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                 fontSize: MediaQuery.of(context).size.width / 26,
                                               )),
                                           TextSpan(
-                                              text: "End Button",
+                                              text: "End",
                                               style: TextStyle(
                                                 color: white,
                                                 backgroundColor:
@@ -633,7 +633,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    //_timer.cancel(); ->> 사라진 위젯에서 cancel하려고 해서 에러 발생
     BackgroundLocation.stopLocationService();
     super.dispose();
   }

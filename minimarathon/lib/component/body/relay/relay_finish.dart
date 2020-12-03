@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:minimarathon/component/header/header.dart';
 import 'package:minimarathon/util/custom_container.dart';
 import 'package:minimarathon/util/custom_dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../util/palette.dart';
 import '../../../util/text_style.dart';
 import 'ranking.dart';
@@ -30,6 +31,7 @@ class RelayFinishState extends State<RelayFinish> {
   String userPhoneNumber = '';
   String teamName;
   bool isTeam = true;
+  double speed;
 
   void getUserNumber() async {
     FirebaseAuth.instance.authStateChanges().listen((User user) {
@@ -89,6 +91,21 @@ class RelayFinishState extends State<RelayFinish> {
     });
   }
 
+  void _openURL() async {
+    String url =
+        "https://www.gofundme.com/f/can-we-read?utm_medium=copy_link&utm_source=customer&utm_campaign=p_lico+share-sheet";
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: false,
+        forceWebView: false,
+        headers: <String, String>{'my_header_key': 'my_header_value'},
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   String _printDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, "0");
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
@@ -115,10 +132,15 @@ class RelayFinishState extends State<RelayFinish> {
     userPhoneNumber = _user.phoneNumber;
     username = widget.userName;
     teamName = widget.teamName;
+    speed = !(widget.totalDistance / widget.recordTime).isNaN
+        ? (widget.totalDistance / widget.recordTime)
+        : 0.0;
+    if (widget.recordTime == null || widget.totalDistance == null) speed = 0.0;
   }
 
   @override
   Widget build(BuildContext context) {
+    print(speed.toString());
     return CustomHeader(
         title: "Relay Finish",
         body: new Center(
@@ -170,8 +192,7 @@ class RelayFinishState extends State<RelayFinish> {
                                   _printDuration(Duration(
                                           seconds: widget.recordTime)) +
                                       ' (' +
-                                      (widget.totalDistance / widget.recordTime)
-                                          .toStringAsFixed(1) +
+                                      speed.toStringAsFixed(1) +
                                       ' m/s)',
                                   Colors.white,
                                   20),
@@ -216,19 +237,42 @@ class RelayFinishState extends State<RelayFinish> {
               Expanded(
                   flex: 4,
                   child: (widget.totalDistance / 1000) >= 5.0
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            makeTwoColor("We certified ", "4 hours",
-                                Colors.white70, white, 20),
-                            // makeTextSemiThin(
-                            //     "We certified 4 hours", Colors.white70, 20),
-                            makeTextSemiThin(
-                                "of volunteer work for", Colors.white70, 20),
-                            makeTextSemiThin(
-                                "Hope Sharing Relay", Colors.white70, 20),
-                          ],
-                        )
+                      ? RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(children: <TextSpan>[
+                            TextSpan(
+                                text: "We certified\n",
+                                style: TextStyle(
+                                    color: superlight,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18)),
+                            TextSpan(
+                                text: "4hours",
+                                style: TextStyle(
+                                    color: white,
+                                    backgroundColor: mandarin,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20)),
+                            TextSpan(
+                                text: " of volunteer work !",
+                                style: TextStyle(
+                                    color: superlight,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18)),
+                          ]))
+                      // ? Column(
+                      //     mainAxisAlignment: MainAxisAlignment.end,
+                      //     children: [
+                      //       makeTwoColor("We certified ", "4 hours",
+                      //           Colors.white70, white, 20),
+                      //       // makeTextSemiThin(
+                      //       //     "We certified 4 hours", Colors.white70, 20),
+                      //       makeTextSemiThin(
+                      //           "of volunteer work for", Colors.white70, 20),
+                      //       makeTextSemiThin(
+                      //           "Hope Sharing Relay", Colors.white70, 20),
+                      //     ],
+                      //   )
                       : RichText(
                           textAlign: TextAlign.center,
                           text: TextSpan(children: <TextSpan>[
@@ -254,6 +298,37 @@ class RelayFinishState extends State<RelayFinish> {
                           ]))),
               Expanded(flex: 1, child: Container(child: Text(''))),
               Expanded(
+                  flex: 3,
+                  child: Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: RaisedButton(
+                        onPressed: () => customAlert(
+                            context: context,
+                            str: "Wish to make a dontaion?",
+                            function: () {
+                              _openURL();
+                              Navigator.of(context).pop();
+                            }),
+                        // _updateInfo,
+                        color: mandarin,
+                        shape: RoundedRectangleBorder(
+                            // border: Border.all(color: lightwhite, width: 3),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30))),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              makeTextSemiThin('More Donation', white, 24),
+                              makeTextSemiThin('Gift for seniors', white, 12),
+                            ],
+                          ),
+                        ),
+                      ))),
+              Expanded(flex: 1, child: Container(child: Text(''))),
+              Expanded(
                 flex: 1,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -265,7 +340,7 @@ class RelayFinishState extends State<RelayFinish> {
               ),
               Expanded(flex: 1, child: Container(child: Text(''))),
               Expanded(
-                  flex: 4,
+                  flex: 3,
                   child: Container(
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: RaisedButton(
@@ -277,7 +352,7 @@ class RelayFinishState extends State<RelayFinish> {
                               Navigator.of(context).pop();
                             }),
                         // _updateInfo,
-                        color: mandarin,
+                        color: Colors.blue[400],
                         shape: RoundedRectangleBorder(
                             // border: Border.all(color: lightwhite, width: 3),
                             borderRadius:
