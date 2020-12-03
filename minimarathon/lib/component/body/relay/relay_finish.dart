@@ -279,20 +279,20 @@ class RelayFinishState extends State<RelayFinish> {
                                 style: TextStyle(
                                     color: superlight,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 18)),
+                                    fontSize: MediaQuery.of(context).size.width / 24)),
                             TextSpan(
                                 text: "4hours",
                                 style: TextStyle(
                                     color: white,
                                     backgroundColor: deepPastelblue,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 20)),
+                                    fontSize: MediaQuery.of(context).size.width / 22)),
                             TextSpan(
                                 text: " of volunteer work !",
                                 style: TextStyle(
                                     color: superlight,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 18)),
+                                    fontSize: MediaQuery.of(context).size.width / 24)),
                           ]))),
               Expanded(flex: 1, child: Container(child: Text(''))),
               Expanded(
@@ -319,8 +319,8 @@ class RelayFinishState extends State<RelayFinish> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              makeTextSemiThin('More Donation', white, 24),
-                              makeTextSemiThin('Gift for seniors', white, 12),
+                              makeTextSemiThin('More Donation', white, MediaQuery.of(context).size.width / 20),
+                              makeTextSemiThin('Gift for seniors', white, MediaQuery.of(context).size.width / 40),
                             ],
                           ),
                         ),
@@ -361,9 +361,9 @@ class RelayFinishState extends State<RelayFinish> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              makeTextSemiThin('More Volunteer', white, 24),
+                              makeTextSemiThin('More Volunteer', white, MediaQuery.of(context).size.width / 20),
                               makeTextSemiThin(
-                                  'Subscribe Hope Sharing Relay', white, 12),
+                                  'Subscribe Hope Sharing Relay', white, MediaQuery.of(context).size.width / 40),
                             ],
                           ),
                         ),
@@ -382,7 +382,7 @@ class RelayFinishState extends State<RelayFinish> {
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        child: makeTextSemiThin('Show Ranking', lightwhite, 24),
+                        child: makeTextSemiThin('Show Ranking', lightwhite, MediaQuery.of(context).size.width / 20),
                       ),
                     ),
                   )),
