@@ -68,7 +68,7 @@ class RelayStartState extends State<RelayStart> {
     // if (currentTime.isBefore(d_day) == true) {
     //   //before
     //   showMyDialog(context,
-    //     "Sorry, " + username + '\n\n' + "Relay is Available on December 10th.");
+    //     "Sorry, " + username + '\n\n' + "Relay is Available on December 18th.");
     // } else if (currentTime.isAfter(d_day) && currentTime.isAfter(finish_day)) {
     //   //after
     //   showMyDialog(context, "Sorry, " + username + '\n\n' + "Relay is Finished.");
