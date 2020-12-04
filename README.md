@@ -29,20 +29,18 @@ Hope Sharing Relay - Book Sharing Club (Olnda HS, Brea. California)
 
 ## Description
 * Hope Sharing Relay Application is a kind of marathon management platform that hosts a 5K mini-marathon.  Individuals or groups can participate in the marathon after applying through the app, and the ranking can be calculated by calculating individual marathon records through the start and end of the mini-marathon. Participants can donate to an external donation platform only if they wish to.
+<a href="https://www.gofundme.com/f/can-we-read?utm_medium=copy_link&utm_source=customer&utm_campaign=p_lico+share-sheet">**current donation link**</a>
 
 ## Screenshots
-### Before Relay
+### Relay
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/22142225/101127869-d2107480-3641-11eb-8594-384657f00532.gif" width="150"/>
-</p>
-
-### After Relay
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/22142225/101127876-d472ce80-3641-11eb-842e-8931ad611fbf.gif" width="150"/>
+  <img src="https://user-images.githubusercontent.com/22142225/101128699-8a8ae800-3643-11eb-9a17-8e5a07864b37.gif" width="150"/>
+  <img src="https://user-images.githubusercontent.com/22142225/101128695-88c12480-3643-11eb-8019-921689c9fdcb.gif" width="150"/>
 </p>
 
 ## Usage
 For help getting started with Flutter, view the online [documentation](https://flutter.io/).
+Need more information FlutterFire [documentation](https://firebase.flutter.dev/docs/overview).
 
 ### :bulb: Running the app locally
 1. Clone this repository.
