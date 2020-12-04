@@ -2,7 +2,7 @@
 Hope Sharing Relay
 </h1>
 <h3 align="center">
-Hope Sharing Relay - Book Sharing Club (Olnda HS, Brea. California)
+Hope Sharing Relay - Book Sharing Club (Olnda HS, Brea. California) X Dongguk Univ.
 </h3>
 <h4 align="center">
   Flutter X Firebase 
@@ -39,7 +39,7 @@ Hope Sharing Relay - Book Sharing Club (Olnda HS, Brea. California)
 </p>
 
 ## Usage
-For help getting started with Flutter, view the online [documentation](https://flutter.io/).
+For help getting started with Flutter, view the online [documentation](https://flutter.io/).<br>
 Need more information FlutterFire [documentation](https://firebase.flutter.dev/docs/overview).
 
 ### :bulb: Running the app locally
