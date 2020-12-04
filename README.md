@@ -2,7 +2,7 @@
 Hope Sharing Relay
 </h1>
 <h3 align="center">
-Hope Sharing Relay - Book Sharing Club (Olnda HS, Brea. California) X Dongguk Univ.
+Hope Sharing Relay - <a href="https://hainy1021.wixsite.com/mysite/blog">Book Sharing Club (Olnda HS, Brea. California)</a> X <a href="http://www.dongguk.edu/mbs/kr/index.jsp">Dongguk Univ.</a>
 </h3>
 <h4 align="center">
   Flutter X Firebase 
