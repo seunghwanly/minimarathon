@@ -15,6 +15,7 @@ Hope Sharing Relay - <a href="https://hainy1021.wixsite.com/mysite/blog">Book Sh
   <a href="#developers">Developers</a> •
   <a href="#key-features">Key Features</a> •
   <a href="#description">Description</a> •
+  <a href="#download">Download</a> •
   <a href="#screenshots">Screenshots</a> •
   <a href="#usage">Usage</a>
 </p>
@@ -30,6 +31,16 @@ Hope Sharing Relay - <a href="https://hainy1021.wixsite.com/mysite/blog">Book Sh
 ## Description
 * Hope Sharing Relay Application is a kind of marathon management platform that hosts a 5K mini-marathon.  Individuals or groups can participate in the marathon after applying through the app, and the ranking can be calculated by calculating individual marathon records through the start and end of the mini-marathon. Participants can donate to an external donation platform only if they wish to.
 <a href="https://www.gofundme.com/f/can-we-read?utm_medium=copy_link&utm_source=customer&utm_campaign=p_lico+share-sheet">**current donation link**</a>
+
+## Download
+<p align="center">
+<a href="https://apps.apple.com/us/app/hope-sharing-relay/id1542745470">
+  <img src="https://user-images.githubusercontent.com/22142225/101352180-15cedc80-38d5-11eb-9ba0-4ab84759420f.png"  width="200"/>
+</a>
+<a href="">
+  <img src="https://user-images.githubusercontent.com/22142225/101352184-17000980-38d5-11eb-8e96-d7aa66181ee7.png"  width="200"/>
+</a>
+</p>
 
 ## Screenshots
 ### Relay
