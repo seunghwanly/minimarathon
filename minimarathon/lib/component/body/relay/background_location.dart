@@ -21,6 +21,7 @@ class MyBackgroundLocation extends StatefulWidget {
 }
 
 class MyBackgroundLocationState extends State<MyBackgroundLocation> {
+  //PermissionStatus currentStaus;
   final databaseReference =
       FirebaseDatabase.instance.reference().child('2020HopeRelay');
   double beforeLat = 0;
@@ -113,6 +114,16 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
       });
     });
   }
+  // Future<bool> _requestPermission() async {
+  //   var result = await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+  //   if (result[PermissionGroup.storage] == PermissionStatus.granted) {
+  //     print('Storage permission is granted.');
+  //     return true;
+  //   } else {
+  //     print('Storage permission is not granted.');
+  //     return false;
+  //   }
+  // }
 
   void startTimer() {
     if (isStart == true) return;
@@ -407,63 +418,74 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                               flex: 4,
                               child: RaisedButton(
                                   onPressed: () async {
-                                    startTimer();
-                                    BackgroundLocation.setNotificationTitle(
-                                        "Background service running");
-                                    BackgroundLocation.startLocationService();
-                                    BackgroundLocation.getLocationUpdates(
-                                        (location) {
-                                      setState(() {
-                                        //초기상태
+                                    BackgroundLocation.getPermissions(
+                                      onGranted: () {
+                                        BackgroundLocation.setNotificationTitle(
+                                            "Background service running");
+                                        BackgroundLocation
+                                            .startLocationService();
+                                        startTimer();
+                                        BackgroundLocation.getLocationUpdates(
+                                            (location) {
+                                          setState(() {
+                                            //초기상태
 
-                                        if (beforeLat == 0 && currentLat == 1) {
-                                          this.beforeLat = location.latitude;
-                                          this.beforeLong = location.longitude;
-                                          this.currentLat = location.latitude;
-                                          this.currentLong = location.longitude;
-                                        } else {
-                                          this.beforeLat =
-                                              double.parse(this.latitude);
-                                          this.beforeLong =
-                                              double.parse(this.longitude);
-                                          this.currentLat = location.latitude;
-                                          this.currentLong = location.longitude;
-                                        }
+                                            if (beforeLat == 0 &&
+                                                currentLat == 1) {
+                                              this.beforeLat =
+                                                  location.latitude;
+                                              this.beforeLong =
+                                                  location.longitude;
+                                              this.currentLat =
+                                                  location.latitude;
+                                              this.currentLong =
+                                                  location.longitude;
+                                            } else {
+                                              this.beforeLat =
+                                                  double.parse(this.latitude);
+                                              this.beforeLong =
+                                                  double.parse(this.longitude);
+                                              this.currentLat =
+                                                  location.latitude;
+                                              this.currentLong =
+                                                  location.longitude;
+                                            }
 
-                                        this.latitude =
-                                            location.latitude.toString();
-                                        this.longitude =
-                                            location.longitude.toString();
-                                        this.accuracy =
-                                            location.accuracy.toString();
-                                        this.altitude =
-                                            location.altitude.toString();
-                                        this.bearing =
-                                            location.bearing.toString();
-                                        this.speed = location.speed.toString();
-                                        this.time =
-                                            DateTime.fromMillisecondsSinceEpoch(
-                                                    location.time.toInt())
+                                            this.latitude =
+                                                location.latitude.toString();
+                                            this.longitude =
+                                                location.longitude.toString();
+                                            this.accuracy =
+                                                location.accuracy.toString();
+                                            this.altitude =
+                                                location.altitude.toString();
+                                            this.bearing =
+                                                location.bearing.toString();
+                                            this.speed =
+                                                location.speed.toString();
+                                            this.time = DateTime
+                                                    .fromMillisecondsSinceEpoch(
+                                                        location.time.toInt())
                                                 .toString();
 
-                                        if (((beforeLat == 0 &&
-                                                    currentLat == 1) ==
-                                                false) &&
-                                            ((beforeLat == currentLat) ==
-                                                false)) {
-                                          totalDistance +=
-                                              distanceInKmBetweenEarthCoordinates(
-                                                  beforeLat,
-                                                  beforeLong,
-                                                  currentLat,
-                                                  currentLong,
-                                                  location.speed);
+                                            if (((beforeLat == 0 &&
+                                                        currentLat == 1) ==
+                                                    false) &&
+                                                ((beforeLat == currentLat) ==
+                                                    false)) {
+                                              totalDistance +=
+                                                  distanceInKmBetweenEarthCoordinates(
+                                                      beforeLat,
+                                                      beforeLong,
+                                                      currentLat,
+                                                      currentLong,
+                                                      location.speed);
 
-                                          // totalDistance2 += distance(beforeLat, beforeLong,
-                                          //     currentLat, currentLong, 'm', location.speed);
-                                        }
-                                      });
-                                      print("""\n
+                                              // totalDistance2 += distance(beforeLat, beforeLong,
+                                              //     currentLat, currentLong, 'm', location.speed);
+                                            }
+                                          });
+                                          print("""\n
                         beforLat: $beforeLat
                         current: $currentLat
                         Latitude:  $latitude
@@ -472,7 +494,13 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                         Speed: $speed
                         Time: $time
                       """);
-                                    });
+                                        });
+                                      },
+                                      onDenied: () {
+                                        BackgroundLocation.checkPermissions()
+                                            .then((status) {});
+                                      },
+                                    );
                                   },
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30),
