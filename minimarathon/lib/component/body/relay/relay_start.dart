@@ -64,21 +64,15 @@ class RelayStartState extends State<RelayStart> {
     DateTime d_day = DateTime(2020, 12, 18, 20, 00, 00);
     DateTime finish_day = DateTime(2020, 12, 20, 20, 00, 00);
     if (currentTime.isBefore(d_day) == true) {
-      //before
-      showMyDialog(
-          context,
-          "Sorry, " +
-              username +
-              '\n' +
-              "Relay is Available on December 18th.");
+      //   //before
+      showMyDialog(context,
+          "Sorry, " + username + '\n' + "Relay is Available on December 18th.");
     } else if (currentTime.isAfter(d_day) && currentTime.isAfter(finish_day)) {
       //after
-      showMyDialog(
-          context, "Sorry, " + username + '\n' + "Relay is Finished.");
+      showMyDialog(context, "Sorry, " + username + '\n' + "Relay is Finished.");
     }
     //마라톤 시작 !
     else {
-      
       customAlertRichText(
           context: context,
           function: () {
@@ -95,8 +89,7 @@ class RelayStartState extends State<RelayStart> {
           richText: RichText(
             textAlign: TextAlign.center,
             softWrap: true,
-            text: TextSpan(
-              children: <TextSpan>[
+            text: TextSpan(children: <TextSpan>[
               TextSpan(
                   text: "Tips\n\n",
                   style: TextStyle(
@@ -126,8 +119,7 @@ class RelayStartState extends State<RelayStart> {
                       fontWeight: FontWeight.w600,
                       fontSize: MediaQuery.of(context).size.width / 24)),
               TextSpan(
-                  text:
-                      "overwritten!",
+                  text: "overwritten!",
                   style: TextStyle(
                       color: white,
                       backgroundColor: mandarin,
@@ -136,7 +128,6 @@ class RelayStartState extends State<RelayStart> {
             ]),
           ));
     }
-    
   }
 
   @override

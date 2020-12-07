@@ -28,6 +28,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
   double beforeLong = 0;
   double currentLat = 1;
   double currentLong = 0;
+  String currentPermission = 'deny';
 
   String latitude = "waiting...";
   String longitude = "waiting...";
@@ -162,7 +163,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                 height: MediaQuery.of(context).size.height,
                 child: Column(children: [
                   Expanded(
-                      flex: 7,
+                      flex: 8,
                       child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
@@ -182,7 +183,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                   //   child: SizedBox(),
                                   // ),
                                   Expanded(
-                                      flex: 4,
+                                      flex: 5,
                                       child: RichText(
                                         textAlign: TextAlign.center,
                                         text: TextSpan(children: <TextSpan>[
@@ -255,7 +256,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                     26,
                                               )),
                                           TextSpan(
-                                              text: "End",
+                                              text: "End\n\n",
                                               style: TextStyle(
                                                 color: white,
                                                 backgroundColor:
@@ -265,6 +266,27 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                         .size
                                                         .width /
                                                     24,
+                                              )),
+                                          TextSpan(
+                                              text:
+                                                  "⚠ To calculate distance for Relay ⚠\n allow 2020 Hope Sharing Relay to use\n your location all of the time by\n",
+                                              style: TextStyle(
+                                                color: superlight,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    28,
+                                              )),
+                                          TextSpan(
+                                              text: "background Service",
+                                              style: TextStyle(
+                                                color: mandarin,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    28,
                                               )),
                                         ]),
                                       )
@@ -420,6 +442,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                   onPressed: () async {
                                     BackgroundLocation.getPermissions(
                                       onGranted: () {
+                                        currentPermission = 'grant';
                                         BackgroundLocation.setNotificationTitle(
                                             "Background service running");
                                         BackgroundLocation
@@ -497,6 +520,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                         });
                                       },
                                       onDenied: () {
+                                        currentPermission = 'deny';
                                         BackgroundLocation.checkPermissions()
                                             .then((status) {});
                                       },
