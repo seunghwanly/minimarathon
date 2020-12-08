@@ -114,6 +114,47 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
     });
   }
 
+  backgroundService() async {
+    showMyDialog(context, "To calculate distance for Relay,\nplease allow 2020 Hope Sharing Relay to use\nyour location all of the time by background service");
+    BackgroundLocation.setNotificationTitle("Background service running");
+    BackgroundLocation.startLocationService();
+    BackgroundLocation.getLocationUpdates((location) {
+      setState(() {
+        //초기상태
+        if (beforeLat == 0 && currentLat == 1) {
+          this.beforeLat = location.latitude;
+          this.beforeLong = location.longitude;
+          this.currentLat = location.latitude;
+          this.currentLong = location.longitude;
+        } else {
+          this.beforeLat = double.parse(this.latitude);
+          this.beforeLong = double.parse(this.longitude);
+          this.currentLat = location.latitude;
+          this.currentLong = location.longitude;
+        }
+
+        this.latitude = location.latitude.toString();
+        this.longitude = location.longitude.toString();
+        this.accuracy = location.accuracy.toString();
+        this.altitude = location.altitude.toString();
+        this.bearing = location.bearing.toString();
+        this.speed = location.speed.toString();
+        this.time = DateTime.fromMillisecondsSinceEpoch(location.time.toInt())
+            .toString();
+
+        if (((beforeLat == 0 && currentLat == 1) == false) &&
+            ((beforeLat == currentLat) == false)) {
+          totalDistance += distanceInKmBetweenEarthCoordinates(
+              beforeLat, beforeLong, currentLat, currentLong, location.speed);
+
+          // totalDistance2 += distance(beforeLat, beforeLong,
+          //     currentLat, currentLong, 'm', location.speed);
+        }
+      });
+    });
+    startTimer();
+  }
+
   void startTimer() {
     if (isStart == true) return;
     const oneSec = const Duration(seconds: 1);
@@ -406,74 +447,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                           Expanded(
                               flex: 4,
                               child: RaisedButton(
-                                  onPressed: () async {
-                                    startTimer();
-                                    BackgroundLocation.setNotificationTitle(
-                                        "Background service running");
-                                    BackgroundLocation.startLocationService();
-                                    BackgroundLocation.getLocationUpdates(
-                                        (location) {
-                                      setState(() {
-                                        //초기상태
-
-                                        if (beforeLat == 0 && currentLat == 1) {
-                                          this.beforeLat = location.latitude;
-                                          this.beforeLong = location.longitude;
-                                          this.currentLat = location.latitude;
-                                          this.currentLong = location.longitude;
-                                        } else {
-                                          this.beforeLat =
-                                              double.parse(this.latitude);
-                                          this.beforeLong =
-                                              double.parse(this.longitude);
-                                          this.currentLat = location.latitude;
-                                          this.currentLong = location.longitude;
-                                        }
-
-                                        this.latitude =
-                                            location.latitude.toString();
-                                        this.longitude =
-                                            location.longitude.toString();
-                                        this.accuracy =
-                                            location.accuracy.toString();
-                                        this.altitude =
-                                            location.altitude.toString();
-                                        this.bearing =
-                                            location.bearing.toString();
-                                        this.speed = location.speed.toString();
-                                        this.time =
-                                            DateTime.fromMillisecondsSinceEpoch(
-                                                    location.time.toInt())
-                                                .toString();
-
-                                        if (((beforeLat == 0 &&
-                                                    currentLat == 1) ==
-                                                false) &&
-                                            ((beforeLat == currentLat) ==
-                                                false)) {
-                                          totalDistance +=
-                                              distanceInKmBetweenEarthCoordinates(
-                                                  beforeLat,
-                                                  beforeLong,
-                                                  currentLat,
-                                                  currentLong,
-                                                  location.speed);
-
-                                          // totalDistance2 += distance(beforeLat, beforeLong,
-                                          //     currentLat, currentLong, 'm', location.speed);
-                                        }
-                                      });
-                                      print("""\n
-                        beforLat: $beforeLat
-                        current: $currentLat
-                        Latitude:  $latitude
-                        Longitude: $longitude
-                        Accuracy: $accuracy
-                        Speed: $speed
-                        Time: $time
-                      """);
-                                    });
-                                  },
+                                  onPressed: () => backgroundService(),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30),
                                   ),
