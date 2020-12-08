@@ -21,12 +21,14 @@ class MyBackgroundLocation extends StatefulWidget {
 }
 
 class MyBackgroundLocationState extends State<MyBackgroundLocation> {
+  //PermissionStatus currentStaus;
   final databaseReference =
       FirebaseDatabase.instance.reference().child('2020HopeRelay');
   double beforeLat = 0;
   double beforeLong = 0;
   double currentLat = 1;
   double currentLong = 0;
+  String currentPermission = 'deny';
 
   String latitude = "waiting...";
   String longitude = "waiting...";
@@ -113,6 +115,16 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
       });
     });
   }
+  // Future<bool> _requestPermission() async {
+  //   var result = await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+  //   if (result[PermissionGroup.storage] == PermissionStatus.granted) {
+  //     print('Storage permission is granted.');
+  //     return true;
+  //   } else {
+  //     print('Storage permission is not granted.');
+  //     return false;
+  //   }
+  // }
 
   backgroundService() async {
     showMyDialog(context, "To calculate distance for Relay,\nplease allow 2020 Hope Sharing Relay to use\nyour location all of the time by background service");
@@ -192,7 +204,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                 height: MediaQuery.of(context).size.height,
                 child: Column(children: [
                   Expanded(
-                      flex: 7,
+                      flex: 8,
                       child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
@@ -212,7 +224,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                   //   child: SizedBox(),
                                   // ),
                                   Expanded(
-                                      flex: 4,
+                                      flex: 5,
                                       child: RichText(
                                         textAlign: TextAlign.center,
                                         text: TextSpan(children: <TextSpan>[
@@ -285,7 +297,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                     26,
                                               )),
                                           TextSpan(
-                                              text: "End",
+                                              text: "End\n\n",
                                               style: TextStyle(
                                                 color: white,
                                                 backgroundColor:
@@ -295,6 +307,27 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                         .size
                                                         .width /
                                                     24,
+                                              )),
+                                          TextSpan(
+                                              text:
+                                                  "⚠ To calculate distance for Relay ⚠\n allow 2020 Hope Sharing Relay to use\n your location all of the time by\n",
+                                              style: TextStyle(
+                                                color: superlight,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    28,
+                                              )),
+                                          TextSpan(
+                                              text: "background Service",
+                                              style: TextStyle(
+                                                color: mandarin,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    28,
                                               )),
                                         ]),
                                       )
