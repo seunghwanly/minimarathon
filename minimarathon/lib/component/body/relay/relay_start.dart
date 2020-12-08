@@ -64,15 +64,15 @@ class RelayStartState extends State<RelayStart> {
     DateTime d_day = DateTime(2020, 12, 18, 20, 00, 00);
     DateTime finish_day = DateTime(2020, 12, 20, 20, 00, 00);
     if (currentTime.isBefore(d_day) == true) {
-      //   //before
-      showMyDialog(context,
-          "Sorry, " + username + '\n' + "Relay is Available on December 18th.");
-    } else if (currentTime.isAfter(d_day) && currentTime.isAfter(finish_day)) {
-      //after
-      showMyDialog(context, "Sorry, " + username + '\n' + "Relay is Finished.");
-    }
-    //마라톤 시작 !
-    else {
+        //before
+        showMyDialog(context,
+            "Sorry, " + username + '\n' + "Relay is Available on December 18th.");
+      } else if (currentTime.isAfter(d_day) && currentTime.isAfter(finish_day)) {
+        //after
+        showMyDialog(context, "Sorry, " + username + '\n' + "Relay is Finished.");
+      }
+      //마라톤 시작 !
+      else {
       customAlertRichText(
           context: context,
           function: () {

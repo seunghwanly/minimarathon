@@ -135,6 +135,7 @@ customAlert({BuildContext context, final function, String str}) {
             )),
       ));
 }
+
 customAlertRichText({BuildContext context, final function, RichText richText}) {
   return showDialog(
       context: context,
@@ -150,15 +151,21 @@ customAlertRichText({BuildContext context, final function, RichText richText}) {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text("Hope Sharing Relay",
+                      Icon(
+                        Icons.location_on,
+                        size: MediaQuery.of(context).size.width / 10,
+                        color: deepPastelblue,
+                      ),
+                      Text("Enable location\n",
                           style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16),
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                            fontSize: MediaQuery.of(context).size.width / 22,
+                          ),
                           textAlign: TextAlign.center),
                       richText
                     ],
@@ -195,10 +202,8 @@ customAlertRichText({BuildContext context, final function, RichText richText}) {
                       )
                     ],
                   ),
-                )
+                ),
               ],
             )),
       ));
 }
-
-

@@ -127,44 +127,48 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
   // }
 
   backgroundService() async {
-    BackgroundLocation.setNotificationTitle("Background service running");
-    BackgroundLocation.startLocationService();
-    BackgroundLocation.getLocationUpdates((location) {
-      setState(() {
-        //초기상태
-        if (beforeLat == 0 && currentLat == 1) {
-          this.beforeLat = location.latitude;
-          this.beforeLong = location.longitude;
-          this.currentLat = location.latitude;
-          this.currentLong = location.longitude;
-        } else {
-          this.beforeLat = double.parse(this.latitude);
-          this.beforeLong = double.parse(this.longitude);
-          this.currentLat = location.latitude;
-          this.currentLong = location.longitude;
-        }
+    BackgroundLocation.getPermissions(onGranted: () {
+      BackgroundLocation.setNotificationTitle("Background service running");
+      BackgroundLocation.startLocationService();
+      BackgroundLocation.getLocationUpdates((location) {
+        setState(() {
+          //초기상태
+          if (beforeLat == 0 && currentLat == 1) {
+            this.beforeLat = location.latitude;
+            this.beforeLong = location.longitude;
+            this.currentLat = location.latitude;
+            this.currentLong = location.longitude;
+          } else {
+            this.beforeLat = double.parse(this.latitude);
+            this.beforeLong = double.parse(this.longitude);
+            this.currentLat = location.latitude;
+            this.currentLong = location.longitude;
+          }
 
-        this.latitude = location.latitude.toString();
-        this.longitude = location.longitude.toString();
-        this.accuracy = location.accuracy.toString();
-        this.altitude = location.altitude.toString();
-        this.bearing = location.bearing.toString();
-        this.speed = location.speed.toString();
-        this.time = DateTime.fromMillisecondsSinceEpoch(location.time.toInt())
-            .toString();
+          this.latitude = location.latitude.toString();
+          this.longitude = location.longitude.toString();
+          this.accuracy = location.accuracy.toString();
+          this.altitude = location.altitude.toString();
+          this.bearing = location.bearing.toString();
+          this.speed = location.speed.toString();
+          this.time = DateTime.fromMillisecondsSinceEpoch(location.time.toInt())
+              .toString();
 
-        if (((beforeLat == 0 && currentLat == 1) == false) &&
-            ((beforeLat == currentLat) == false)) {
-          totalDistance += distanceInKmBetweenEarthCoordinates(
-              beforeLat, beforeLong, currentLat, currentLong, location.speed);
+          if (((beforeLat == 0 && currentLat == 1) == false) &&
+              ((beforeLat == currentLat) == false)) {
+            totalDistance += distanceInKmBetweenEarthCoordinates(
+                beforeLat, beforeLong, currentLat, currentLong, location.speed);
 
-          // totalDistance2 += distance(beforeLat, beforeLong,
-          //     currentLat, currentLong, 'm', location.speed);
-        }
+            // totalDistance2 += distance(beforeLat, beforeLong,
+            //     currentLat, currentLong, 'm', location.speed);
+          }
+        });
       });
+      startTimer();
+      Navigator.of(context).pop();
+    }, onDenied: () {
+      // Navigator.of(context).pop();
     });
-    startTimer();
-    Navigator.of(context).pop();
   }
 
   void startTimer() {
@@ -219,17 +223,13 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                             child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  // Expanded(
-                                  //   flex: 1,
-                                  //   child: SizedBox(),
-                                  // ),
                                   Expanded(
-                                      flex: 5,
+                                      flex: 4,
                                       child: RichText(
                                         textAlign: TextAlign.center,
                                         text: TextSpan(children: <TextSpan>[
                                           TextSpan(
-                                              text: "5K RUN\n",
+                                              text: "5K RUN\n\n",
                                               style: TextStyle(
                                                 color: white,
                                                 fontWeight: FontWeight.w800,
@@ -240,7 +240,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                 letterSpacing: 2.0,
                                               )),
                                           TextSpan(
-                                              text: "\nTips\n",
+                                              text: "\nTips\n\n",
                                               style: TextStyle(
                                                 color: superlight,
                                                 decoration:
@@ -454,6 +454,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                   Expanded(
                       flex: 1,
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Expanded(
@@ -462,7 +463,9 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                   onPressed: () => customAlertRichText(
                                       context: context,
                                       function: () {
-                                        backgroundService();
+                                        if (isStart == false) {
+                                          backgroundService();
+                                        }
                                       },
                                       richText: RichText(
                                         textAlign: TextAlign.center,
@@ -480,48 +483,37 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                 letterSpacing: 2.0,
                                               )),
                                           TextSpan(
+                                              text: "2020 Hope Sharing Relay",
+                                              style: TextStyle(
+                                                  color: Colors.black87,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width /
+                                                          25)),
+                                          TextSpan(
                                               text:
-                                                  "To calculate distance for Relay, allow 2020 Hope Sharing Relay to use  ",
+                                                  ", collects location data to calculate distance for Relay,",
                                               style: TextStyle(
-                                                  color: Colors.black54,
-                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.black87,
+                                                  fontWeight: FontWeight.w500,
                                                   fontSize:
                                                       MediaQuery.of(context)
                                                               .size
                                                               .width /
-                                                          24)),
+                                                          25)),
                                           TextSpan(
-                                              text: "your location ",
+                                              text:
+                                                  " even when the app is closed or not in use. You will need to enable location services in order to start Relay.",
                                               style: TextStyle(
-                                                  color: white,
-                                                  backgroundColor: mandarin.withOpacity(0.5),
-                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black87,
+                                                  fontWeight: FontWeight.w500,
                                                   fontSize:
                                                       MediaQuery.of(context)
                                                               .size
                                                               .width /
-                                                          24)),
-                                          TextSpan(
-                                              text: "all of the time by\n",
-                                              style: TextStyle(
-                                                  color: Colors.black54,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width /
-                                                          24)),
-                                          TextSpan(
-                                              text: "background service",
-                                              style: TextStyle(
-                                                  color: white,
-                                                  backgroundColor: mandarin.withOpacity(0.5),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width /
-                                                          24)),
+                                                          25)),
                                         ]),
                                       )),
                                   shape: RoundedRectangleBorder(
@@ -705,7 +697,8 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
 
   @override
   void dispose() {
-    //_timer.cancel(); ->> 사라진 위젯에서 cancel하려고 해서 에러 발생
+    _timer.cancel();
+    // ->> 사라진 위젯에서 cancel하려고 해서 에러 발생
     BackgroundLocation.stopLocationService();
     super.dispose();
   }
