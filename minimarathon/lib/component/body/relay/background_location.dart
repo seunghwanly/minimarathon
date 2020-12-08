@@ -127,7 +127,6 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
   // }
 
   backgroundService() async {
-    showMyDialog(context, "To calculate distance for Relay,\nplease allow 2020 Hope Sharing Relay to use\nyour location all of the time by background service");
     BackgroundLocation.setNotificationTitle("Background service running");
     BackgroundLocation.startLocationService();
     BackgroundLocation.getLocationUpdates((location) {
@@ -165,6 +164,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
       });
     });
     startTimer();
+    Navigator.of(context).pop();
   }
 
   void startTimer() {
@@ -307,27 +307,6 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                                                         .size
                                                         .width /
                                                     24,
-                                              )),
-                                          TextSpan(
-                                              text:
-                                                  "⚠ To calculate distance for Relay ⚠\n allow 2020 Hope Sharing Relay to use\n your location all of the time by\n",
-                                              style: TextStyle(
-                                                color: superlight,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    28,
-                                              )),
-                                          TextSpan(
-                                              text: "background Service",
-                                              style: TextStyle(
-                                                color: mandarin,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    28,
                                               )),
                                         ]),
                                       )
@@ -480,7 +459,71 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                           Expanded(
                               flex: 4,
                               child: RaisedButton(
-                                  onPressed: () => backgroundService(),
+                                  onPressed: () => customAlertRichText(
+                                      context: context,
+                                      function: () {
+                                        backgroundService();
+                                      },
+                                      richText: RichText(
+                                        textAlign: TextAlign.center,
+                                        softWrap: true,
+                                        text: TextSpan(children: <TextSpan>[
+                                          TextSpan(
+                                              text: "⚠ WARNING ⚠ \n\n",
+                                              style: TextStyle(
+                                                color: mandarin,
+                                                fontWeight: FontWeight.w800,
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    22,
+                                                letterSpacing: 2.0,
+                                              )),
+                                          TextSpan(
+                                              text:
+                                                  "To calculate distance for Relay, allow 2020 Hope Sharing Relay to use  ",
+                                              style: TextStyle(
+                                                  color: Colors.black54,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width /
+                                                          24)),
+                                          TextSpan(
+                                              text: "your location ",
+                                              style: TextStyle(
+                                                  color: white,
+                                                  backgroundColor: mandarin.withOpacity(0.5),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width /
+                                                          24)),
+                                          TextSpan(
+                                              text: "all of the time by\n",
+                                              style: TextStyle(
+                                                  color: Colors.black54,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width /
+                                                          24)),
+                                          TextSpan(
+                                              text: "background service",
+                                              style: TextStyle(
+                                                  color: white,
+                                                  backgroundColor: mandarin.withOpacity(0.5),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width /
+                                                          24)),
+                                        ]),
+                                      )),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30),
                                   ),
