@@ -94,7 +94,7 @@ class RelayStartState extends State<RelayStart> {
       customAlertRichText(
           context: context,
           function: () {
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (BuildContext context) => MyBackgroundLocation(
