@@ -81,72 +81,20 @@ class RelayStartState extends State<RelayStart> {
 
     DateTime d_day = DateTime(2020, 12, 18, 20, 00, 00);
     DateTime finish_day = DateTime(2020, 12, 20, 20, 00, 00);
-    // if (currentTime.isBefore(d_day) == true) {
-    //   //before
-    //   showMyDialog(context,
-    //       "Sorry, " + username + '\n' + "Relay is Available on December 18th.");
-    // } else if (currentTime.isAfter(d_day) && currentTime.isAfter(finish_day)) {
-    //   //after
-    //   showMyDialog(context, "Sorry, " + username + '\n' + "Relay is Finished.");
-    // }
-    // //마라톤 시작 !
-    // else {
-    //   customAlertRichText(
-    //       context: context,
-    //       function: () {
-    //         Navigator.pushReplacement(
-    //           context,
-    //           MaterialPageRoute(
-    //             builder: (BuildContext context) => MyBackgroundLocation(
-    //               teamName: teamname,
-    //               userName: username,
-    //             ),
-    //           ),
-    //         );
-    //       },
-    //       richText: RichText(
-    //         textAlign: TextAlign.center,
-    //         softWrap: true,
-    //         text: TextSpan(children: <TextSpan>[
-    //           TextSpan(
-    //               text: "Tips\n\n",
-    //               style: TextStyle(
-    //                 color: Colors.black,
-    //                 fontWeight: FontWeight.w800,
-    //                 fontSize: MediaQuery.of(context).size.width / 22,
-    //                 letterSpacing: 2.0,
-    //               )),
-    //           TextSpan(
-    //               text: "The Distance measurement is based on your device's ",
-    //               style: TextStyle(
-    //                   color: Colors.black54,
-    //                   fontWeight: FontWeight.w600,
-    //                   fontSize: MediaQuery.of(context).size.width / 24)),
-    //           TextSpan(
-    //               text: "GPS & Network",
-    //               style: TextStyle(
-    //                   color: white,
-    //                   backgroundColor: mandarin,
-    //                   fontWeight: FontWeight.bold,
-    //                   fontSize: MediaQuery.of(context).size.width / 24)),
-    //           TextSpan(
-    //               text:
-    //                   ".\nPlease, take your device outside with you for the marathon!\nIf you have existing record, it will be ",
-    //               style: TextStyle(
-    //                   color: Colors.black54,
-    //                   fontWeight: FontWeight.w600,
-    //                   fontSize: MediaQuery.of(context).size.width / 24)),
-    //           TextSpan(
-    //               text: "overwritten!",
-    //               style: TextStyle(
-    //                   color: white,
-    //                   backgroundColor: mandarin,
-    //                   fontWeight: FontWeight.bold,
-    //                   fontSize: MediaQuery.of(context).size.width / 24)),
-    //         ]),
-    //       ));
-    // }
-    Navigator.push(
+    if (currentTime.isBefore(d_day) == true) {
+      //before
+      showMyDialog(context,
+          "Sorry, " + username + '\n' + "Relay is Available on December 18th.");
+    } else if (currentTime.isAfter(d_day) && currentTime.isAfter(finish_day)) {
+      //after
+      showMyDialog(context, "Sorry, " + username + '\n' + "Relay is Finished.");
+    }
+    //마라톤 시작 !
+    else {
+      customAlertRichText(
+          context: context,
+          function: () {
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (BuildContext context) => MyBackgroundLocation(
@@ -155,6 +103,50 @@ class RelayStartState extends State<RelayStart> {
                 ),
               ),
             );
+          },
+          richText: RichText(
+            textAlign: TextAlign.center,
+            softWrap: true,
+            text: TextSpan(children: <TextSpan>[
+              TextSpan(
+                  text: "Tips\n\n",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w800,
+                    fontSize: MediaQuery.of(context).size.width / 22,
+                    letterSpacing: 2.0,
+                  )),
+              TextSpan(
+                  text: "The Distance measurement is based on your device's ",
+                  style: TextStyle(
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w600,
+                      fontSize: MediaQuery.of(context).size.width / 24)),
+              TextSpan(
+                  text: "GPS & Network",
+                  style: TextStyle(
+                      color: white,
+                      backgroundColor: mandarin,
+                      fontWeight: FontWeight.bold,
+                      fontSize: MediaQuery.of(context).size.width / 24)),
+              TextSpan(
+                  text:
+                      ".\nPlease, take your device outside with you for the marathon!\nIf you have existing record, it will be ",
+                  style: TextStyle(
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w600,
+                      fontSize: MediaQuery.of(context).size.width / 24)),
+              TextSpan(
+                  text: "overwritten!",
+                  style: TextStyle(
+                      color: white,
+                      backgroundColor: mandarin,
+                      fontWeight: FontWeight.bold,
+                      fontSize: MediaQuery.of(context).size.width / 24)),
+            ]),
+          ));
+    }
+   
   }
 
   @override
