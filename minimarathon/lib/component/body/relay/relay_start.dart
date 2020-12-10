@@ -190,10 +190,10 @@ class RelayStartState extends State<RelayStart> {
           alignment: Alignment.center,
           padding: EdgeInsets.all(10.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Expanded(
-                flex: 3,
+                flex: 2,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -314,14 +314,14 @@ class RelayStartState extends State<RelayStart> {
                                 BorderRadius.all(Radius.circular(30))),
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
+                              horizontal: 20, vertical: 5),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               makeTextSemiThin('Donation', white,
                                   MediaQuery.of(context).size.width / 20),
                               makeTextSemiThin('Gift for seniors', white,
-                                  MediaQuery.of(context).size.width / 40),
+                                  MediaQuery.of(context).size.width / 44),
                             ],
                           ),
                         ),
