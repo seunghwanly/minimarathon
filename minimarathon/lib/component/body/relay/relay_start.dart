@@ -3,6 +3,7 @@ import 'package:minimarathon/component/body/relay/background_location.dart';
 import 'package:minimarathon/component/header/header.dart';
 import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/palette.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../util/text_style.dart';
 import '../relay/ranking.dart';
 import '../register/edit_member_info.dart';
@@ -29,6 +30,23 @@ class RelayStartState extends State<RelayStart> {
   String username = 'Jong Ha Park';
   String teamname = '';
   bool isTeamLeader = false;
+
+  // url open -> donation
+  void _openURL() async {
+    String url =
+        "https://www.gofundme.com/f/can-we-read?utm_medium=copy_link&utm_source=customer&utm_campaign=p_lico+share-sheet";
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: false,
+        forceWebView: false,
+        headers: <String, String>{'my_header_key': 'my_header_value'},
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   void _navigation() {
     Navigator.push(
       context,
@@ -63,20 +81,72 @@ class RelayStartState extends State<RelayStart> {
 
     DateTime d_day = DateTime(2020, 12, 18, 20, 00, 00);
     DateTime finish_day = DateTime(2020, 12, 20, 20, 00, 00);
-    if (currentTime.isBefore(d_day) == true) {
-        //before
-        showMyDialog(context,
-            "Sorry, " + username + '\n' + "Relay is Available on December 18th.");
-      } else if (currentTime.isAfter(d_day) && currentTime.isAfter(finish_day)) {
-        //after
-        showMyDialog(context, "Sorry, " + username + '\n' + "Relay is Finished.");
-      }
-      //마라톤 시작 !
-      else {
-      customAlertRichText(
-          context: context,
-          function: () {
-            Navigator.pushReplacement(
+    // if (currentTime.isBefore(d_day) == true) {
+    //   //before
+    //   showMyDialog(context,
+    //       "Sorry, " + username + '\n' + "Relay is Available on December 18th.");
+    // } else if (currentTime.isAfter(d_day) && currentTime.isAfter(finish_day)) {
+    //   //after
+    //   showMyDialog(context, "Sorry, " + username + '\n' + "Relay is Finished.");
+    // }
+    // //마라톤 시작 !
+    // else {
+    //   customAlertRichText(
+    //       context: context,
+    //       function: () {
+    //         Navigator.pushReplacement(
+    //           context,
+    //           MaterialPageRoute(
+    //             builder: (BuildContext context) => MyBackgroundLocation(
+    //               teamName: teamname,
+    //               userName: username,
+    //             ),
+    //           ),
+    //         );
+    //       },
+    //       richText: RichText(
+    //         textAlign: TextAlign.center,
+    //         softWrap: true,
+    //         text: TextSpan(children: <TextSpan>[
+    //           TextSpan(
+    //               text: "Tips\n\n",
+    //               style: TextStyle(
+    //                 color: Colors.black,
+    //                 fontWeight: FontWeight.w800,
+    //                 fontSize: MediaQuery.of(context).size.width / 22,
+    //                 letterSpacing: 2.0,
+    //               )),
+    //           TextSpan(
+    //               text: "The Distance measurement is based on your device's ",
+    //               style: TextStyle(
+    //                   color: Colors.black54,
+    //                   fontWeight: FontWeight.w600,
+    //                   fontSize: MediaQuery.of(context).size.width / 24)),
+    //           TextSpan(
+    //               text: "GPS & Network",
+    //               style: TextStyle(
+    //                   color: white,
+    //                   backgroundColor: mandarin,
+    //                   fontWeight: FontWeight.bold,
+    //                   fontSize: MediaQuery.of(context).size.width / 24)),
+    //           TextSpan(
+    //               text:
+    //                   ".\nPlease, take your device outside with you for the marathon!\nIf you have existing record, it will be ",
+    //               style: TextStyle(
+    //                   color: Colors.black54,
+    //                   fontWeight: FontWeight.w600,
+    //                   fontSize: MediaQuery.of(context).size.width / 24)),
+    //           TextSpan(
+    //               text: "overwritten!",
+    //               style: TextStyle(
+    //                   color: white,
+    //                   backgroundColor: mandarin,
+    //                   fontWeight: FontWeight.bold,
+    //                   fontSize: MediaQuery.of(context).size.width / 24)),
+    //         ]),
+    //       ));
+    // }
+    Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (BuildContext context) => MyBackgroundLocation(
@@ -85,49 +155,6 @@ class RelayStartState extends State<RelayStart> {
                 ),
               ),
             );
-          },
-          richText: RichText(
-            textAlign: TextAlign.center,
-            softWrap: true,
-            text: TextSpan(children: <TextSpan>[
-              TextSpan(
-                  text: "Tips\n\n",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w800,
-                    fontSize: MediaQuery.of(context).size.width / 22,
-                    letterSpacing: 2.0,
-                  )),
-              TextSpan(
-                  text: "The Distance measurement is based on your device's ",
-                  style: TextStyle(
-                      color: Colors.black54,
-                      fontWeight: FontWeight.w600,
-                      fontSize: MediaQuery.of(context).size.width / 24)),
-              TextSpan(
-                  text: "GPS & Network",
-                  style: TextStyle(
-                      color: white,
-                      backgroundColor: mandarin,
-                      fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.of(context).size.width / 24)),
-              TextSpan(
-                  text:
-                      ".\nPlease, take your device outside with you for the marathon!\nIf you have existing record, it will be ",
-                  style: TextStyle(
-                      color: Colors.black54,
-                      fontWeight: FontWeight.w600,
-                      fontSize: MediaQuery.of(context).size.width / 24)),
-              TextSpan(
-                  text: "overwritten!",
-                  style: TextStyle(
-                      color: white,
-                      backgroundColor: mandarin,
-                      fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.of(context).size.width / 24)),
-            ]),
-          ));
-    }
   }
 
   @override
@@ -143,21 +170,21 @@ class RelayStartState extends State<RelayStart> {
     if (widget.isLeader) {
       return Column(
         children: [
-          makeText('Hello, ${widget.username} !', lightwhite, 22),
+          makeText('Welcome, ${widget.username} !', lightwhite, 22),
           makeText('The Leader of ${widget.teamname} !', lightwhite, 22),
         ],
       );
     } else if (widget.ismember) {
       return Column(
         children: [
-          makeText('Hello, ${widget.username} !', lightwhite, 22),
+          makeText('Welcome, ${widget.username} !', lightwhite, 22),
           makeText('You belong to ${widget.teamname} !', lightwhite, 22),
         ],
       );
     } else {
       return Column(
         children: [
-          makeText('Hello, ${widget.username} !', lightwhite, 22),
+          makeText('Welcome, ${widget.username} !', lightwhite, 22),
         ],
       );
     }
@@ -274,7 +301,40 @@ class RelayStartState extends State<RelayStart> {
                       ),
                     ),
                   )),
-              Expanded(flex: 2, child: Container(child: Text(''))),
+              Expanded(flex: 1, child: Container(child: Text(''))),
+              Expanded(
+                  flex: 2,
+                  child: Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: RaisedButton(
+                        onPressed: () => customAlert(
+                            context: context,
+                            str: "Wish to make a dontaion?",
+                            function: () {
+                              _openURL();
+                              Navigator.of(context).pop();
+                            }),
+                        // _updateInfo,
+                        color: deepPastelblue,
+                        shape: RoundedRectangleBorder(
+                            // border: Border.all(color: lightwhite, width: 3),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30))),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              makeTextSemiThin('More Donation', white,
+                                  MediaQuery.of(context).size.width / 20),
+                              makeTextSemiThin('Gift for seniors', white,
+                                  MediaQuery.of(context).size.width / 40),
+                            ],
+                          ),
+                        ),
+                      ))),
+              Expanded(flex: 1, child: Container(child: Text(''))),
             ],
           ),
         ));

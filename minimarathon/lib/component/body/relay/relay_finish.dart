@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:minimarathon/component/body/relay/relay_start.dart';
 import 'package:minimarathon/component/header/header.dart';
+import 'package:minimarathon/component/route_page.dart';
 import 'package:minimarathon/util/custom_container.dart';
 import 'package:minimarathon/util/custom_dialog.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../../util/palette.dart';
 import '../../../util/text_style.dart';
 import 'ranking.dart';
@@ -91,21 +92,6 @@ class RelayFinishState extends State<RelayFinish> {
     });
   }
 
-  void _openURL() async {
-    String url =
-        "https://www.gofundme.com/f/can-we-read?utm_medium=copy_link&utm_source=customer&utm_campaign=p_lico+share-sheet";
-    if (await canLaunch(url)) {
-      await launch(
-        url,
-        forceSafariVC: false,
-        forceWebView: false,
-        headers: <String, String>{'my_header_key': 'my_header_value'},
-      );
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
   String _printDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, "0");
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
@@ -122,6 +108,14 @@ class RelayFinishState extends State<RelayFinish> {
       context,
       MaterialPageRoute(
         builder: (BuildContext context) => Ranking(),
+      ),
+    );
+  }
+  void _navigationMainScreen() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => RoutePage(),
       ),
     );
   }
@@ -223,7 +217,7 @@ class RelayFinishState extends State<RelayFinish> {
                                   _printDuration(Duration(
                                           seconds: widget.recordTime)) +
                                       ' (' +
-                                      speed.toStringAsFixed(1)+
+                                      speed.toStringAsFixed(1) +
                                       ' m/s)',
                                   Colors.white,
                                   20),
@@ -279,52 +273,27 @@ class RelayFinishState extends State<RelayFinish> {
                                 style: TextStyle(
                                     color: superlight,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: MediaQuery.of(context).size.width / 24)),
+                                    fontSize:
+                                        MediaQuery.of(context).size.width /
+                                            24)),
                             TextSpan(
                                 text: "4hours",
                                 style: TextStyle(
                                     color: white,
                                     backgroundColor: deepPastelblue,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: MediaQuery.of(context).size.width / 22)),
+                                    fontSize:
+                                        MediaQuery.of(context).size.width /
+                                            22)),
                             TextSpan(
                                 text: " of volunteer work !",
                                 style: TextStyle(
                                     color: superlight,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: MediaQuery.of(context).size.width / 24)),
+                                    fontSize:
+                                        MediaQuery.of(context).size.width /
+                                            24)),
                           ]))),
-              Expanded(flex: 1, child: Container(child: Text(''))),
-              Expanded(
-                  flex: 3,
-                  child: Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      child: RaisedButton(
-                        onPressed: () => customAlert(
-                            context: context,
-                            str: "Wish to make a dontaion?",
-                            function: () {
-                              _openURL();
-                              Navigator.of(context).pop();
-                            }),
-                        // _updateInfo,
-                        color: mandarin,
-                        shape: RoundedRectangleBorder(
-                            // border: Border.all(color: lightwhite, width: 3),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(30))),
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              makeTextSemiThin('More Donation', white, MediaQuery.of(context).size.width / 20),
-                              makeTextSemiThin('Gift for seniors', white, MediaQuery.of(context).size.width / 40),
-                            ],
-                          ),
-                        ),
-                      ))),
               Expanded(flex: 1, child: Container(child: Text(''))),
               Expanded(
                 flex: 1,
@@ -350,7 +319,7 @@ class RelayFinishState extends State<RelayFinish> {
                               Navigator.of(context).pop();
                             }),
                         // _updateInfo,
-                        color: Colors.blue[400],
+                        color: mandarin,
                         shape: RoundedRectangleBorder(
                             // border: Border.all(color: lightwhite, width: 3),
                             borderRadius:
@@ -361,9 +330,12 @@ class RelayFinishState extends State<RelayFinish> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              makeTextSemiThin('More Volunteer', white, MediaQuery.of(context).size.width / 20),
+                              makeTextSemiThin('More Volunteer', white,
+                                  MediaQuery.of(context).size.width / 20),
                               makeTextSemiThin(
-                                  'Subscribe Hope Sharing Relay', white, MediaQuery.of(context).size.width / 40),
+                                  'Subscribe Hope Sharing Relay',
+                                  white,
+                                  MediaQuery.of(context).size.width / 40),
                             ],
                           ),
                         ),
@@ -382,7 +354,27 @@ class RelayFinishState extends State<RelayFinish> {
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        child: makeTextSemiThin('Show Ranking', lightwhite, MediaQuery.of(context).size.width / 20),
+                        child: makeTextSemiThin('Show Ranking', lightwhite,
+                            MediaQuery.of(context).size.width / 20),
+                      ),
+                    ),
+                  )),
+              Expanded(flex: 1, child: Container(child: Text(''))),
+              Expanded(
+                  flex: 3,
+                  child: Container(
+                    // height:  MediaQuery.of(context).size.height * 0.8,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: RaisedButton(
+                      onPressed: _navigationMainScreen,
+                      color: Colors.blue[400],
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30))),
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        child: makeTextSemiThin('Back to Main', lightwhite,
+                            MediaQuery.of(context).size.width / 20),
                       ),
                     ),
                   )),

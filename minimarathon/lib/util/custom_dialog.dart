@@ -151,7 +151,7 @@ customAlertRichText({BuildContext context, final function, RichText richText}) {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
-                  flex: 2,
+                  flex: 4,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
