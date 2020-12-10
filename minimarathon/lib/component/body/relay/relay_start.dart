@@ -326,7 +326,7 @@ class RelayStartState extends State<RelayStart> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              makeTextSemiThin('More Donation', white,
+                              makeTextSemiThin('Donation', white,
                                   MediaQuery.of(context).size.width / 20),
                               makeTextSemiThin('Gift for seniors', white,
                                   MediaQuery.of(context).size.width / 40),
