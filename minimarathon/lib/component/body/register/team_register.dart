@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:international_phone_input/international_phone_input.dart';
 import 'package:minimarathon/component/body/relay/relay_start.dart';
+import 'package:minimarathon/component/route_page.dart';
 import '../../header/header.dart';
 import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/palette.dart';
@@ -92,13 +94,16 @@ class _TeamRegisterState extends State<TeamRegister> {
     teamData.members = List.from(listForPushDatabase);
 
     Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => RelayStart(
-              isLeader: true,
-              isTeam: true,
-              ismember: false,
-              username: teamData.leader.name,
-              teamname: teamData.teamName,
-            )));
+        // builder: (context) => RelayStart(
+        //       isLeader: true,
+        //       isTeam: true,
+        //       ismember: false,
+        //       username: teamData.leader.name,
+        //       teamname: teamData.teamName,
+        //     )
+        builder: (context) => RoutePage(telephonecode: widget.isoCode),
+            )
+            );
 
     await teamReference
         .child(teamData.teamName)
@@ -127,7 +132,8 @@ class _TeamRegisterState extends State<TeamRegister> {
         newMember.relay = Relay(runningDistance: 0, timer: 0);
       } else {
         newMember.name = "  Memeber name";
-        newMember.phoneNumber = "  Member phone number";
+        // newMember.phoneNumber = "  Member phone number";
+        newMember.phoneNumber = "";
         newMember.moreVolunteer = false;
         newMember.relay = Relay(runningDistance: 0, timer: 0);
       }
@@ -371,8 +377,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                         memberLength++;
                                         Member newMember = new Member();
                                         newMember.name = "  Memeber name";
-                                        newMember.phoneNumber =
-                                            "  Member phone number";
+                                        newMember.phoneNumber = "";
                                         newMember.moreVolunteer = false;
                                         newMember.relay = new Relay(
                                             runningDistance: 0, timer: 0);
@@ -414,6 +419,17 @@ class _TeamRegisterState extends State<TeamRegister> {
                                 itemCount: memberList.length,
                                 // itemCount: 2,
                                 itemBuilder: (context, index) {
+                                  void onPhoneNumberChange(
+                                      String number,
+                                      String internationalizedPhoneNumber,
+                                      String isoCode) {
+                                    setState(() {
+                                      memberList[index].phoneNumber =
+                                          internationalizedPhoneNumber;
+                                    });
+                                    print(internationalizedPhoneNumber);
+                                  }
+
                                   return Container(
                                     // ---------------------------------------------------------------------------Member index
                                     width:
@@ -520,85 +536,143 @@ class _TeamRegisterState extends State<TeamRegister> {
                                                 0.7,
                                             margin: EdgeInsets.symmetric(
                                                 vertical: 5.0),
-                                            child: TextField(
-                                              decoration: InputDecoration(
-                                                filled: true,
-                                                fillColor: index == 0
-                                                    ? mandarin
-                                                    : Colors.transparent,
-                                                disabledBorder:
-                                                    OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(30),
-                                                        borderSide:
-                                                            new BorderSide(
-                                                                color: mandarin,
-                                                                width: 3)),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(30),
-                                                        borderSide: BorderSide(
-                                                            color: white,
-                                                            width: 3)),
-                                                enabledBorder: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30),
-                                                    borderSide: new BorderSide(
-                                                        color: lightwhite,
-                                                        width: 3)),
-                                                prefixText: '+1', // US
-                                                hintText:
-                                                    '  Please type phonenumber ...',
-                                                hintStyle: TextStyle(
-                                                    color: Colors.white54),
-                                                labelText: index == 0
-                                                    ? _user.phoneNumber
-                                                    : '${memberList[index].phoneNumber}',
-                                                labelStyle: TextStyle(
-                                                    color: index == 0
-                                                        ? white
-                                                        : Colors.white54,
-                                                    fontSize: 18,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                              enabled:
-                                                  index == 0 ? false : true,
-                                              style:
-                                                  TextStyle(color: lightwhite),
-                                              onChanged: (number) {
-                                                setState(() {
-                                                  memberList[index]
-                                                          .phoneNumber =
-                                                      '+1' + number;
-                                                });
-                                              },
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              keyboardType: TextInputType
-                                                  .numberWithOptions(
-                                                      signed: true),
-                                              focusNode:
-                                                  focusPhoneNumberList[index],
-                                              onEditingComplete: () {
-                                                if (index == memberLength - 1) {
-                                                  //last member
-                                                  FocusScope.of(context)
-                                                      .requestFocus(
-                                                          focusDonationFee);
-                                                } else {
-                                                  FocusScope.of(context)
-                                                      .requestFocus(
-                                                          focusNameList[
-                                                              index + 1]);
-                                                }
-                                              },
-                                              cursorWidth: 4.0,
-                                            ))
+                                            padding: index != 0
+                                                ? EdgeInsets.symmetric(
+                                                    horizontal: 10.0)
+                                                : EdgeInsets.symmetric(
+                                                    horizontal: 0.0),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                                color: white),
+                                            child: index != 0
+                                                ? InternationalPhoneInput(
+                                                    decoration: InputDecoration(
+                                                      border: InputBorder.none,
+                                                      labelText:
+                                                          '  Phone number',
+                                                      labelStyle: TextStyle(
+                                                          color: lightgrey,
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                      hintText:
+                                                          '  Please type phonenumber ...',
+                                                      hintStyle: TextStyle(
+                                                          color:
+                                                              Colors.white54),
+                                                    ),
+                                                    onPhoneNumberChange:
+                                                        onPhoneNumberChange,
+                                                    initialPhoneNumber:
+                                                        memberList[index]
+                                                            .phoneNumber,
+                                                    initialSelection:
+                                                        widget.isoCode,
+                                                    enabledCountries: [
+                                                      '+1',
+                                                      '+82',
+                                                      '+977',
+                                                      '+91',
+                                                      '+256'
+                                                    ],
+                                                    showCountryCodes: false,
+                                                  )
+                                                : TextField(
+                                                    decoration: InputDecoration(
+                                                      filled: true,
+                                                      fillColor: index == 0
+                                                          ? mandarin
+                                                          : Colors.transparent,
+                                                      disabledBorder:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          30),
+                                                              borderSide:
+                                                                  new BorderSide(
+                                                                      color:
+                                                                          mandarin,
+                                                                      width:
+                                                                          3)),
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          30),
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                      color:
+                                                                          white,
+                                                                      width:
+                                                                          3)),
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          30),
+                                                              borderSide:
+                                                                  new BorderSide(
+                                                                      color:
+                                                                          lightwhite,
+                                                                      width:
+                                                                          3)),
+                                                      //prefixText: '+1', // US
+                                                      hintText:
+                                                          '  Please type phonenumber ...',
+                                                      hintStyle: TextStyle(
+                                                          color:
+                                                              Colors.white54),
+                                                      labelText: index == 0
+                                                          ? _user.phoneNumber
+                                                          : '${memberList[index].phoneNumber}',
+                                                      labelStyle: TextStyle(
+                                                          color: index == 0
+                                                              ? white
+                                                              : Colors.white54,
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                    enabled: index == 0
+                                                        ? false
+                                                        : true,
+                                                    style: TextStyle(
+                                                        color: lightwhite),
+                                                    onChanged: (number) {
+                                                      setState(() {
+                                                        memberList[index]
+                                                                .phoneNumber =
+                                                            '+1' + number;
+                                                      });
+                                                    },
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    keyboardType: TextInputType
+                                                        .numberWithOptions(
+                                                            signed: true),
+                                                    focusNode:
+                                                        focusPhoneNumberList[
+                                                            index],
+                                                    onEditingComplete: () {
+                                                      if (index ==
+                                                          memberLength - 1) {
+                                                        //last member
+                                                        FocusScope.of(context)
+                                                            .requestFocus(
+                                                                focusDonationFee);
+                                                      } else {
+                                                        FocusScope.of(context)
+                                                            .requestFocus(
+                                                                focusNameList[
+                                                                    index + 1]);
+                                                      }
+                                                    },
+                                                    cursorWidth: 4.0,
+                                                  ))
                                       ],
                                     ),
                                   );
@@ -712,9 +786,19 @@ class _TeamRegisterState extends State<TeamRegister> {
                                     if (teamnameControlller.text.isNotEmpty &&
                                         teamData.teamName != null &&
                                         teamData.teamName != "  Team name") {
-                                      setState(() {
-                                        isRegisterAvailable = true;
+                                      var checkMemberListNumber = 0;
+                                      memberList.forEach((element) {
+                                        if (element.phoneNumber.isNotEmpty)
+                                          checkMemberListNumber++;
                                       });
+                                      if (checkMemberListNumber ==
+                                          memberList.length) {
+                                        setState(() {
+                                          isRegisterAvailable = true;
+                                        });
+                                      } else {
+                                        showMyDialog(context, "Check the members phone number.");
+                                      }
                                     } else {
                                       showMyDialog(context, "Fill the blank.");
                                     }
@@ -727,7 +811,9 @@ class _TeamRegisterState extends State<TeamRegister> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),
-                                color: !isTeamnameChecked ? deepPastelblue : Colors.green[400],
+                                color: !isTeamnameChecked
+                                    ? deepPastelblue
+                                    : Colors.green[400],
                                 child: Container(
                                   width: double.infinity,
                                   // height: MediaQuery.of(context).size.width * 0.2,
@@ -745,7 +831,7 @@ class _TeamRegisterState extends State<TeamRegister> {
                                 ))),
                       ),
                       Expanded(
-                        flex:1,
+                        flex: 1,
                         child: SizedBox(),
                       )
                     ],

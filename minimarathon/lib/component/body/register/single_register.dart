@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minimarathon/component/body/relay/relay_start.dart';
+import 'package:minimarathon/component/route_page.dart';
 // util
 import 'package:minimarathon/util/custom_dialog.dart';
 import 'package:minimarathon/util/palette.dart';
@@ -19,8 +20,9 @@ final databaseReference =
 
 class SingleRegister extends StatefulWidget {
   final title;
+  final isoCode;
 
-  SingleRegister({this.title});
+  SingleRegister({this.title, this.isoCode});
 
   @override
   _SingleRegisterState createState() => _SingleRegisterState();
@@ -65,13 +67,16 @@ class _SingleRegisterState extends State<SingleRegister> {
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => RelayStart(
-                  isLeader: false,
-                  isTeam: false,
-                  ismember: false,
-                  username: singleRegisterData.name,
-                  teamname: "",
-                )));
+            // builder: (context) => RelayStart(
+            //       isLeader: false,
+            //       isTeam: false,
+            //       ismember: false,
+            //       username: singleRegisterData.name,
+            //       teamname: "",
+            //     )
+            builder: (context) => RoutePage(telephonecode: widget.isoCode,),
+                )
+                );
     await databaseReference
         .child("Single/" + user.uid)
         .set(singleRegisterData.toJson())

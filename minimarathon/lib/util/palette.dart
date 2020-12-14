@@ -11,7 +11,7 @@ const lightwhite = Color.fromRGBO(238, 238, 238, 1.0);
 const superlight = Color.fromRGBO(238, 238, 238, 1.0);
 // theme
 
-const pastelblue = Color.fromRGBO(106, 140, 180, 1.0);
+const pastelblue = Color.fromRGBO(135, 180, 230, 1.0);
 const deepPastelblue = Color.fromRGBO(22, 69, 125, 1);
 const pastelgreen = Color.fromRGBO(34, 141, 79, 1.0);
 const ougar = Color.fromRGBO(21, 111, 59, 1.0);

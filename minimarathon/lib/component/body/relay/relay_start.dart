@@ -305,8 +305,8 @@ class RelayStartState extends State<RelayStart> {
                             context: context,
                             str: "Wish to make a dontaion?",
                             function: () {
-                              _openURL();
                               Navigator.of(context).pop();
+                              _openURL();
                             }),
                         // _updateInfo,
                         color: deepPastelblue,

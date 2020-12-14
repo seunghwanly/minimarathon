@@ -72,6 +72,7 @@ class _NeedPaymentRegisterState extends State<NeedPaymentRegister> {
                                       MaterialPageRoute(
                                           builder: (context) => SingleRegister(
                                                 title: "Single Register",
+                                                isoCode: widget.isoCode,
                                               )));
                                 },
                                 shape: RoundedRectangleBorder(

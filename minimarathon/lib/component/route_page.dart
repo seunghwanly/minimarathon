@@ -38,7 +38,7 @@ class _RoutePageState extends State<RoutePage> {
   @override
   void initState() {
     super.initState();
-    telephonecode = this.widget.telephonecode;
+    telephonecode = widget.telephonecode;
   }
 
   @override
