@@ -8,41 +8,25 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:949723521719:android:059a8765789f3f3afea332",
+        "mobilesdk_app_id": "1:949723521719:android:52e7ff12bdd7b38bfea332",
         "android_client_info": {
-          "package_name": "com.example.minimarathon"
+          "package_name": "com.hopeSharingRelay"
         }
       },
       "oauth_client": [
         {
-          "client_id": "949723521719-sh7od2vlr1atfkgrl1cefvl9sgj4aqa4.apps.googleusercontent.com",
+          "client_id": "949723521719-5uk3lhsnrdtl6b88ah0sddr93bcfjhk9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.minimarathon",
-            "certificate_hash": "25afa1b5fbae80cf2b124470aca6d531a3e4ccf5"
-          }
-        },
-        {
-          "client_id": "949723521719-oqd9vdca4gccn5er0h3cueombu7sm0m9.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.minimarathon",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "949723521719-bnrmidetdg8o9fnuam6jbal8llnb6gth.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.minimarathon",
+            "package_name": "com.hopeSharingRelay",
             "certificate_hash": "4e9b3027abbaf596ef0d79789921bf01b19f9588"
           }
         },
         {
-          "client_id": "949723521719-ioumcdhg41i8iq78qncjdm9s2jp4ejhu.apps.googleusercontent.com",
+          "client_id": "949723521719-f5b4mhfmc71006d1v88nr50afmi13q06.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.minimarathon",
+            "package_name": "com.hopeSharingRelay",
             "certificate_hash": "b0a3011042532be7cf738781fdc7c5c4fd0a4d50"
           }
         },
@@ -64,46 +48,10 @@
               "client_type": 3
             },
             {
-              "client_id": "949723521719-poj67md3qjs5cfan9s9ns0o1q8mo97q5.apps.googleusercontent.com",
+              "client_id": "949723521719-1jgoi622qs6l8goeanvfsa027vk4vbcv.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.hopeSharingRelay"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:949723521719:android:52e7ff12bdd7b38bfea332",
-        "android_client_info": {
-          "package_name": "com.hopeSharingRelay"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "949723521719-0j5gqfdn9qdcklmcgtnl3q8m1bpdd995.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDneSz-NV68-AFOtCvtwpuiLYBbIiAgBKY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "949723521719-0j5gqfdn9qdcklmcgtnl3q8m1bpdd995.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "949723521719-poj67md3qjs5cfan9s9ns0o1q8mo97q5.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.hopeSharingRelay"
+                "bundle_id": "com.minimarathon"
               }
             }
           ]
