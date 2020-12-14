@@ -141,7 +141,13 @@ class _MyHomePageState extends State<MyHomePage> {
                             onPhoneNumberChange: onPhoneNumberChange,
                             initialPhoneNumber: phoneNumber,
                             initialSelection: phoneIsoCode,
-                            enabledCountries: ['+1'],
+                            enabledCountries: [
+                              '+1',
+                              '+82',
+                              '+977',
+                              '+91',
+                              '+256'
+                            ],
                             showCountryCodes: false,
                           )),
                       SizedBox(
@@ -195,7 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // } else {
       //   return NeedPaymentRegister(isoCode: this.phoneIsoCode);
       // }
-      return RoutePage();
+      return RoutePage(telephonecode: this.phoneIsoCode);
     }
   }
 
@@ -339,8 +345,10 @@ class _MyHomePageState extends State<MyHomePage> {
             if (value.user != null) {
               print('value user not null');
               // LOGIN FINISHED
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => RoutePage()));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => RoutePage(
+                        telephonecode: this.phoneIsoCode,
+                      )));
             } else
               print("login error");
           });
@@ -486,8 +494,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
                                                     Navigator.of(context).push(
                                                         MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                RoutePage()));
+                                                            builder:
+                                                                (context) =>
+                                                                    RoutePage(
+                                                                      telephonecode:
+                                                                          phoneIsoCode,
+                                                                    )));
                                                   } else {
                                                     showMyDialog(modalContext,
                                                         "SignIn Failed !");

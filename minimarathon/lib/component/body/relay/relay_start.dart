@@ -12,16 +12,18 @@ class RelayStart extends StatefulWidget {
   final bool isTeam;
   final bool isLeader;
   final bool ismember;
-
+  final String telephonecode;
   final String teamname;
   final String username;
 
-  RelayStart(
-      {this.isLeader,
-      this.isTeam,
-      this.ismember,
-      this.username,
-      this.teamname});
+  RelayStart({
+    this.isLeader,
+    this.isTeam,
+    this.ismember,
+    this.username,
+    this.teamname,
+    this.telephonecode,
+  });
   @override
   RelayStartState createState() => RelayStartState();
 }
@@ -146,12 +148,12 @@ class RelayStartState extends State<RelayStart> {
             ]),
           ));
     }
-   
   }
 
   @override
   void initState() {
     super.initState();
+    print('code:' + this.widget.telephonecode);
     setState(() {
       username = widget.username;
       teamname = widget.teamname;
@@ -313,8 +315,8 @@ class RelayStartState extends State<RelayStart> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(30))),
                         child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 5),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

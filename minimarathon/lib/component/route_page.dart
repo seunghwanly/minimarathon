@@ -15,23 +15,32 @@ class PaidUser {
   final String username;
   final String teamname;
 
-  PaidUser(
-      {this.isPaidUser,
-      this.isTeam,
-      this.isMember,
-      this.isLeader,
-      this.username,
-      this.teamname});
+  PaidUser({
+    this.isPaidUser,
+    this.isTeam,
+    this.isMember,
+    this.isLeader,
+    this.username,
+    this.teamname,
+  });
 }
 
 class RoutePage extends StatefulWidget {
-  RoutePage({Key key}) : super(key: key);
+  final String telephonecode;
+  RoutePage({this.telephonecode});
 
   @override
   _RoutePageState createState() => _RoutePageState();
 }
 
 class _RoutePageState extends State<RoutePage> {
+  String telephonecode;
+  @override
+  void initState() {
+    super.initState();
+    telephonecode = this.widget.telephonecode;
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -52,9 +61,12 @@ class _RoutePageState extends State<RoutePage> {
                 ismember: result.isMember,
                 username: result.username,
                 teamname: result.teamname,
+                telephonecode: this.widget.telephonecode,
               );
             } else {
-              return NeedPaymentRegister();
+              return NeedPaymentRegister(
+                isoCode: telephonecode,
+              );
             }
           }
         },
