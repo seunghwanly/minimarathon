@@ -80,9 +80,9 @@ class RelayStartState extends State<RelayStart> {
     // TODO : 2020,12,20,00,00 으로 바꾸기.
     // DateTime d_day = DateTime(2020, 12, 18, 20, 00, 00);
     // DateTime finish_day = DateTime(2020, 12, 20, 20, 00, 00);
-
-    DateTime d_day = DateTime(2020, 12, 18, 20, 00, 00);
-    DateTime finish_day = DateTime(2020, 12, 20, 20, 00, 00);
+ 
+    DateTime d_day = DateTime(2020, 12, 18, 00, 00, 00);
+    DateTime finish_day = DateTime(2020, 12, 20, 23, 59, 59);
     if (currentTime.isBefore(d_day) == true) {
       //before
       showMyDialog(context,
