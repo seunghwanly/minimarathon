@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//알림창 확인 모달
 Widget showAlert(BuildContext context) {
   showDialog(
     context: context,

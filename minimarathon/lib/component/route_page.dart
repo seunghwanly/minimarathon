@@ -74,6 +74,7 @@ class _RoutePageState extends State<RoutePage> {
     );
   }
 
+  //사용자가 Donation 을 했는지 검사
   Future<PaidUser> checkUserisPaid() async {
     // database
     DatabaseReference dbRef =

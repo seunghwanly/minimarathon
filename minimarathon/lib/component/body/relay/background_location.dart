@@ -30,14 +30,16 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
   double currentLong = 0;
   String currentPermission = 'deny';
 
+  //디바이스로부터 저장될 위치정보
   String latitude = "waiting...";
   String longitude = "waiting...";
   String altitude = "waiting...";
   String accuracy = "waiting...";
   String bearing = "waiting...";
+
+  //릴레이 정보
   String speed = "0.0";
   String time = "waiting...";
-
   double totalDistance = 0;
   double totalDistance2 = 0;
   var date = new DateTime(1996, 5, 23, 0, 0, 0);
@@ -56,7 +58,9 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
     return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
   }
 
+  //릴레이 기록 DB저장
   void writeData() async {
+    // 개인 참여자
     await databaseReference
         .child("Single")
         .once()
@@ -73,6 +77,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
         }
       });
     });
+    //팀 참여자
     await databaseReference
         .child("Teams")
         .once()
@@ -81,6 +86,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
         String teamInfo = k.toString();
         Map<dynamic, dynamic> eachTeamData = v;
         eachTeamData.forEach((k, v) {
+          //팀 참여자 - 팀 리더
           if (k == "leader") {
             if (v['phoneNumber'] == auth.currentUser.phoneNumber) {
               lastTimer = _start;
@@ -92,7 +98,9 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                   .update(
                       {'timer': lastTimer, 'runningDistance': totalDistance});
             }
-          } else if (k == "members") {
+          }
+          //팀 참여자 - 팀 멤버
+          else if (k == "members") {
             var memberList = List<Map<dynamic, dynamic>>.from(v);
             memberList.forEach((values) {
               var eachMemberData = Map<dynamic, dynamic>.from(values);
@@ -115,24 +123,17 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
       });
     });
   }
-  // Future<bool> _requestPermission() async {
-  //   var result = await PermissionHandler().requestPermissions([PermissionGroup.storage]);
-  //   if (result[PermissionGroup.storage] == PermissionStatus.granted) {
-  //     print('Storage permission is granted.');
-  //     return true;
-  //   } else {
-  //     print('Storage permission is not granted.');
-  //     return false;
-  //   }
-  // }
 
+  //백그라운드에서 위치정보
+  //위도 경도 이동속도 저장
   backgroundService() async {
     BackgroundLocation.getPermissions(onGranted: () {
       BackgroundLocation.setNotificationTitle("Background service running");
       BackgroundLocation.startLocationService();
       BackgroundLocation.getLocationUpdates((location) {
         setState(() {
-          //초기상태
+          // 새롭게 위치정보를 받아온 후
+          // 이전 위치와 현재 위치를 비교하여 거리 측정
           if (beforeLat == 0 && currentLat == 1) {
             this.beforeLat = location.latitude;
             this.beforeLong = location.longitude;
@@ -164,6 +165,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
           }
         });
       });
+
       startTimer();
       Navigator.of(context).pop();
     }, onDenied: () {
@@ -171,6 +173,8 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
     });
   }
 
+  // 타이머 시작
+  // 00:00:00
   void startTimer() {
     if (isStart == true) return;
     const oneSec = const Duration(seconds: 1);
@@ -594,6 +598,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
                 ]))));
   }
 
+  //릴레이 종료 함수
   void handleDialogYes() {
     // Navigator.of(context).pop();
     if (_start != 0) {
@@ -601,11 +606,9 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
       _timer.cancel();
       writeData();
     }
-    //이 거리만큼 이동시에 Finish_Relay 으로 이동.
-    //테스팅용
-    //실제에서는 if(totalDistance > 3500)
-    //if (totalDistance > 3500) {
-    //if (_start > 5) {
+
+    // RelayFinish 로 화면 전환
+    // 파라미터 : 릴레이 기록정보와 사용자/팀정보를
     Route route = MaterialPageRoute(
         builder: (context) => RelayFinish(
               recordTime: _start != null ? _start : 0,
@@ -638,6 +641,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
     });
   }
 
+  // Degree -> Radian 변환 함수
   double degreesToRadians(degrees) {
     // return degrees * 0.0174532925199432954743716805978692718781530857086181640625;   // max : 52 | min 14
     return degrees * 0.017453292519943295474371; // jongsTest
@@ -645,6 +649,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
     // return degrees * 0.01745329251994329547437168059786927187815;          // max : 49 | min 15
   }
 
+  // 2개 지점의 위도 경도로 거리 구하는 함수
   double distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2, speed) {
     if (speed > 0.8 && speed < 6) {
       var earthRadiusKm = 6371;
@@ -662,6 +667,7 @@ class MyBackgroundLocationState extends State<MyBackgroundLocation> {
       return 0;
   }
 
+  // 2개 지점의 위도 경도로 거리 구하는 함수 - 2
   double distance(lat1_, lon1_, lat2_, lon2_, String unit, speed) {
     if (speed > 0.8 && speed < 6) {
       double lat1 = lat1_;

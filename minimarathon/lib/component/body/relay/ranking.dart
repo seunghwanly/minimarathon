@@ -18,10 +18,11 @@ class Ranking extends StatefulWidget {
 
 List<Member> memberList = new List<Member>();
 
-//List<_Row> _rows= new List<_Row>(10);
 class RankingState extends State<Ranking> {
-  // List<_Row> _rows = new List<_Row>();
+  //표의 행 목록
   var currentRowList = List<_Row>();
+
+  //표에 담길 Data
   final datasource = new _DataSource();
 
   @override

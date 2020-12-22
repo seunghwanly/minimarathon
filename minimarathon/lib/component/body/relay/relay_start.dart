@@ -34,6 +34,7 @@ class RelayStartState extends State<RelayStart> {
   bool isTeamLeader = false;
 
   // url open -> donation
+  // url의 값 앱의 목적에 맞게 수정 가능.
   void _openURL() async {
     String url =
         "https://www.gofundme.com/f/can-we-read?utm_medium=copy_link&utm_source=customer&utm_campaign=p_lico+share-sheet";
@@ -80,7 +81,6 @@ class RelayStartState extends State<RelayStart> {
     // TODO : 2020,12,20,00,00 으로 바꾸기.
     // DateTime d_day = DateTime(2020, 12, 18, 20, 00, 00);
     // DateTime finish_day = DateTime(2020, 12, 20, 20, 00, 00);
- 
     DateTime d_day = DateTime(2020, 12, 18, 00, 00, 00);
     DateTime finish_day = DateTime(2020, 12, 20, 23, 59, 59);
     if (currentTime.isBefore(d_day) == true) {
@@ -187,6 +187,7 @@ class RelayStartState extends State<RelayStart> {
   @override
   Widget build(BuildContext context) {
     return CustomHeader(
+        //title 에 행사 이름으로 수정하면 됨.
         title: "Hope Sharing Relay",
         body: new Container(
           alignment: Alignment.center,
@@ -214,6 +215,8 @@ class RelayStartState extends State<RelayStart> {
                 //   alignment: Alignment.center,
                 //   child:
                 //  )
+
+                //행사 사진에 맞는 이미지 파일을 images/ 디렉토리에 넣고 수정하면 됨.
                 child: Image(
                   image: AssetImage('images/home.png'),
                   fit: BoxFit.cover,

@@ -40,6 +40,7 @@ class RelayFinishState extends State<RelayFinish> {
     });
   }
 
+//추후에 봉사활동에 참여의사를 DB에 저장
   void _updateInfo() async {
     await databaseReference
         .child("Single")
@@ -111,6 +112,7 @@ class RelayFinishState extends State<RelayFinish> {
       ),
     );
   }
+
   void _navigationMainScreen() {
     Navigator.pushReplacement(
       context,
@@ -146,6 +148,7 @@ class RelayFinishState extends State<RelayFinish> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    //행사 이름에 맞게 수정
                     makeText("2020 Hope Sharing Relay", white, 21),
                     makeText("Let's Run & Share", white, 21),
                   ],

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:minimarathon/util/palette.dart';
 
+//앱 시작시 로딩화면
+
 class LoadingPage extends StatefulWidget {
   // final res;
   // final Function onFinish;
