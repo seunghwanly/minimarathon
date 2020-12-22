@@ -8,8 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 // model
 import '../../../model/model_register.dart';
 
-final referenceDatabase =
-    FirebaseDatabase.instance.reference().child('2020HopeRelay');
+final referenceDatabase = FirebaseDatabase.instance.reference().child('2020HopeRelay');
 
 class Ranking extends StatefulWidget {
   @override
@@ -37,6 +36,7 @@ class RankingState extends State<Ranking> {
     });
   }
 
+  // timer(초단위)를 '시:분:초' 형태로 변환
   String makeTimeString(int timer) {
     int ihour = timer ~/ 3600;
     int imin = (timer - (ihour * 3600)) ~/ 60;
@@ -48,6 +48,7 @@ class RankingState extends State<Ranking> {
     return time;
   }
 
+  // DB에서 데이터를 읽어오는 함수
   void readList() async {
     String name;
     int timer;
@@ -121,6 +122,7 @@ class RankingState extends State<Ranking> {
     bool isSort = false;
     List<_Row> sortedList = new List<_Row>();
 
+    // 랭킹을 위해 정렬하는 부분
     setState(() {
       tmpList.sort((a, b) =>
           isSort ? (a.speed).compareTo(b.speed) : (b.speed).compareTo(a.speed));
@@ -175,6 +177,7 @@ class RankingState extends State<Ranking> {
   }
 }
 
+// DB에서 불러오는 데이터를 담는 클래스
 class _Mem {
   _Mem({this.name, this.time, this.distance, this.speed});
   final String name;
@@ -183,6 +186,7 @@ class _Mem {
   final double speed;
 }
 
+// 랭킹 한 행을 나타내는 클래스
 class _Row {
   _Row(
     this.name,
@@ -195,6 +199,7 @@ class _Row {
   bool selected = false;
 }
 
+// 랭킹에 나타낼 데이터 클래스
 class _DataSource extends DataTableSource {
   var _rows = new List<_Row>();
   int _selectedCount = 0;
