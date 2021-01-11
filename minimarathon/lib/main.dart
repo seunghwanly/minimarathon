@@ -18,6 +18,7 @@ import './util/custom_dialog.dart';
 import './util/palette.dart';
 
 void main() {
+  // Need for Firebase initState
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
